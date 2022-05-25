@@ -63,9 +63,8 @@ public class GrapheInterface extends javax.swing.JFrame {
                         list_liens_affiches.get(i).getArrivee().getX() + 25,
                         list_liens_affiches.get(i).getArrivee().getY() + 25);
                 g.drawString(
-                        list_liens_affiches.get(i).getDepart().getNom() + " -> " + list_liens_affiches.get(i).getType()
-                                + "," + list_liens_affiches.get(i).getDistance() + " -> "
-                                + list_liens_affiches.get(i).getArrivee().getNom(),
+                                  list_liens_affiches.get(i).getType()
+                                + "," + list_liens_affiches.get(i).getDistance(),
                         (list_liens_affiches.get(i).getDepart().getX() + list_liens_affiches.get(i).getArrivee().getX()
                                 + 25) / 2,
                         (list_liens_affiches.get(i).getDepart().getY() + list_liens_affiches.get(i).getArrivee().getY()
@@ -344,7 +343,18 @@ public class GrapheInterface extends javax.swing.JFrame {
                     )
                    ) 
                 {
-                    a.list_liens_affiches.add(a.list_liens.get(z));
+                    if 
+                    (
+                        (National.isSelected() && a.list_liens.get(z).getType() == 'N')
+                        ||
+                        (Departmental.isSelected() && a.list_liens.get(z).getType() == 'D')
+                        ||
+                        (Highway.isSelected() && a.list_liens.get(z).getType() == 'A')
+                    )
+                    {
+                        a.list_liens_affiches.add(a.list_liens.get(z));
+                    }
+                    
                 }
             }
         }
