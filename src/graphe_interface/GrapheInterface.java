@@ -91,6 +91,13 @@ public class GrapheInterface extends javax.swing.JFrame {
                 g.drawString(list_noeuds_affiches.get(i).getNom(), list_noeuds_affiches.get(i).getX() + 25,
                         list_noeuds_affiches.get(i).getY() + 60);
             }
+            lblDepartemental.setText("Départementales : "+countLinkByType('D'));
+            lblNational.setText("Nationales : "+countLinkByType('N'));
+            lblHighway.setText("Autoroutes : "+countLinkByType('A'));
+            lblFood.setText("Restaurants : "+countNodeByType('R')); 
+            lblFun.setText("Loisirs : "+countNodeByType('L'));
+            lblCity.setText("Villes : "+countNodeByType('V'));
+            lblNational.setText("Nationales : "+countLinkByType('N'));
         }
 
     }
@@ -110,6 +117,12 @@ public class GrapheInterface extends javax.swing.JFrame {
     JCheckBox Highway;
     JCheckBox National;
     JCheckBox Departmental;
+    JLabel lblCity;
+    JLabel lblFood;
+    JLabel lblFun;
+    JLabel lblDepartemental;
+    JLabel lblNational;
+    JLabel lblHighway;
 
     public GrapheInterface() {
 
@@ -201,9 +214,18 @@ public class GrapheInterface extends javax.swing.JFrame {
 
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 5));
-        bottomBar.add(new JLabel("test"));
-        bottomBar.add(new JSeparator());
-        bottomBar.add(new JLabel("autre Test"));
+        lblCity = new JLabel("Villes : "+countNodeByType('V'));
+        lblFood = new JLabel("Restaurants : "+countNodeByType('R')); 
+        lblFun = new JLabel("Loisirs : "+countNodeByType('L'));
+        lblDepartemental = new JLabel("Departementales : "+countLinkByType('D'));
+        lblNational = new JLabel("Nationales : "+countLinkByType('N'));
+        lblHighway = new JLabel("Autoroutes : "+countLinkByType('A'));
+        bottomBar.add(lblCity);
+        bottomBar.add(lblFood);
+        bottomBar.add(lblFun);
+        bottomBar.add(lblDepartemental);
+        bottomBar.add(lblNational);
+        bottomBar.add(lblHighway);
         bottomBar.setBackground(Color.WHITE);
 
         getContentPane().add(bottomBar, borderLayout.SOUTH);
@@ -216,29 +238,32 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     protected void btnDepartmentalActionPerformed(ActionEvent evt) {
-        hideOrDisplayLink(Departmental.isSelected(), 'D');
+        hideOrDisplayLink(Departmental.isSelected(), 'D');    
     }
 
     protected void btnNationalActionPerformed(ActionEvent evt) {
-        hideOrDisplayLink(National.isSelected(), 'N');
+        hideOrDisplayLink(National.isSelected(), 'N');  
     }
 
     protected void btnHighwayActionPerformed(ActionEvent evt) {
-        hideOrDisplayLink(Highway.isSelected(), 'A');
+        hideOrDisplayLink(Highway.isSelected(), 'A');  
     }
 
     protected void btnFoodActionPerformed(ActionEvent evt) {
-        hideOrDisplayNode(Food.isSelected(), 'R');
+        hideOrDisplayNode(Food.isSelected(), 'R');       
     }
 
     protected void btnFunActionPerformed(ActionEvent evt) {
-        hideOrDisplayNode(Fun.isSelected(), 'L');
+        hideOrDisplayNode(Fun.isSelected(), 'L');    
     }
 
     protected void btnCityActionPerformed(ActionEvent evt) {
-        hideOrDisplayNode(City.isSelected(), 'V');
+        hideOrDisplayNode(City.isSelected(), 'V');      
     }
-
+    private void refreshInfoBottomBar()
+    {
+        
+    }
     private void hideOrDisplayLink(Boolean selected,char type)
     {
         boolean check = false;
@@ -273,6 +298,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         }
         repaint();    
     }
+    
     private void hideOrDisplayNode(Boolean selected,char type)
     {
         boolean check = false;
@@ -354,6 +380,30 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         }
         return check;
+    }
+
+    private int countLinkByType(char type) {
+        int count = 0;
+        for (Lien link : a.list_liens_affiches)
+        {
+            if (link.getType() == type)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int countNodeByType(char type) {
+        int count = 0;
+        for (Noeud noeud : a.list_noeuds_affiches)
+        {
+            if (noeud.getType() == type)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     private void go() {
