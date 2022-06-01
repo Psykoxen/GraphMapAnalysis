@@ -1,17 +1,21 @@
 package graphe_interface;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JCheckBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import graphe_backend.*;
+import graphe_backend.Lien;
+import graphe_backend.Noeud;
 
 /**
  *
@@ -19,10 +23,7 @@ import graphe_backend.*;
  * 
  */
 public class PanelInterface extends JPanel{
-    int xPress = 0;
-    int xRelease = 0;
-    int yPress = 0;
-    int yRelease = 0;
+    Noeud SelectedNode = null;
 
     private int widthJFrame;
     private int heightJFrame;
@@ -34,6 +35,9 @@ public class PanelInterface extends JPanel{
 
     Random random = new Random();
 
+    JPopupMenu jMenu;
+    JMenuItem OneNeighbour;
+    JMenuItem TwoNeighbour;
     
     PanelInterface(int width,int height,ArrayList<Noeud> list_noeuds,ArrayList<Lien> list_liens)
     {
@@ -53,60 +57,155 @@ public class PanelInterface extends JPanel{
             noeud.setY(y);
         }
 
-        addMouseListener(new MouseListener() 
-        {
 
+        jMenu = new JPopupMenu();
+        OneNeighbour = new JMenuItem();
+        OneNeighbour.setText("1-voisins");
+        OneNeighbour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OneNeigbourActionPerformed(evt);
+            }
+        });
+        TwoNeighbour = new JMenuItem();
+        TwoNeighbour.setText("2-voisins");
+        TwoNeighbour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TwoNeigbourActionPerformed(evt);
+            }
+        });
+        jMenu.add(OneNeighbour);
+        jMenu.add(TwoNeighbour);
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (xPress==xRelease && yPress==yRelease)
-                {
-                    selectNoeud(e.getX(),e.getY());
-                }
-            }
 
+                    //selectNoeud(e.getX(),e.getY());
+                    if (e.getButton() == MouseEvent.BUTTON3)
+                    {
+                        for (Noeud noeud:list_noeuds_affiches)
+                        {
+                        if (
+                            (noeud.getX() <= e.getX() && e.getX() <= noeud.getX()+50)
+                            &&
+                            (noeud.getY() <= e.getY() && e.getY() <= noeud.getY()+50)
+                        )
+                        {
+                            SelectedNode = noeud;
+                            jMenu.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                        }
+                    }
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() 
+        {
             @Override
-            public void mousePressed(MouseEvent e) {
-                xPress = e.getX();
-                yPress = e.getY();
-                System.out.println(e.getX()+" - "+e.getY());
+            public void mouseDragged(MouseEvent e) {
+                System.out.println("X : "+(int)e.getPoint().getX()+" Y : "+(int)e.getPoint().getY());
+                moveNode((int)e.getPoint().getX(),(int)e.getPoint().getY());   
             }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                xRelease = e.getX();
-                yRelease = e.getY();
-                if (xPress!=xRelease || yPress!=yRelease)
-                {
-                    moveNode();
-                }
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
         });
     }
-    private void moveNode()
+  
+    protected void OneNeigbourActionPerformed(ActionEvent evt) 
+    {
+        list_liens_affiches.clear();
+        list_noeuds_affiches.clear();
+        list_noeuds_affiches.add(SelectedNode);
+        for (Lien lien : list_liens)
+        {
+            if (lien.getDepart().equals(SelectedNode))
+            {
+                list_liens_affiches.add(lien);
+                list_noeuds_affiches.add(lien.getArrivee());
+            }
+            else if (lien.getArrivee().equals(SelectedNode))
+            {
+                list_liens_affiches.add(lien);
+                list_noeuds_affiches.add(lien.getDepart());
+            }
+        }
+        repaint();
+    }
+
+    protected void TwoNeigbourActionPerformed(ActionEvent evt) {
+        list_liens_affiches.clear();
+        list_noeuds_affiches.clear();
+        list_noeuds_affiches.add(SelectedNode);
+        for (Lien lien : list_liens)
+        {
+            if (lien.getDepart().equals(SelectedNode))
+            {
+                list_liens_affiches.add(lien);
+                list_noeuds_affiches.add(lien.getArrivee());
+                for (Lien lienSecond : list_liens)
+                {
+                    if 
+                    (
+                        (lien.getArrivee().equals(lienSecond.getDepart()))
+                        &&
+                        (!SelectedNode.equals(lienSecond.getArrivee())) 
+                    )
+                    {
+                        list_liens_affiches.add(lienSecond);
+                        list_noeuds_affiches.add(lienSecond.getArrivee());
+                    }
+                    else if 
+                    (
+                        (lien.getArrivee().equals(lienSecond.getArrivee()))
+                        &&
+                        (!SelectedNode.equals(lienSecond.getDepart())) 
+                    )
+                    {
+                        list_liens_affiches.add(lienSecond);
+                        list_noeuds_affiches.add(lienSecond.getDepart());
+                    }
+                }
+            }
+            else if (lien.getArrivee().equals(SelectedNode))
+            {
+                list_liens_affiches.add(lien);
+                list_noeuds_affiches.add(lien.getDepart());
+                for (Lien lienSecond : list_liens)
+                {
+                    if 
+                    (
+                        (lien.getDepart().equals(lienSecond.getDepart()))
+                        &&
+                        (!SelectedNode.equals(lienSecond.getArrivee())) 
+                    )
+                    {
+                        list_liens_affiches.add(lienSecond);
+                        list_noeuds_affiches.add(lienSecond.getArrivee());
+                    }
+                    else if 
+                    (
+                        (lien.getDepart().equals(lienSecond.getArrivee()))
+                        &&
+                        (!SelectedNode.equals(lienSecond.getDepart())) 
+                    )
+                    {
+                        list_liens_affiches.add(lienSecond);
+                        list_noeuds_affiches.add(lienSecond.getDepart());
+                    }
+                }
+            }
+        }
+        repaint();
+    }
+
+    private void moveNode(int x,int y)
     {
         for (Noeud noeud:list_noeuds_affiches)
                 {
                     if (
-                        (noeud.getX() <= xPress && xPress <= noeud.getX()+50)
+                        (noeud.getX() <= x && x <= noeud.getX()+50)
                         &&
-                        (noeud.getY() <= yPress && yPress <= noeud.getY()+50)
+                        (noeud.getY() <= y && y <= noeud.getY()+50)
                     )
                     {
-                        noeud.setX(xRelease);
-                        noeud.setY(yRelease);
+                        noeud.setX(x-25);
+                        noeud.setY(y-25);
                         break;
                     }
                 }
@@ -157,8 +256,8 @@ public class PanelInterface extends JPanel{
         for (Lien lien :list_liens_affiches)
         {System.out.println("De "+lien.getDepart().getNom()+" -> "+lien.getArrivee().getNom());}
         repaint();
+        }
     }
-}
     
     public void hideOrDisplayLinkByType(Boolean selected,char type)
     {

@@ -1,11 +1,23 @@
 package graphe_interface;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-import graphe_backend.*;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import graphe_backend.Graphe;
+import graphe_backend.Lien;
+import graphe_backend.Noeud;
 
 /**
  *
@@ -56,7 +68,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         borderLayout = new BorderLayout();
         setLayout(borderLayout);
 
-        /////////////////////////////////////////////////////////////
+        /*////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
@@ -78,9 +90,9 @@ public class GrapheInterface extends javax.swing.JFrame {
         list_liens.add(CA);
         list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        /////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////*/
 
-        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");
@@ -187,32 +199,48 @@ public class GrapheInterface extends javax.swing.JFrame {
 
     protected void btnRefreshActionPerformed(ActionEvent evt) {
         PanelInterface.reset();
+        updateCountLabel();
     }
 
     protected void btnDepartmentalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');    
+        PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');  
+        updateCountLabel();  
     }
 
     protected void btnNationalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(National.isSelected(), 'N');  
+        PanelInterface.hideOrDisplayLinkByType(National.isSelected(), 'N');
+        updateCountLabel();  
     }
 
     protected void btnHighwayActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Highway.isSelected(), 'A');  
+        updateCountLabel();
     }
 
     protected void btnFoodActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(Food.isSelected(), 'R',this);       
+        PanelInterface.hideOrDisplayNodeByType(Food.isSelected(), 'R',this);     
+        updateCountLabel();  
     }
 
     protected void btnFunActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(Fun.isSelected(), 'L',this);    
+        PanelInterface.hideOrDisplayNodeByType(Fun.isSelected(), 'L',this);  
+        updateCountLabel();  
     }
 
     protected void btnCityActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);      
+        PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);
+        updateCountLabel();      
     }
 
+    private void updateCountLabel()
+    {
+        lblCity.setText("Villes : "+countNodeByType('V'));
+        lblFood.setText("Restaurants : "+countNodeByType('R')); 
+        lblFun.setText("Loisirs : "+countNodeByType('L'));
+        lblDepartemental.setText("Departementales : "+countLinkByType('D'));
+        lblNational.setText("Nationales : "+countLinkByType('N'));
+        lblHighway.setText("Autoroutes : "+countLinkByType('A'));   
+    }
     
 
     private int countLinkByType(char type) {
