@@ -7,8 +7,6 @@ package graphe_backend;
 
 import java.io.FileNotFoundException;
 
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.*;
 import java.io.File;
 
@@ -33,7 +31,6 @@ public class Graphe {
         try {
             loading();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -190,12 +187,12 @@ public class Graphe {
         return nbLiens;
     }
 
-    public ArrayList getNoeuds()
+    public ArrayList<Noeud> getNoeuds()
     {
         return list_noeuds;
     }
 
-    public ArrayList getLiens()
+    public ArrayList<Lien> getLiens()
     {
         return list_liens;
     }
@@ -444,7 +441,7 @@ public class Graphe {
             return noeud1.getNom() + " est moins ouverte que " + noeud2.getNom();
         }
     }
-
+/*
     public void Affichage()
     {
         Scanner scanner = new Scanner(System.in);
@@ -495,7 +492,7 @@ public class Graphe {
             }
         }
     }
-/*
+
     public void FloydMarshall()
     {
         int[][] distances = new int[list_noeuds.size()][list_noeuds.size()];

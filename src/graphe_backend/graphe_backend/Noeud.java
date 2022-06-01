@@ -5,7 +5,6 @@ package graphe_backend;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
