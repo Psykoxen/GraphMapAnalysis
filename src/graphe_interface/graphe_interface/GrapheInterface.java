@@ -32,6 +32,8 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenuBar menubar;
     JMenu File;
     JMenu Display;
+    JMenu Find;
+    JMenuItem Connected;
     JMenuItem Open;
     JMenuItem Refresh;
     BorderLayout borderLayout;
@@ -160,6 +162,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         Display.add(Places);
         Display.add(Link);
 
+
         Refresh = new JMenuItem("Réinitialiser");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,9 +171,21 @@ public class GrapheInterface extends javax.swing.JFrame {
         });
         Display.add(Refresh);
 
+        Find = new JMenu("Recherche");
+        Connected = new JMenuItem("Connexion..");
+        Connected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConnectedActionPerformed(evt);
+            }
+        });
+        Find.add(Connected);
+
+
+
         menubar = new JMenuBar();
         menubar.add(File);
         menubar.add(Display);
+        menubar.add(Find);
 
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 5));
@@ -195,6 +210,10 @@ public class GrapheInterface extends javax.swing.JFrame {
         pack();
         setVisible(true);
         
+    }
+
+    protected void btnConnectedActionPerformed(ActionEvent evt) {
+        ConnectedDialog dialog = new ConnectedDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches());
     }
 
     protected void btnRefreshActionPerformed(ActionEvent evt) {
