@@ -1,4 +1,4 @@
-package graphe_interface;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,14 +8,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JCheckBox;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
-import graphe_backend.Lien;
-import graphe_backend.Noeud;
 
 /**
  *
@@ -127,15 +122,18 @@ public class PanelInterface extends JPanel{
         list_noeuds_affiches.add(SelectedNode);
         for (Lien lien : list_liens)
         {
+            System.out.println(lien);
             if (lien.getDepart().equals(SelectedNode))
             {
                 list_liens_affiches.add(lien);
                 list_noeuds_affiches.add(lien.getArrivee());
+                System.out.println("Ajout de arrivée "+lien.getArrivee());
             }
             else if (lien.getArrivee().equals(SelectedNode))
             {
                 list_liens_affiches.add(lien);
                 list_noeuds_affiches.add(lien.getDepart());
+                System.out.println("Ajout de départ "+lien.getDepart());
             }
         }
         repaint();
@@ -279,35 +277,6 @@ public class PanelInterface extends JPanel{
                             {
                                 list_liens_affiches.add(lien);
                             }
-                            /*if (this.getListLiens().get(i).getType() == type)
-                        {
-                            if (SelectedNode == null)
-                            {
-                                for (int j=0;j< this.getListNoeudAffiches().size();j++)
-                                {
-                                    if (this.getListLiens().get(i).getDepart().equals( this.getListNoeudAffiches().get(j))) 
-                                    {
-                                        for (int k=0;k< this.getListNoeudAffiches().size();k++)
-                                        {
-                                            if (this.getListLiens().get(i).getArrivee().equals( this.getListNoeudAffiches().get(k))) 
-                                            {
-                                                this.getListLiensAffiches().add(this.getListLiens().get(i));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                for (Noeud noeud : list_noeuds_affiches)
-                                {
-                                    if 
-                                    (
-                                        (this.getListLiens().get(i).getDepart().equals(noeud))
-                                    )
-                                }
-                            }
-                        } */
                     }
                 }
             

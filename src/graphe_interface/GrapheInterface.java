@@ -1,12 +1,11 @@
-package graphe_interface;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -14,10 +13,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import graphe_backend.Graphe;
-import graphe_backend.Lien;
-import graphe_backend.Noeud;
 
 /**
  *
@@ -56,7 +51,6 @@ public class GrapheInterface extends javax.swing.JFrame {
     public GrapheInterface() {
 
         initComponents();
-
     }
 
     private void initComponents() {
@@ -66,7 +60,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         setTitle("Graph-Map");
         setPreferredSize(new Dimension(800, 800));
         setMinimumSize(new Dimension(800, 800));
-        // setResizable(false);
+        this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
         borderLayout = new BorderLayout();
         setLayout(borderLayout);
 
@@ -213,7 +207,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     protected void btnConnectedActionPerformed(ActionEvent evt) {
-        ConnectedDialog dialog = new ConnectedDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches());
+        new ConnectedDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches());
     }
 
     protected void btnRefreshActionPerformed(ActionEvent evt) {

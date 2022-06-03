@@ -1,8 +1,7 @@
-package graphe_interface;
 
-import java.awt.Component;
+
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -11,10 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import java.awt.BorderLayout;
-import graphe_backend.Lien;
-import graphe_backend.Noeud;
 
 public class ConnectedDialog extends JDialog 
 {
@@ -87,9 +82,7 @@ public class ConnectedDialog extends JDialog
                                 lien.getArrivee().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
                                 &&
                                 lien.getArrivee().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
-                            )
-
-                        
+                            )       
                         )
                         {
                             find = true;

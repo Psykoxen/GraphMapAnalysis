@@ -1,5 +1,3 @@
-package graphe_backend;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -32,6 +30,11 @@ public class Graphe {
             loading();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        
+        for (Lien lien : list_liens)
+        {
+            System.out.println(lien);
         }
     }
 
@@ -71,6 +74,7 @@ public class Graphe {
         String[] data;
         Noeud start = null;
         Noeud voisin = null;
+        Boolean check;
         int i = 0;
         File file = new File("src\\graphe_data\\Graphe.csv");
         Scanner scan = new Scanner(file);
@@ -86,12 +90,10 @@ public class Graphe {
                         start = this.add_noeud(data[0].charAt(2), data[1]);
                     } else {
                         start = existNoeud(data[0].charAt(2), data[1]);
-
                     }
                     liens = lieux[1].split(";");
                     for (String lien : liens) {
                         details = lien.split("::");
-
                         data = details[1].split(",");
                         if (existNoeud(data[0].charAt(0), data[1]) == null) {
                             voisin = this.add_noeud(data[0].charAt(0), data[1]);
@@ -99,7 +101,30 @@ public class Graphe {
                             voisin = existNoeud(data[0].charAt(0), data[1]);
                         }
                         data = details[0].split(",");
-                        this.add_lien(Integer.parseInt(data[1]), data[0].charAt(0), start, voisin);
+                        check =true;
+                        for (Lien lientoCheck : list_liens)
+                        {
+                            if 
+                            (
+                                (lientoCheck.getDepart().equals(voisin))
+                                &&
+                                (lientoCheck.getArrivee().equals(start))
+                                &&
+                                (lientoCheck.getType() == data[0].charAt(0))
+                                &&
+                                (lientoCheck.getDistance() == Integer.parseInt(data[1]))
+                            )
+                            {
+                                check = false;
+                            }
+                        }
+                        if (check)
+                        {   
+                            this.add_lien(Integer.parseInt(data[1]), data[0].charAt(0), start, voisin);
+                        }
+                        
+                        
+                       
                     }
                 }i++;
             }
