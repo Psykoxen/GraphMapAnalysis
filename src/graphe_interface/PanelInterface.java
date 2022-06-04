@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -38,6 +39,7 @@ public class PanelInterface extends JPanel{
     JMenuItem TwoNeighbour;
     Boolean OneNeighbourDisplay = false;
     Boolean TwoNeighbourDisplay = false;
+    ArrayList<JLabel> labelList;
 
     
     PanelInterface(int width,int height,ArrayList<Noeud> list_noeuds,ArrayList<Lien> list_liens)
@@ -46,7 +48,7 @@ public class PanelInterface extends JPanel{
         this.heightJFrame = height;
         this.list_liens = list_liens;
         this.list_noeuds = list_noeuds;
-        
+
         this.list_liens_affiches = (ArrayList<Lien>) list_liens.clone();
         this.list_noeuds_affiches = (ArrayList<Noeud>) list_noeuds.clone();
 
@@ -447,6 +449,51 @@ public class PanelInterface extends JPanel{
         OneNeighbourDisplay = false;
     }
    
+    private void updateStat()
+    {
+        for (JLabel label : labelList)
+        {
+            switch(label.getText().split(":")[0])
+            {
+                case "Ville ": label.setText("Ville : "+countNodeByType('V'));break;
+                case "Restaurant ": label.setText("Restaurant : "+countNodeByType('R'));break;
+                case "Loisir ": label.setText("Loisir : "+countNodeByType('L'));break;
+                case "Départementale ": label.setText("Départementale : "+countLinkByType('D'));break;
+                case "Nationale ": label.setText("Nationale : "+countLinkByType('N'));break;
+                case "Autoroute ": label.setText("Autoroute : "+countLinkByType('A'));break;
+            }
+        }
+    }
+
+    public int countLinkByType(char type) {
+        int count = 0;
+        for (Lien link : list_liens_affiches)
+        {
+            if (link.getType() == type)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countNodeByType(char type) {
+        int count = 0;
+        for (Noeud noeud : list_noeuds_affiches)
+        {
+            if (noeud.getType() == type)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+ 
+    public void updateLabelList(ArrayList<JLabel> labelList)
+    {
+        this.labelList = labelList;
+    }
+
     public void paintComponent(Graphics g) 
     {
         System.out.println(" -- REPAINT -- ");
@@ -504,6 +551,10 @@ public class PanelInterface extends JPanel{
                 noeud.getX() + 23,
                 noeud.getY() + 28
             );
+        }
+        if (labelList != null)
+        {
+            updateStat();
         }
     }
 

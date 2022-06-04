@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenu Display;
     JMenu Find;
     JMenuItem Connected;
+    JMenuItem Compare;
     JMenuItem Open;
     JMenuItem Refresh;
     BorderLayout borderLayout;
@@ -47,6 +49,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     JLabel lblDepartemental;
     JLabel lblNational;
     JLabel lblHighway;
+    
 
     public GrapheInterface() {
 
@@ -63,6 +66,8 @@ public class GrapheInterface extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
         borderLayout = new BorderLayout();
         setLayout(borderLayout);
+
+       
 
         /*////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;
@@ -87,7 +92,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
         ////////////////////////////////////////////////////////////*/
-
+        ArrayList<JLabel> labelList = new ArrayList<>();
         PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
@@ -166,14 +171,20 @@ public class GrapheInterface extends javax.swing.JFrame {
         Display.add(Refresh);
 
         Find = new JMenu("Recherche");
-        Connected = new JMenuItem("Connexion..");
+        Connected = new JMenuItem("Connexion");
         Connected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConnectedActionPerformed(evt);
             }
         });
         Find.add(Connected);
-
+        Compare = new JMenuItem("Comparer");
+        Compare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompareActionPerformed(evt);
+            }
+        });
+        Find.add(Compare);
 
 
         menubar = new JMenuBar();
@@ -183,27 +194,46 @@ public class GrapheInterface extends javax.swing.JFrame {
 
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 5));
-        lblCity = new JLabel("Villes : "+countNodeByType('V'));
-        lblFood = new JLabel("Restaurants : "+countNodeByType('R')); 
-        lblFun = new JLabel("Loisirs : "+countNodeByType('L'));
-        lblDepartemental = new JLabel("Departementales : "+countLinkByType('D'));
-        lblNational = new JLabel("Nationales : "+countLinkByType('N'));
-        lblHighway = new JLabel("Autoroutes : "+countLinkByType('A'));
+        lblCity = new JLabel("Ville : "+PanelInterface.countNodeByType('V'));
+        lblFood = new JLabel("Restaurant : "+PanelInterface.countNodeByType('L'));
+        lblFun = new JLabel("Loisir : "+PanelInterface.countNodeByType('R'));
+        lblDepartemental = new JLabel("Départementale : "+PanelInterface.countLinkByType('D'));
+        lblNational =   new JLabel("Nationale : "+PanelInterface.countLinkByType('N'));
+        lblHighway = new JLabel("Autoroute : "+PanelInterface.countLinkByType('A'));
+        
+        
         bottomBar.add(lblCity);
+        
         bottomBar.add(lblFood);
+        
         bottomBar.add(lblFun);
+        
         bottomBar.add(lblDepartemental);
+        
         bottomBar.add(lblNational);
+        
         bottomBar.add(lblHighway);
         bottomBar.setBackground(Color.WHITE);
 
         getContentPane().add(bottomBar, borderLayout.SOUTH);
         bottomBar.setVisible(true);
+        
+        labelList.add(lblCity);
+        labelList.add(lblFood);
+        labelList.add(lblFun);
+        labelList.add(lblDepartemental);
+        labelList.add(lblNational);
+        labelList.add(lblHighway);
+        PanelInterface.updateLabelList(labelList);
 
         setJMenuBar(menubar);
         pack();
         setVisible(true);
         
+    }
+
+    protected void btnCompareActionPerformed(ActionEvent evt) {
+        new CompareDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches(),mainGraphe);
     }
 
     protected void btnConnectedActionPerformed(ActionEvent evt) {
@@ -212,72 +242,31 @@ public class GrapheInterface extends javax.swing.JFrame {
 
     protected void btnRefreshActionPerformed(ActionEvent evt) {
         PanelInterface.reset();
-        updateCountLabel();
     }
 
     protected void btnDepartmentalActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');  
-        updateCountLabel();  
+
     }
 
     protected void btnNationalActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(National.isSelected(), 'N');
-        updateCountLabel();  
     }
 
     protected void btnHighwayActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Highway.isSelected(), 'A');  
-        updateCountLabel();
     }
 
     protected void btnFoodActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayNodeByType(Food.isSelected(), 'R',this);     
-        updateCountLabel();  
     }
 
     protected void btnFunActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayNodeByType(Fun.isSelected(), 'L',this);  
-        updateCountLabel();  
     }
 
     protected void btnCityActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);
-        updateCountLabel();      
-    }
-
-    private void updateCountLabel()
-    {
-        lblCity.setText("Villes : "+countNodeByType('V'));
-        lblFood.setText("Restaurants : "+countNodeByType('R')); 
-        lblFun.setText("Loisirs : "+countNodeByType('L'));
-        lblDepartemental.setText("Departementales : "+countLinkByType('D'));
-        lblNational.setText("Nationales : "+countLinkByType('N'));
-        lblHighway.setText("Autoroutes : "+countLinkByType('A'));   
-    }
-    
-
-    private int countLinkByType(char type) {
-        int count = 0;
-        for (Lien link : PanelInterface.getListLiensAffiches())
-        {
-            if (link.getType() == type)
-            {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private int countNodeByType(char type) {
-        int count = 0;
-        for (Noeud noeud : PanelInterface.getListNoeudAffiches())
-        {
-            if (noeud.getType() == type)
-            {
-                count++;
-            }
-        }
-        return count;
+        PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);     
     }
 
 
