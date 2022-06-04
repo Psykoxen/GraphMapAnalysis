@@ -456,14 +456,14 @@ public class Graphe {
         }
         if (compteur1 == compteur2)
         {
-            return noeud1.getNom() + " est tout aussi ouverte que " + noeud2.getNom();
+            return noeud1.getNom() + " est tout aussi culturel que " + noeud2.getNom();
         }
         else if (compteur1 > compteur2)
         {
-            return noeud1.getNom() + "est plus ouverte que " + noeud2.getNom();
+            return noeud1.getNom() + "est plus culturel que " + noeud2.getNom();
         }
         else {
-            return noeud1.getNom() + " est moins ouverte que " + noeud2.getNom();
+            return noeud1.getNom() + " est moins gastronomique que " + noeud2.getNom();
         }
     }
 /*
