@@ -129,7 +129,7 @@ public class ConnectedDialog extends Dialog
                         {
                             JOptionPane.showMessageDialog(
                                                             null,
-                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" sont à "+selector.getSelectedItem()+" de selector.",
+                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" sont à "+selector.getSelectedItem()+" de liaison.",
                                                             "Vérification de connexion",
                                                             JOptionPane.INFORMATION_MESSAGE
                                                             );
@@ -138,7 +138,7 @@ public class ConnectedDialog extends Dialog
                         {
                             JOptionPane.showMessageDialog(
                                                             null,
-                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" ne sont pas à "+selector.getSelectedItem()+" de selector.",
+                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" ne sont pas à "+selector.getSelectedItem()+" de liaison.",
                                                             "Vérification de connexion",
                                                             JOptionPane.ERROR_MESSAGE
                                                             );

@@ -69,7 +69,7 @@ public class GrapheInterface extends javax.swing.JFrame {
 
        
 
-        /*////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
@@ -91,9 +91,9 @@ public class GrapheInterface extends javax.swing.JFrame {
         list_liens.add(CA);
         list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        ////////////////////////////////////////////////////////////*/
+        /////////////////////////////////////////////////////////////
         ArrayList<JLabel> labelList = new ArrayList<>();
-        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");

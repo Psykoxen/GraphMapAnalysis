@@ -37,6 +37,7 @@ public class PanelInterface extends JPanel{
     JPopupMenu jMenu;
     JMenuItem OneNeighbour;
     JMenuItem TwoNeighbour;
+    JMenuItem Reset;
     Boolean OneNeighbourDisplay = false;
     Boolean TwoNeighbourDisplay = false;
     ArrayList<JLabel> labelList;
@@ -76,6 +77,14 @@ public class PanelInterface extends JPanel{
                 TwoNeigbourActionPerformed(evt);
             }
         });
+        Reset = new JMenuItem();
+        Reset.setText("Réinitialiser");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        }); 
+        jMenu.add(Reset);
         jMenu.add(OneNeighbour);
         jMenu.add(TwoNeighbour);
         addMouseListener(new MouseAdapter() {
@@ -98,6 +107,17 @@ public class PanelInterface extends JPanel{
                         }
                         }
                     }
+                    else
+                    {
+                        Graphics g = getGraphics();
+                        g.fillOval(e.getX(), e.getY(), 1, 1);
+                        repaint();
+                        for (Lien lien : list_liens_affiches)
+                        {
+                            System.out.println(checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY()));
+                            
+                        }
+                    }
             }
         });
         addMouseMotionListener(new MouseAdapter() 
@@ -109,7 +129,36 @@ public class PanelInterface extends JPanel{
             }
         });
     }
-  
+    protected void ResetActionPerformed(ActionEvent evt) 
+    {
+        reset();
+    }
+    
+    private Boolean checkOnTheLine(Noeud noeudA,Noeud noeudB,int x,int y)
+    {
+        int coeff;
+        int b;
+
+        if (noeudA.getX() < noeudB.getX())
+        {
+            coeff = ((noeudB.getY())-(noeudA.getY()))/((noeudB.getX())-(noeudA.getX()));
+        }
+        else
+        {
+            coeff = ((noeudA.getY())-(noeudB.getY()))/((noeudA.getX())-(noeudB.getX()));
+        }
+        b = coeff*noeudA.getX()-noeudA.getY();
+        if (y == coeff*x+b)
+        {
+            System.out.println("Sur la ligne");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     protected void OneNeigbourActionPerformed(ActionEvent evt) 
     {
         HideOrDisplayOneNeighbour();
