@@ -1,3 +1,7 @@
+package graphe_interface;
+
+import graphe_backend.Noeud;
+import graphe_backend.Lien;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Insets;

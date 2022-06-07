@@ -1,8 +1,11 @@
+package graphe_interface;
+import graphe_backend.Graphe;
+import graphe_backend.Noeud;
+import graphe_backend.Lien;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 public class CompareDialog extends Dialog{
     Graphe graphe;
     CompareDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens, Graphe graphe)

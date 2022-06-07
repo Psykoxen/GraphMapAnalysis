@@ -1,3 +1,6 @@
+package graphe_interface;
+
+import graphe_backend.Graphe;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,7 +45,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     JCheckBox Food;
     JCheckBox Highway;
     JCheckBox National;
-    JCheckBox btnDepartemental;
+    JCheckBox Departemental;
     JLabel lblCity;
     JLabel lblFood;
     JLabel lblFun;
@@ -144,11 +147,11 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         });
 
-        btnDepartemental = new JCheckBox("Départementales");
-        btnDepartemental.setSelected(true);
-        btnDepartemental.addActionListener(new java.awt.event.ActionListener() {
+        Departemental = new JCheckBox("Départementales");
+        Departemental.setSelected(true);
+        Departemental.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbtnDepartementalActionPerformed(evt);
+                btnDepartementalActionPerformed(evt);
             }
         });
 
@@ -157,7 +160,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         Places.add(Food);
         Link.add(Highway);
         Link.add(National);
-        Link.add(btnDepartemental);
+        Link.add(Departemental);
         Display.add(Places);
         Display.add(Link);
 
@@ -257,17 +260,13 @@ public class GrapheInterface extends javax.swing.JFrame {
         PanelInterface.reset();
     }
 
-<<<<<<< HEAD
     /*
     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnDepartmentalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');  
-=======
-    protected void btnbtnDepartementalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(btnDepartemental.isSelected(), 'D');  
->>>>>>> origin/comment
+    protected void btnDepartementalActionPerformed(ActionEvent evt) {
+        PanelInterface.hideOrDisplayLinkByType(Departemental.isSelected(), 'D');  
+
 
     }
     

@@ -1,4 +1,6 @@
-
+package graphe_interface;
+import graphe_backend.Noeud;
+import graphe_backend.Lien;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -491,7 +493,7 @@ public class PanelInterface extends JPanel{
                     (
                         (JFrame.National.isSelected() && this.getListLiens().get(z).getType() == 'N')
                         ||
-                        (JFrame.Departmental.isSelected() && this.getListLiens().get(z).getType() == 'D')
+                        (JFrame.Departemental.isSelected() && this.getListLiens().get(z).getType() == 'D')
                         ||
                         (JFrame.Highway.isSelected() && this.getListLiens().get(z).getType() == 'A')
                     )
