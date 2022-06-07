@@ -158,7 +158,7 @@ public class PanelInterface extends JPanel{
             //System.out.println("Xb - Xa :"+((float)(noeudA.getX()-noeudB.getX())));
             //System.out.println("m :"+((float)((float)(noeudA.getY()-noeudB.getY()))/((float)(noeudA.getX()-noeudB.getX()))));
         }
-        b = (int)(-1*((m*(float)noeudA.getX())+(float)noeudA.getY()));
+        b = (int)(((m*(float)noeudA.getX())+(float)noeudA.getY()));
         System.out.println("Yb - Ya :"+Yba);
         System.out.println("Xb - Xa :"+Xba);
         System.out.println("m :"+m);

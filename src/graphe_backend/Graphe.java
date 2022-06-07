@@ -60,7 +60,7 @@ public class Graphe {
         Noeud voisin = null;
         Boolean check;
         int i = 0;
-        File file = new File("src\\graphe_data\\Graphe.csv");
+        File file = new File("graphe_data/Graphe.csv");
         Scanner scan = new Scanner(file);
         scan.useDelimiter(";;");
         while (scan.hasNext()) {

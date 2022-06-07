@@ -1,6 +1,8 @@
 package graphe_interface;
 
 import graphe_backend.Graphe;
+import graphe_backend.Lien;
+import graphe_backend.Noeud;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -66,14 +68,14 @@ public class GrapheInterface extends javax.swing.JFrame {
         setTitle("Graph-Map");
         setPreferredSize(new Dimension(800, 800));
         setMinimumSize(new Dimension(800, 800));
-        //this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("graphe_data/logo.png")).getImage());
         borderLayout = new BorderLayout();
         setLayout(borderLayout);
 
        
 
-        /*////////////////////////////////////////////////////////////
-        ArrayList<Noeud> list_noeuds;
+        /////////////////////////////////////////////////////////////
+        ArrayList<Noeud> list_noeuds;;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
         Noeud B = new Noeud('R', "B");
@@ -94,9 +96,9 @@ public class GrapheInterface extends javax.swing.JFrame {
         //list_liens.add(CA);
         //list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        ////////////////////////////////////////////////////////////*/
+        /////////////////////////////////////////////////////////////
         ArrayList<JLabel> labelList = new ArrayList<>();
-        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");
