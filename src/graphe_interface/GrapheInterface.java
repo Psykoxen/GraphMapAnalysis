@@ -232,39 +232,76 @@ public class GrapheInterface extends javax.swing.JFrame {
         
     }
 
+    /*
+    * Ajoute un évènement au bouton "Compare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
+    * grastronomiques, ouverts, culturels.
+    * @param evt correspond à un ActionEvent
+    */
     protected void btnCompareActionPerformed(ActionEvent evt) {
         new CompareDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches(),mainGraphe);
     }
 
+    /*
+    *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux noeuds sont reliés entre eux.
+    * @param evt correspond à un ActionEvent
+    */
     protected void btnConnectedActionPerformed(ActionEvent evt) {
         new ConnectedDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches());
     }
 
+    /*
+    * Ajoute un évènement au bouton "Rafraîchir" qui permet de revenir au stade initial du graphe
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnRefreshActionPerformed(ActionEvent evt) {
         PanelInterface.reset();
     }
 
+    /*
+    * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnDepartmentalActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');  
 
     }
-
+    
+    /*
+    * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les liens de type "N".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnNationalActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(National.isSelected(), 'N');
     }
-
+    
+    /*
+    * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les liens de type "A".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnHighwayActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Highway.isSelected(), 'A');  
     }
-
+    
+    /*
+    * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les liens de type "R".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnFoodActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayNodeByType(Food.isSelected(), 'R',this);     
     }
 
+    /*
+    * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les liens de type "L".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnFunActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayNodeByType(Fun.isSelected(), 'L',this);  
     }
 
+    /*
+    * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les liens de type "V".
+    * @param evt correcpond à un ActionEvent
+    */
     protected void btnCityActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);     
     }

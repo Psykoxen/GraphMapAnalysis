@@ -79,6 +79,5 @@ public class Lien {
         return this.arrivee;
     }
 
-    public String toString(){ return "ville de départ : " + depart + ", ville d'arrivée : "
-            + arrivee + ", type de route : " + type + ", distance : " + distance;}
+    
 }

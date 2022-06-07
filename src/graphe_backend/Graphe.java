@@ -33,20 +33,7 @@ public class Graphe {
         }
     }
 
-    public void afficherVoisins()
-    {
-        ArrayList<Noeud> voisins;
-        for(Noeud noeud:list_noeuds)
-        {
-            System.out.print("Le noeud "+noeud.getNom() + " possède ");
-            voisins = this.listeVoisins(noeud);
-            for (Noeud voisin : voisins)
-            {
-                System.out.print(voisin.getNom()+", ");
-            }
-            System.out.println(" comme voisin(s).");
-        }
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -220,11 +207,7 @@ public class Graphe {
         return create;
     }
 
-    public String trouverLien(Lien lien)
-    {
-        return "Noeud de départ: " + lien.depart.getType() + lien.depart.getNom() +
-                "Noeud d'arrivée : " + lien.arrivee.getType() + lien.arrivee.getNom();
-    }
+
 
     public void add_lien(int distance, char type, Noeud depart, Noeud arrivee) {
         list_liens.add(nbLiens, new Lien(distance, type, depart, arrivee));

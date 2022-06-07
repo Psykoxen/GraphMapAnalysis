@@ -74,10 +74,7 @@ public class Noeud {
     {
         this.y = y;
     }
-    @Override
-    public String toString() {
-        return type +"," + nom;
-    }
+    
     
     
 }
