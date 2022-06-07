@@ -63,7 +63,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         setTitle("Graph-Map");
         setPreferredSize(new Dimension(800, 800));
         setMinimumSize(new Dimension(800, 800));
-        this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
+        //this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
         borderLayout = new BorderLayout();
         setLayout(borderLayout);
 

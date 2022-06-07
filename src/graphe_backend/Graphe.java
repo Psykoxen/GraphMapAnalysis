@@ -127,12 +127,6 @@ public class Graphe {
         scan.close();
     }
 
-    /*
-    public void loading() throws FileNotFoundException {
-        CSVReader reader = new CSVReader(new FileReader("./noeud.csv"));
-        CSVParser parser = new CSVParserBuilder().withSeparator(";;").build();
-    }
-    */
     public Noeud existNoeud(char type,String nom)
     {
         for (Noeud noeud : list_noeuds)
@@ -237,140 +231,6 @@ public class Graphe {
         nbLiens++;
     }
 
-    public void afficherLieux()
-    {
-        for (Noeud noeud : list_noeuds) {
-            System.out.println(noeud.toString());
-        }
-    }
-
-    public void afficherVilles()
-    {
-        for (Noeud ville : list_noeuds) {
-            if (ville.getType() == 'V') {
-                System.out.println(ville.getNom());
-            }
-        }
-    }
-
-    public void afficherLoisirs()
-    {
-        for (Noeud loisir : list_noeuds) {
-            if (loisir.getType() == 'L') {
-                System.out.println(loisir.getNom());
-            }
-        }
-    }
-
-    public void afficherRestaurants()
-    {
-        for (Noeud loisir : list_noeuds) {
-            if (loisir.getType() == 'R') {
-                System.out.println(loisir.getNom());
-            }
-        }
-    }
-
-    public void afficherLiens()
-    {
-        for (Lien lien : list_liens) {
-            System.out.println(lien.toString());
-            }
-    }
-
-    public void afficherAutoroutes()
-    {
-        for (Lien autoroute : list_liens) {
-            if (autoroute.getType() == 'A') {
-                System.out.println(autoroute.toString());
-            }
-        }
-    }
-
-    public void afficherNationales()
-    {
-        for (Lien nationale : list_liens) {
-            if (nationale.getType() == 'N') {
-                System.out.println(nationale.toString());
-            }
-        }
-    }
-
-    public void afficherDepartementales()
-    {
-        for (Lien departementale : list_liens) {
-            if (departementale.getType() == 'D') {
-                System.out.println(departementale.toString());
-            }
-        }
-    }
-
-    public int nbrLoisirs()
-    {
-        int res = 0;
-        for (Noeud loisir : list_noeuds) {
-            if (loisir.getType() == 'L') {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int nbrVilles()
-    {
-        int res = 0;
-        for (Noeud ville : list_noeuds) {
-            if (ville.getType() == 'V') {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int nbrRestaurants()
-    {
-        int res = 0;
-        for (Noeud restaurant : list_noeuds) {
-            if (restaurant.getType() == 'R') {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int nbrAutoroutes()
-    {
-        int res = 0;
-        for (Lien autoroute : list_liens) {
-            if (autoroute.getType() == 'A') {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int nbrNationales()
-    {
-        int res = 0;
-        for (Lien nationale : list_liens) {
-            if (nationale.getType() == 'N') {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int nbrDepartementales()
-    {
-        int res = 0;
-        for (Lien departementale : list_liens) {
-            if (departementale.getType() == 'D') {
-                res++;
-            }
-        }
-        return res;
-    }
-
     public String plusGastro(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
@@ -399,9 +259,6 @@ public class Graphe {
             return noeud1.getNom() + " est moins gastronomique que " + noeud2.getNom();
         }
     }
-
-
-
 
     public String plusOuverte(Noeud noeud1, Noeud noeud2)
     {
@@ -432,7 +289,6 @@ public class Graphe {
         }
     }
 
-
     public String plusCulturelle(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
@@ -461,100 +317,4 @@ public class Graphe {
             return noeud1.getNom() + " est moins gastronomique que " + noeud2.getNom();
         }
     }
-/*
-    public void Affichage()
-    {
-        Scanner scanner = new Scanner(System.in);
-        boolean check = true;
-        while (check)
-        {
-            System.out.println("Veuillez entrer la valeur se trouvant devant ce que vous souhaitez afficher :");
-            System.out.println("1. Seulement les villes");
-            System.out.println("2. Seulement les centres de loisirs");
-            System.out.println("3. Seulement les restaurants");
-            System.out.println("4. Seulement les autoroutes");
-            System.out.println("5. Seulement les nationales");
-            System.out.println("6. Seulement les départementales");
-            System.out.println("8. Tous les lieux");
-            System.out.println("9. Toutes les routes");
-            System.out.println("10. Les villes et les restaurants");
-            System.out.println("11. Les villes et les centres de loisir");
-            System.out.println("12. Les restaurants et les centres de loisirs");
-            System.out.println("13. les autoroutes et nationales");
-            System.out.println("14. les autoroutes et départementales");
-            System.out.println("15. les nationales et départementales");
-            int choix = scanner.nextInt();
-            switch (choix) {
-                case 1:
-                    afficherVilles();
-                    break;
-                case 2:
-                    afficherLoisirs();
-                    break;
-                case 3:
-                    afficherRestaurants();
-                    break;
-                case 4:
-                    afficherAutoroutes();
-                    break;
-                case 5:
-                    afficherNationales();
-                    break;
-                case 6:
-                    afficherDepartementales();
-                    break;
-                case 7:
-                    afficherLieux();
-                    break;
-                case 8:
-                    afficherLiens();
-                    break;
-            }
-        }
-    }
-
-    public void FloydMarshall()
-    {
-        int[][] distances = new int[list_noeuds.size()][list_noeuds.size()];
-        int inf = 999999999;
-        Arrays.fill(distances,-1);
-        for (int i = 0;i<list_noeuds.size())
-        {
-            for (int j = 0; j<list_noeuds.size())
-            {
-                if (i == j)
-                {
-                    distances[i][j] = inf;
-                }
-                else
-                {
-                    for (Lien lien : list_liens)
-                    {
-                        if (lien.getDepart().equals(list_noeuds.get(j)))
-                        {
-                            distances[i][j] = lien.getDistance();
-                        }
-                    }
-                    if (distances[i][j] == 0)
-                    {
-                        distances[i][j] = inf;
-                    }
-                }
-            }
-        }
-        for(Noeud k : list_noeuds)
-        {
-            for (Noeud i : list_noeuds)
-            {
-                for (Noeud j : list_noeuds)
-                {
-                    if (distances[i][j] > distances[i][k] + distances[k][j])
-                    {
-                        distances[i][j] = distances[i][k] + distances[k][j];
-
-                    }
-                }
-            }
-        }
-    }*/
 }
