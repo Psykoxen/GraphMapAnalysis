@@ -57,27 +57,40 @@ public class Lien {
         return Objects.equals(this.arrivee, other.arrivee);
     }
     
-    
-    
+    /**
+     * Renvoie la distance du lien
+     * @return Un entier valant la distance du lien. 
+     */
     public int getDistance()
     {
         return this.distance;
     }
     
+    /**
+     * Renvoie le type du lien
+     * @return Un char valant le type du lien. 
+     */
     public char getType()
     {
         return this.type;
     }
     
+    /**
+     * Renvoie le NoeudDepart du lien
+     * @return Un objet de type noeud. 
+     */
     public Noeud getDepart()
     {
         return this.depart;
     }
     
+    /**
+     * Renvoie le NoeudArrivee du lien
+     * @return Un objet de type noeud. 
+     */
     public Noeud getArrivee()
     {
         return this.arrivee;
     }
 
-    
 }

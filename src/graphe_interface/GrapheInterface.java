@@ -42,7 +42,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     JCheckBox Food;
     JCheckBox Highway;
     JCheckBox National;
-    JCheckBox Departmental;
+    JCheckBox btnDepartemental;
     JLabel lblCity;
     JLabel lblFood;
     JLabel lblFun;
@@ -144,11 +144,11 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         });
 
-        Departmental = new JCheckBox("Départementales");
-        Departmental.setSelected(true);
-        Departmental.addActionListener(new java.awt.event.ActionListener() {
+        btnDepartemental = new JCheckBox("Départementales");
+        btnDepartemental.setSelected(true);
+        btnDepartemental.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDepartmentalActionPerformed(evt);
+                btnbtnDepartementalActionPerformed(evt);
             }
         });
 
@@ -157,7 +157,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         Places.add(Food);
         Link.add(Highway);
         Link.add(National);
-        Link.add(Departmental);
+        Link.add(btnDepartemental);
         Display.add(Places);
         Display.add(Link);
 
@@ -257,12 +257,17 @@ public class GrapheInterface extends javax.swing.JFrame {
         PanelInterface.reset();
     }
 
+<<<<<<< HEAD
     /*
     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
     * @param evt correcpond à un ActionEvent
     */
     protected void btnDepartmentalActionPerformed(ActionEvent evt) {
         PanelInterface.hideOrDisplayLinkByType(Departmental.isSelected(), 'D');  
+=======
+    protected void btnbtnDepartementalActionPerformed(ActionEvent evt) {
+        PanelInterface.hideOrDisplayLinkByType(btnDepartemental.isSelected(), 'D');  
+>>>>>>> origin/comment
 
     }
     
