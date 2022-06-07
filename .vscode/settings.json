@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
+        "src/graphe_interface",
         "src/graphe_backend",
-        "src/graphe_interface"
+        "src"
     ]
 }
