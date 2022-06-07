@@ -69,31 +69,31 @@ public class GrapheInterface extends javax.swing.JFrame {
 
        
 
-        /////////////////////////////////////////////////////////////
+        /*////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
         Noeud B = new Noeud('R', "B");
-        Noeud C = new Noeud('L', "C");
-        Noeud D = new Noeud('L', "D");
+        //Noeud C = new Noeud('L', "C");
+        //Noeud D = new Noeud('L', "D");
         list_noeuds = new ArrayList<>();
         list_noeuds.add(A);
         list_noeuds.add(B);
-        list_noeuds.add(C);
-        list_noeuds.add(D);
+        //list_noeuds.add(C);
+        //list_noeuds.add(D);
         Lien AB = new Lien(0,'N',A,B);
-        Lien BC = new Lien(0,'D',B,C);
-        Lien CA = new Lien(0,'A',C,A);
-        Lien AD = new Lien(0,'A',A,D);
+        //Lien BC = new Lien(0,'D',B,C);
+        //Lien CA = new Lien(0,'A',C,A);
+        //Lien AD = new Lien(0,'A',A,D);
         list_liens = new ArrayList<>();
         list_liens.add(AB);
-        list_liens.add(BC);
-        list_liens.add(CA);
-        list_liens.add(AD);
+        //list_liens.add(BC);
+        //list_liens.add(CA);
+        //list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        /////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////*/
         ArrayList<JLabel> labelList = new ArrayList<>();
-        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");

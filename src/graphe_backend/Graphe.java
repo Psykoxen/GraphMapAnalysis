@@ -31,11 +31,6 @@ public class Graphe {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
-        for (Lien lien : list_liens)
-        {
-            System.out.println(lien);
-        }
     }
 
     public void afficherVoisins()

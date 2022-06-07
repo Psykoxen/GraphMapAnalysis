@@ -109,12 +109,9 @@ public class PanelInterface extends JPanel{
                     }
                     else
                     {
-                        Graphics g = getGraphics();
-                        g.fillOval(e.getX(), e.getY(), 1, 1);
-                        repaint();
                         for (Lien lien : list_liens_affiches)
                         {
-                            System.out.println(checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY()));
+                            checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY());
                             
                         }
                     }
@@ -136,18 +133,60 @@ public class PanelInterface extends JPanel{
     
     private Boolean checkOnTheLine(Noeud noeudA,Noeud noeudB,int x,int y)
     {
-        int coeff;
+        float Xba,Yba,m;
         int b;
-
-        if (noeudA.getX() < noeudB.getX())
+        System.out.println("Xa : "+noeudA.getX()+" Ya : "+noeudA.getY());
+        System.out.println("Xb : "+noeudB.getX()+" Yb : "+noeudB.getY());
+        if (noeudA.getX() <= noeudB.getX())
         {
-            coeff = ((noeudB.getY())-(noeudA.getY()))/((noeudB.getX())-(noeudA.getX()));
+            Yba = ((float)(noeudB.getY()-noeudA.getY()));
+            Xba = ((float)(noeudB.getX()-noeudA.getX()));
+            m = ((float)((float)(noeudB.getY()-noeudA.getY()))/((float)(noeudB.getX()-noeudA.getX())));
+            //System.out.println("Yb - Ya :"+((float)(noeudB.getY()-noeudA.getY())));
+            //System.out.println("Xb - Xa :"+((float)(noeudB.getX()-noeudA.getX())));
+            //System.out.println("m :"+((float)((float)(noeudB.getY()-noeudA.getY()))/((float)(noeudB.getX()-noeudA.getX()))));
+
         }
         else
         {
-            coeff = ((noeudA.getY())-(noeudB.getY()))/((noeudA.getX())-(noeudB.getX()));
+            Yba = ((float)(noeudA.getY()-noeudB.getY()));
+            Xba = ((float)(noeudA.getX()-noeudB.getX()));
+            m = ((float)((float)(noeudA.getY()-noeudB.getY()))/((float)(noeudA.getX()-noeudB.getX())));
+            //System.out.println("Yb - Ya :"+((float)(noeudA.getY()-noeudB.getY())));
+            //System.out.println("Xb - Xa :"+((float)(noeudA.getX()-noeudB.getX())));
+            //System.out.println("m :"+((float)((float)(noeudA.getY()-noeudB.getY()))/((float)(noeudA.getX()-noeudB.getX()))));
         }
-        b = coeff*noeudA.getX()-noeudA.getY();
+        b = (int)(-1*((m*(float)noeudA.getX())+(float)noeudA.getY()));
+        System.out.println("Yb - Ya :"+Yba);
+        System.out.println("Xb - Xa :"+Xba);
+        System.out.println("m :"+m);
+        System.out.println("b :"+b);
+        System.out.println("Y :"+y);
+        System.out.println("X :"+x);
+        System.out.println((int)(m*x+b));
+        /*
+        float coeff;
+        int b;
+        System.out.println("Xa : "+noeudA.getX()+" Ya : "+noeudA.getY());
+        
+        
+        if (noeudA.getX() < noeudB.getX())
+        {
+            coeff = ((float) (noeudB.getY()+25)-(noeudA.getY()+25))/((float)(noeudB.getX()+25)-(noeudA.getX()+25));
+            System.out.println("Y: "+((noeudB.getY()+25)-(noeudA.getY()+25)));
+            System.out.println("X: "+((noeudB.getX()+25)-(noeudA.getX()+25)));
+            System.out.println("Coeff :"+coeff);
+        }
+        else
+        {
+            coeff = ((float)=(noeudA.getY()+25)-(noeudB.getY()+25))/((float)(noeudA.getX()+25)-(noeudB.getX()+25));
+            System.out.println("Y: "+((noeudA.getY()+25)-(noeudB.getY()+25)));
+            System.out.println("X: "+((noeudA.getX()+25)-(noeudB.getX()+25)));
+            System.out.println("Coeff :"+coeff);
+        }
+        b = (int) ((-1)*(coeff*noeudA.getX()-noeudA.getY()));
+        System.out.println("X : "+x+" Y : "+y);
+        System.out.println(coeff+"x"+b);
         if (y == coeff*x+b)
         {
             System.out.println("Sur la ligne");
@@ -157,6 +196,8 @@ public class PanelInterface extends JPanel{
         {
             return false;
         }
+        */
+        return null;
     }
     
     protected void OneNeigbourActionPerformed(ActionEvent evt) 
