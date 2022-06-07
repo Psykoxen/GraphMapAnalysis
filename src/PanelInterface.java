@@ -111,8 +111,7 @@ public class PanelInterface extends JPanel{
                     {
                         for (Lien lien : list_liens_affiches)
                         {
-                            checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY());
-                            
+                            System.out.println(checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY()));
                         }
                     }
             }
@@ -131,22 +130,20 @@ public class PanelInterface extends JPanel{
         reset();
     }
     
-    public boolean checkOnTheLine(Noeud noeudA, Noeud noeudB)
-{
-    float Xba,Yba,m;
-    int p;
-    if(noeudA.getX() <= noeudB.getX())
+    public boolean checkOnTheLine(Noeud noeudA, Noeud noeudB,int x, int y)
     {
-        Yba = noeudB.getY()-noeudA.getY();
-        Xba = noeudB.getX()-noeudA.getX();
-        m = Yba/Xba;
-    }else{
-        Yba = noeudA.getY()-noeudB.getY();
-        Xba = noeudA.getX()-noeudB.getX();
-        m = Yba/Xba;
+        if(noeudA.getX()<=noeudB.getX())
+        {
+            if(x>noeudA.getX() && x<noeudB.getX())
+            {
+                if (y>noeudA.getY() && y<noeudB.getY())
+            }
+        }
+        else
+        {
+
+        }
     }
-    
-}
     
     protected void OneNeigbourActionPerformed(ActionEvent evt) 
     {
