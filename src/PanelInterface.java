@@ -137,12 +137,32 @@ public class PanelInterface extends JPanel{
             if(x>noeudA.getX() && x<noeudB.getX())
             {
                 if (y>noeudA.getY() && y<noeudB.getY())
+                {
+                    int xvecteurNoeudASouris,yvecteurNoeudASouris,xvecteurNoeudANoeudB,yvecteurNoeudANoeudB;
+                    xvecteurNoeudASouris = x - noeudA.getX();
+                    yvecteurNoeudASouris = y - noeudA.getY();
+                    xvecteurNoeudANoeudB = noeudB.getX() - noeudA.getX();
+                    yvecteurNoeudANoeudB = noeudB.getY() - noeudA.getY();
+                    System.out.println("test");
+                    if (xvecteurNoeudANoeudB/yvecteurNoeudANoeudB == xvecteurNoeudASouris/yvecteurNoeudASouris)
+                    {
+                        System.out.println("Vérif vecte");
+                        return true;
+                    }  
+                    if(xvecteurNoeudASouris<=xvecteurNoeudANoeudB-5 || yvecteurNoeudASouris<=yvecteurNoeudANoeudB-5 || xvecteurNoeudASouris>=xvecteurNoeudANoeudB+5 || yvecteurNoeudASouris>=yvecteurNoeudANoeudB+5)
+                    {
+                        System.out.println("test2");
+                        return false;
+                    }
+                    return true;                  
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-        else
-        {
-
-        }
+        return false;
     }
     
     protected void OneNeigbourActionPerformed(ActionEvent evt) 

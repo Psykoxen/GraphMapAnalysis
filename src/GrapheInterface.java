@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -29,6 +30,8 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenu File;
     JMenu Display;
     JMenu Find;
+    JMenu Preferences;
+    JMenuItem color;
     JMenuItem Connected;
     JMenuItem Compare;
     JMenuItem Open;
@@ -69,7 +72,7 @@ public class GrapheInterface extends javax.swing.JFrame {
 
        
 
-        /////////////////////////////////////////////////////////////
+        /*////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
@@ -91,9 +94,9 @@ public class GrapheInterface extends javax.swing.JFrame {
         //list_liens.add(CA);
         //list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        /////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////*/
         ArrayList<JLabel> labelList = new ArrayList<>();
-        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");
@@ -186,11 +189,20 @@ public class GrapheInterface extends javax.swing.JFrame {
         });
         Find.add(Compare);
 
+        Preferences = new JMenu("Préférences");
+        color = new JMenuItem("Couleur");
+        color.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorActionPerformed(evt);
+            }
+        });
+        Preferences.add(color);
 
         menubar = new JMenuBar();
         menubar.add(File);
         menubar.add(Display);
         menubar.add(Find);
+        menubar.add(Preferences);
 
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 5));
@@ -215,7 +227,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         bottomBar.add(lblHighway);
         bottomBar.setBackground(Color.WHITE);
 
-        getContentPane().add(bottomBar, borderLayout.SOUTH);
+        getContentPane().add(bottomBar, BorderLayout.SOUTH);
         bottomBar.setVisible(true);
         
         labelList.add(lblCity);
@@ -232,7 +244,11 @@ public class GrapheInterface extends javax.swing.JFrame {
         
     }
 
-    /*
+    protected void btnColorActionPerformed(ActionEvent evt) {
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
+	}
+
+	/*
     * Ajoute un évènement au bouton "Compare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
     * grastronomiques, ouverts, culturels.
     * @param evt correspond à un ActionEvent
