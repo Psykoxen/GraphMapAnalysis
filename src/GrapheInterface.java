@@ -31,7 +31,15 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenu Display;
     JMenu Find;
     JMenu Preferences;
-    JMenuItem color;
+    JMenu color;
+    JMenu colorNoeud;
+    JMenu colorLink;
+    JMenuItem colorNoeudCity;
+    JMenuItem colorNoeudFun;
+    JMenuItem colorNoeudFood;
+    JMenuItem colorLinkHighway;
+    JMenuItem colorLinkNationale;
+    JMenuItem colorLinkDepartementale;
     JMenuItem Connected;
     JMenuItem Compare;
     JMenuItem Open;
@@ -72,31 +80,31 @@ public class GrapheInterface extends javax.swing.JFrame {
 
        
 
-        /*////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
         Noeud B = new Noeud('R', "B");
-        //Noeud C = new Noeud('L', "C");
-        //Noeud D = new Noeud('L', "D");
+        Noeud C = new Noeud('L', "C");
+        Noeud D = new Noeud('L', "D");
         list_noeuds = new ArrayList<>();
         list_noeuds.add(A);
         list_noeuds.add(B);
-        //list_noeuds.add(C);
-        //list_noeuds.add(D);
+        list_noeuds.add(C);
+        list_noeuds.add(D);
         Lien AB = new Lien(0,'N',A,B);
-        //Lien BC = new Lien(0,'D',B,C);
-        //Lien CA = new Lien(0,'A',C,A);
-        //Lien AD = new Lien(0,'A',A,D);
+        Lien BC = new Lien(0,'D',B,C);
+        Lien CA = new Lien(0,'A',C,A);
+        Lien AD = new Lien(0,'A',A,D);
         list_liens = new ArrayList<>();
         list_liens.add(AB);
-        //list_liens.add(BC);
-        //list_liens.add(CA);
-        //list_liens.add(AD);
+        list_liens.add(BC);
+        list_liens.add(CA);
+        list_liens.add(AD);
         PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        ////////////////////////////////////////////////////////////*/
+        /////////////////////////////////////////////////////////////
         ArrayList<JLabel> labelList = new ArrayList<>();
-        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        //PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(PanelInterface, BorderLayout.CENTER);
         
         File = new JMenu("Menu");
@@ -190,12 +198,56 @@ public class GrapheInterface extends javax.swing.JFrame {
         Find.add(Compare);
 
         Preferences = new JMenu("Préférences");
-        color = new JMenuItem("Couleur");
-        color.addActionListener(new java.awt.event.ActionListener() {
+        color = new JMenu("Couleurs");
+        colorNoeud = new JMenu("Noeuds");
+        colorLink = new JMenu("Liens");
+
+        colorNoeudCity = new JMenuItem("Villes");
+        colorNoeudCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnColorActionPerformed(evt);
+                btnColorNoeudCityActionPerformed(evt);
             }
         });
+        colorNoeudFood = new JMenuItem("Restaurants");
+        colorNoeudFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorNoeudFoodActionPerformed(evt);
+            }
+        });
+        colorNoeudFun = new JMenuItem("Loisirs");
+        colorNoeudFun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorNoeudFunActionPerformed(evt);
+            }
+        });
+        colorNoeud.add(colorNoeudCity);
+        colorNoeud.add(colorNoeudFood);
+        colorNoeud.add(colorNoeudFun);
+        color.add(colorNoeud);
+
+        colorLinkHighway = new JMenuItem("Autoroutes");
+        colorLinkHighway.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorLinkHighwayActionPerformed(evt);
+            }
+        });
+        colorLinkNationale = new JMenuItem("Nationales");
+        colorLinkNationale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorLinkNationaleActionPerformed(evt);
+            }
+        });
+        colorLinkDepartementale = new JMenuItem("Départementales");
+        colorLinkDepartementale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorLinkDepartementaleActionPerformed(evt);
+            }
+        }); 
+        colorLink.add(colorLinkHighway);
+        colorLink.add(colorLinkNationale);
+        colorLink.add(colorLinkDepartementale);    
+        color.add(colorLink);
+ 
         Preferences.add(color);
 
         menubar = new JMenuBar();
@@ -242,6 +294,24 @@ public class GrapheInterface extends javax.swing.JFrame {
         pack();
         setVisible(true);
         
+    }
+
+    protected void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) {
+    }
+
+    protected void btnColorLinkNationaleActionPerformed(ActionEvent evt) {
+    }
+
+    protected void btnColorLinkHighwayActionPerformed(ActionEvent evt) {
+    }
+
+    protected void btnColorNoeudFunActionPerformed(ActionEvent evt) {
+    }
+
+    protected void btnColorNoeudFoodActionPerformed(ActionEvent evt) {
+    }
+
+    protected void btnColorNoeudCityActionPerformed(ActionEvent evt) {
     }
 
     protected void btnColorActionPerformed(ActionEvent evt) {
