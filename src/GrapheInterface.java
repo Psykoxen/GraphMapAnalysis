@@ -296,27 +296,41 @@ public class GrapheInterface extends javax.swing.JFrame {
         
     }
 
-    protected void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) {
+    protected void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("D",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("D")));
+        PanelInterface.repaint();
     }
 
-    protected void btnColorLinkNationaleActionPerformed(ActionEvent evt) {
+    protected void btnColorLinkNationaleActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("N",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("N")));
+        PanelInterface.repaint();
     }
 
-    protected void btnColorLinkHighwayActionPerformed(ActionEvent evt) {
+    protected void btnColorLinkHighwayActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("H",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("H")));
+        PanelInterface.repaint();
     }
 
-    protected void btnColorNoeudFunActionPerformed(ActionEvent evt) {
+    protected void btnColorNoeudFunActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("FU",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("FU")));
+        PanelInterface.repaint();
     }
 
-    protected void btnColorNoeudFoodActionPerformed(ActionEvent evt) {
+    protected void btnColorNoeudFoodActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("FO",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("FO")));
+        PanelInterface.repaint();
     }
 
-    protected void btnColorNoeudCityActionPerformed(ActionEvent evt) {
+    protected void btnColorNoeudCityActionPerformed(ActionEvent evt) 
+    {
+        PanelInterface.mapPanelColor.replace("C",JColorChooser.showDialog(null, "Choose a color", PanelInterface.mapPanelColor.get("C")));
+        PanelInterface.repaint();
     }
-
-    protected void btnColorActionPerformed(ActionEvent evt) {
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-	}
 
 	/*
     * Ajoute un évènement au bouton "Compare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins

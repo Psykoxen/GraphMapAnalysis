@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ public class PanelInterface extends JPanel{
     private ArrayList<Lien> list_liens_affiches;
     private ArrayList<Noeud> checkNode;
     private ArrayList<Lien> checkLink;
+    Map<String, Color> mapPanelColor; 
 
 
     Random random = new Random();
@@ -61,6 +64,13 @@ public class PanelInterface extends JPanel{
             noeud.setY(y);
         }
 
+        this.mapPanelColor = new HashMap<String, Color>();
+        this.mapPanelColor.put("C",Color.GREEN);
+        this.mapPanelColor.put("FU",Color.BLUE);
+        this.mapPanelColor.put("FO",Color.RED);
+        this.mapPanelColor.put("H",Color.BLACK);
+        this.mapPanelColor.put("N",Color.BLACK);
+        this.mapPanelColor.put("D",Color.BLACK);
 
         jMenu = new JPopupMenu();
         OneNeighbour = new JMenuItem();
@@ -555,6 +565,24 @@ public class PanelInterface extends JPanel{
         super.paintComponent(g);
         for (Lien lien:this.list_liens_affiches)
         {
+            switch (lien.getType())
+            {
+                case 'A':
+                {
+                    g.setColor(mapPanelColor.get("H"));
+                    break;
+                }
+                case 'N':
+                {
+                    g.setColor(mapPanelColor.get("N"));
+                    break;
+                }
+                case 'D':
+                {
+                    g.setColor(mapPanelColor.get("D"));
+                    break;
+                }
+            }
             g.drawLine(
                 lien.getDepart().getX()+25, 
                 lien.getDepart().getY()+25,
@@ -573,17 +601,17 @@ public class PanelInterface extends JPanel{
             {
                 case 'V':
                 {
-                    g.setColor(Color.GREEN);
+                    g.setColor(mapPanelColor.get("C"));
                     break;
                 }
                 case 'R':
                 {
-                    g.setColor(Color.RED);
+                    g.setColor(mapPanelColor.get("FO"));
                     break;
                 }
                 case 'L':
                 {
-                    g.setColor(Color.BLUE);
+                    g.setColor(mapPanelColor.get("FU"));
                     break;
                 }
             }
