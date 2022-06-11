@@ -56,13 +56,7 @@ public class PanelInterface extends JPanel{
         this.list_liens_affiches = (ArrayList<Lien>) list_liens.clone();
         this.list_noeuds_affiches = (ArrayList<Noeud>) list_noeuds.clone();
 
-        for (Noeud noeud:list_noeuds) 
-        {
-            int x = random.nextInt(this.widthJFrame - 120);
-            int y = random.nextInt(this.heightJFrame - 120);
-            noeud.setX(x);
-            noeud.setY(y);
-        }
+        generatingNode();
 
         this.mapPanelColor = new HashMap<String, Color>();
         this.mapPanelColor.put("C",Color.GREEN);
@@ -135,6 +129,18 @@ public class PanelInterface extends JPanel{
             }
         });
     }
+    
+    private void generatingNode()
+    {
+        for (Noeud noeud:list_noeuds) 
+        {
+            int x = random.nextInt(this.widthJFrame - 120);
+            int y = random.nextInt(this.heightJFrame - 120);
+            noeud.setX(x);
+            noeud.setY(y);
+        }
+    }
+
     protected void ResetActionPerformed(ActionEvent evt) 
     {
         reset();
