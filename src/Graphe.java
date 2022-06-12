@@ -26,13 +26,13 @@ public class Graphe {
     private final ArrayList<Noeud> list_noeuds;
     private final ArrayList<Lien> list_liens;
 
-    public Graphe() {
+    public Graphe(String path) {
         list_noeuds = new ArrayList<>();
         list_liens = new ArrayList<>();
         nbNoeuds = 0;
         nbLiens = 0;
         try {
-            loading();
+            loading(path);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class Graphe {
     public int hashCode() {
         return Objects.hash(nbNoeuds, nbLiens, list_noeuds, list_liens);
     }
-    public void loading() throws FileNotFoundException
+    public void loading(String path) throws FileNotFoundException
     {
         String line;
         String[] lieux;
@@ -63,7 +63,7 @@ public class Graphe {
         Noeud voisin = null;
         Boolean check;
         int i = 0;
-        File file = new File("src/Graphe.csv");
+        File file = new File(path);
         Scanner scan = new Scanner(file);
         scan.useDelimiter(";;");
         while (scan.hasNext()) {

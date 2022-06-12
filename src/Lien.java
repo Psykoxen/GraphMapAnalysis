@@ -1,6 +1,8 @@
 
 import java.util.Objects;
 
+import javax.swing.JLabel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -15,13 +17,15 @@ public class Lien {
     char type;
     Noeud depart;
     Noeud arrivee;
-    
+    JLabel label;
+
     public Lien(int newDistance, char newType, Noeud newDepart, Noeud newArrivee)
     {
         distance = newDistance;
         type = newType;
         depart = newDepart;
         arrivee = newArrivee;
+        label = new JLabel(type+","+distance);
     }
 
     @Override
@@ -94,4 +98,8 @@ public class Lien {
         return this.arrivee;
     }
 
+    public JLabel getLabel()
+    {
+        return this.label;
+    }
 }

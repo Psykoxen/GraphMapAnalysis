@@ -54,7 +54,8 @@ public class PanelInterface extends JPanel{
         this.list_noeuds = list_noeuds;
 
         this.list_liens_affiches = (ArrayList<Lien>) list_liens.clone();
-        this.list_noeuds_affiches = (ArrayList<Noeud>) list_noeuds.clone();
+        this.list_noeuds_affiches = new ArrayList<>();
+       
 
         generatingNode();
 
@@ -115,8 +116,18 @@ public class PanelInterface extends JPanel{
                     {
                         for (Lien lien : list_liens_affiches)
                         {
-                            System.out.println(checkOnTheLine(lien.getDepart(), lien.getArrivee(), e.getX(), e.getY()));
+                            if(checkOnTheLine(lien, e.getX(), e.getY()))
+                            {
+                                list_liens_affiches.clear();
+                                list_liens_affiches.add(lien);
+                                list_noeuds_affiches.clear();
+                                list_noeuds_affiches.add(lien.getDepart());
+                                list_noeuds_affiches.add(lien.getArrivee());
+                                repaint();
+                                break;
+                            }
                         }
+                        
                     }
             }
         });
@@ -124,7 +135,6 @@ public class PanelInterface extends JPanel{
         {
             @Override
             public void mouseDragged(MouseEvent e) {
-                System.out.println("X : "+(int)e.getPoint().getX()+" Y : "+(int)e.getPoint().getY());
                 moveNode((int)e.getPoint().getX(),(int)e.getPoint().getY());   
             }
         });
@@ -134,10 +144,27 @@ public class PanelInterface extends JPanel{
     {
         for (Noeud noeud:list_noeuds) 
         {
-            int x = random.nextInt(this.widthJFrame - 120);
-            int y = random.nextInt(this.heightJFrame - 120);
+            int x = random.nextInt(20,this.widthJFrame - 70);
+            int y = random.nextInt(20,this.heightJFrame - 170);
+
+            //int y = (int) Math.sqrt(-(Math.pow(400,2))+(2*400*x)+Math.pow(400,2)-Math.pow(x,2)+400);
+            /*         
+            for (Noeud noeudCheck:list_noeuds_affiches)
+            {
+                supperpose = ((noeudCheck.getX()-10 < x && x < noeudCheck.getX()+60) || (noeudCheck.getY()-10 < y && y < noeudCheck.getY()+60));
+                while ()
+                {
+                    System.out.println("X : "+x+" X : "+(x+50)+" Y :"+y+" Y :"+(y+50));
+                    System.out.println("Xnoeud : "+noeudCheck.getX()+" Xnoeud : "+(noeudCheck.getX()+50)+" Y :"+noeudCheck.getY()+" Y :"+(noeudCheck.getY()+50));
+                    x = random.nextInt(this.widthJFrame - 120);
+                    y = random.nextInt(this.heightJFrame - 120);
+                }
+            }
+             */
+            System.out.println(noeud.getNom()+"-> X : "+x+" Y :"+y);
             noeud.setX(x);
             noeud.setY(y);
+            list_noeuds_affiches.add(noeud);
         }
     }
 
@@ -146,39 +173,25 @@ public class PanelInterface extends JPanel{
         reset();
     }
     
-    public boolean checkOnTheLine(Noeud noeudA, Noeud noeudB,int x, int y)
+    public boolean checkOnTheLine(Lien lien,int x, int y)
     {
-        if(noeudA.getX()<=noeudB.getX())
+        System.out.println("Xclick : "+x+" Yclick : "+y);
+        System.out.println("X : "+lien.getLabel().getX()+" X++ : "+(lien.getLabel().getX()+(int)lien.getLabel().getSize().getWidth()));
+        System.out.println("Y :"+lien.getLabel().getY());
+        System.out.println("Y++ :"+(lien.getLabel().getY()+(int)lien.getLabel().getSize().getHeight()));
+        if 
+        (
+            (lien.getLabel().getX() < x && (lien.getLabel().getX()+(int)lien.getLabel().getSize().getWidth()) > x)
+            &&
+            (lien.getLabel().getY() < y && (lien.getLabel().getY()+(int)lien.getLabel().getSize().getHeight()) > y)
+        )
         {
-            if(x>noeudA.getX() && x<noeudB.getX())
-            {
-                if (y>noeudA.getY() && y<noeudB.getY())
-                {
-                    int xvecteurNoeudASouris,yvecteurNoeudASouris,xvecteurNoeudANoeudB,yvecteurNoeudANoeudB;
-                    xvecteurNoeudASouris = x - noeudA.getX();
-                    yvecteurNoeudASouris = y - noeudA.getY();
-                    xvecteurNoeudANoeudB = noeudB.getX() - noeudA.getX();
-                    yvecteurNoeudANoeudB = noeudB.getY() - noeudA.getY();
-                    System.out.println("test");
-                    if (xvecteurNoeudANoeudB/yvecteurNoeudANoeudB == xvecteurNoeudASouris/yvecteurNoeudASouris)
-                    {
-                        System.out.println("Vérif vecte");
-                        return true;
-                    }  
-                    if(xvecteurNoeudASouris<=xvecteurNoeudANoeudB-5 || yvecteurNoeudASouris<=yvecteurNoeudANoeudB-5 || xvecteurNoeudASouris>=xvecteurNoeudANoeudB+5 || yvecteurNoeudASouris>=yvecteurNoeudANoeudB+5)
-                    {
-                        System.out.println("test2");
-                        return false;
-                    }
-                    return true;                  
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
     
     protected void OneNeigbourActionPerformed(ActionEvent evt) 
@@ -294,6 +307,8 @@ public class PanelInterface extends JPanel{
                         (noeud.getX() <= x && x <= noeud.getX()+50)
                         &&
                         (noeud.getY() <= y && y <= noeud.getY()+50)
+                        &&
+                        (x>20 && x<760 && y<680 && y>20)
                     )
                     {
                         noeud.setX(x-25);
@@ -522,6 +537,7 @@ public class PanelInterface extends JPanel{
    
     private void updateStat()
     {
+        System.out.println("-- UPDATE --");
         for (JLabel label : labelList)
         {
             switch(label.getText().split(":")[0])
@@ -567,6 +583,7 @@ public class PanelInterface extends JPanel{
 
     public void paintComponent(Graphics g) 
     {
+        this.removeAll();
         System.out.println(" -- REPAINT -- ");
         super.paintComponent(g);
         for (Lien lien:this.list_liens_affiches)
@@ -576,16 +593,19 @@ public class PanelInterface extends JPanel{
                 case 'A':
                 {
                     g.setColor(mapPanelColor.get("H"));
+                    lien.getLabel().setForeground(mapPanelColor.get("H"));
                     break;
                 }
                 case 'N':
                 {
                     g.setColor(mapPanelColor.get("N"));
+                    lien.getLabel().setForeground(mapPanelColor.get("N"));
                     break;
                 }
                 case 'D':
                 {
                     g.setColor(mapPanelColor.get("D"));
+                    lien.getLabel().setForeground(mapPanelColor.get("D"));
                     break;
                 }
             }
@@ -595,11 +615,18 @@ public class PanelInterface extends JPanel{
                 lien.getArrivee().getX()+25,
                 lien.getArrivee().getY()+25
             );
-            g.drawString(
-                lien.getType()+","+lien.getDistance(),
+            /* */
+            lien.getLabel().setLocation(
                 (lien.getDepart().getX() + lien.getArrivee().getX()+ 25) / 2,
                 (lien.getDepart().getY() + lien.getArrivee().getY()+ 25) / 2
             );
+            
+            this.add(lien.getLabel());
+            /*g.drawString(
+                lien.getType()+","+lien.getDistance(),
+                (lien.getDepart().getX() + lien.getArrivee().getX()+ 25) / 2,
+                (lien.getDepart().getY() + lien.getArrivee().getY()+ 25) / 2
+            );*/
         }
         for (Noeud noeud:list_noeuds_affiches)
         {
