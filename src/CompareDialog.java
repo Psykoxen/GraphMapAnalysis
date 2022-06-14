@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-public class CompareDialog extends Dialog{
+public class CompareDialog extends SearchDialog{
     Graphe graphe;
     CompareDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens, Graphe graphe)
     {

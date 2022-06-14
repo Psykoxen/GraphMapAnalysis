@@ -22,7 +22,7 @@ public class Graphe {
      * Constructeur de la classe Graphe qui prend en argument une chaîne de caractères et instancie une liste de noeuds, 
      * une liste de liens, met le nombre de liens et de noeuds à 0 et essaye de récupérer les données d'un fichier CSV 
      * dont le chemin est donné par la chaîne de caractères en paramètres 
-     * @param path correspond à une chaîne de caractère
+     * @param path Le chemin du fichier à charger
      */
     public Graphe(String path) 
     {
@@ -312,7 +312,7 @@ public class Graphe {
         }
         else if (compteur1 > compteur2)
         {
-            return noeud1.getNom() + "est plus gastronomique que " + noeud2.getNom();
+            return noeud1.getNom() + " est plus gastronomique que " + noeud2.getNom();
         }
         else {
             return noeud1.getNom() + " est moins gastronomique que " + noeud2.getNom();
