@@ -1,11 +1,16 @@
+package graphmap.GraphDialog;
 
+
+import graphmap.GraphBackEnd.Graphe;
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 public class CompareDialog extends SearchDialog{
     Graphe graphe;
-    CompareDialog (JFrame parent, String title,ArrayList<Node> list_node, ArrayList<Link> list_link, Graphe graphe)
+    public CompareDialog (JFrame parent, String title,ArrayList<Node> list_node, ArrayList<Link> list_link, Graphe graphe)
     {
         super(parent,title,list_node,list_link);
         this.graphe = graphe;

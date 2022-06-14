@@ -1,3 +1,5 @@
+package graphmap.GraphDialog;
+
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -7,11 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;  
 
+import graphmap.GraphBackEnd.Node;
 public class NodeDialog extends AddDialog{
     JTextField node;
     JComboBox type;
     JButton btnAdd;
-    NodeDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche)
+    public NodeDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche)
     {
         super(parent,title);
 

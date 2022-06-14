@@ -1,3 +1,5 @@
+package graphmap.GraphDialog;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

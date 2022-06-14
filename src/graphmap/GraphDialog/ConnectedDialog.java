@@ -1,12 +1,17 @@
+package graphmap.GraphDialog;
+
 
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
+
 public class ConnectedDialog extends SearchDialog
 {
-    ConnectedDialog (JFrame parent, String title,ArrayList<Node> list_nodes, ArrayList<Link> list_link)
+    public ConnectedDialog (JFrame parent, String title,ArrayList<Node> list_nodes, ArrayList<Link> list_link)
     {
         super(parent,title,list_nodes,list_link);
         labelselector.setText("Liaison ");;

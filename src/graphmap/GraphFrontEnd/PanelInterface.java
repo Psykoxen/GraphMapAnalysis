@@ -1,3 +1,5 @@
+package graphmap.GraphFrontEnd;
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+
+
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
 /**
  *
  * @author Antoine
@@ -97,15 +103,15 @@ public class PanelInterface extends JPanel{
             public void mouseClicked(MouseEvent e) {
                     if (e.getButton() == MouseEvent.BUTTON3)
                     {
-                        for (Node noeud:list_node_affiches)
+                        for (Node node:list_node_affiches)
                         {
                         if (
-                            (noeud.getX() <= e.getX() && e.getX() <= noeud.getX()+50)
+                            (node.getX() <= e.getX() && e.getX() <= node.getX()+50)
                             &&
-                            (noeud.getY() <= e.getY() && e.getY() <= noeud.getY()+50)
+                            (node.getY() <= e.getY() && e.getY() <= node.getY()+50)
                         )
                         {
-                            SelectedNode = noeud;
+                            SelectedNode = node;
                             jMenu.show(e.getComponent(), e.getX(), e.getY());
                         }
                         }
@@ -140,83 +146,61 @@ public class PanelInterface extends JPanel{
     }
     
     /**
-     * Donne des coordonnées à chaque noeud de la liste list_noeuds et les ajoute
+     * Donne des coordonnées à chaque node de la liste list_node et les ajoute
      */
     public void generatingNode()
     {
-        for (Node noeud:list_node) 
+        for (Node node:list_node) 
         {
-            generatingCoord(noeud);
-            list_node_affiches.add(noeud);
+            generatingCoord(node);
+            list_node_affiches.add(node);
         }
     }
 
-<<<<<<< HEAD
-    public void generatingCoord(Node noeud)
-=======
     /**
-     * Génère des coordonnées aléatoires pour un noeud donné en paramètre
-     * @param noeud correspond à un objet de type Noeud
+     * Génère des coordonnées aléatoires pour un node donné en paramètre
+     * @param node correspond à un objet de type Node
      */
-    public void generatingCoord(Noeud noeud)
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public void generatingCoord(Node node)
     {
         int x = random.nextInt(20,this.widthJFrame - 70);
         int y = random.nextInt(20,this.heightJFrame - 170);
-        noeud.setX(x);
-        noeud.setY(y);
+        node.setX(x);
+        node.setY(y);
         for (int i = 0;i<500;i++)
         {
-            if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
+            if (checkNode(node) && !node.equals(list_node.get(0)))
             {
-<<<<<<< HEAD
-                if (checkNode(noeud) && !noeud.equals(list_node.get(0)))
-                {
-                    x = random.nextInt(20,this.widthJFrame - 70);
-                    y = random.nextInt(20,this.heightJFrame - 170);
-                    noeud.setX(x);
-                    noeud.setY(y);
-                }
-                else
-                {
-                    break;
-                }
-=======
                 x = random.nextInt(20,this.widthJFrame - 70);
                 y = random.nextInt(20,this.heightJFrame - 170);
-                noeud.setX(x);
-                noeud.setY(y);
+                node.setX(x);
+                node.setY(y);
             }
             else
             {
                 break;
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
             }
         }
     }
 
-<<<<<<< HEAD
-    private boolean checkNode(Node noeud)
-=======
     /**
-     * Renvoie true si les noeud donné en paramètre est superposé à un autre noeud et false sinon
-     * @param noeud correspond à un objet de type Noeud
+     * Renvoie true si les node donné en paramètre est superposé à un autre node et false sinon
+     * @param node correspond à un objet de type Node
      * @return un booleen
      */
-    private boolean checkNode(Noeud noeud)
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    private boolean checkNode(Node node)
     {
-        for (Node noeudCheck : list_node)
+        for (Node nodeCheck : list_node)
         {
             if 
             (
                 (
-                (Point.distance((double)noeud.getX()+25,(double)noeud.getY()+25,(double)noeudCheck.getX()+25,(double)noeudCheck.getY()+25) <= 50)
+                (Point.distance((double)node.getX()+25,(double)node.getY()+25,(double)nodeCheck.getX()+25,(double)nodeCheck.getY()+25) <= 50)
                 )
                 &&
-                (!noeud.equals(noeudCheck))
+                (!node.equals(nodeCheck))
                 &&
-                (noeudCheck.getX() != 0 && noeudCheck.getY() != 0)
+                (nodeCheck.getX() != 0 && nodeCheck.getY() != 0)
             )
             {
                 return true;
@@ -234,18 +218,14 @@ public class PanelInterface extends JPanel{
         reset();
     }
     
-<<<<<<< HEAD
-    public boolean checkOnTheLine(Link link,int x, int y)
-=======
     /**
-     * Renvoie true si les coordonnées x,y sont sur le label du lien donné en paramètre
-     * @param lien correspond à un objet de type Lien
+     * Renvoie true si les coordonnées x,y sont sur le label du link donné en paramètre
+     * @param link correspond à un objet de type Link
      * @param x correspond à un entier
      * @param y correspond à un entier
      * @return un booleen
      */
-    public boolean checkOnTheLine(Lien lien,int x, int y)
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public boolean checkOnTheLine(Link link,int x, int y)
     {
 
         if 
@@ -273,7 +253,7 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     * Affiche ou camoufle les 1-voisins d'un noeud
+     * Affiche ou camoufle les 1-voisins d'un node
      */
     private void HideOrDisplayOneNeighbour()
     {
@@ -311,7 +291,7 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     * Affiche ou camoufle les 2-voisins d'un noeud
+     * Affiche ou camoufle les 2-voisins d'un node
      */
     private void HideOrDisplayTwoNeighbour() 
     {
@@ -383,25 +363,25 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     * Permet de bouger les noeuds indépendamment
+     * Permet de bouger les node indépendamment
      * @param x correspond à un entier
      * @param y correspond à un entier
      */
     private void moveNode(int x,int y)
     {
-        for (Node noeud:list_node_affiches)
+        for (Node node:list_node_affiches)
                 {
                     if (
-                        (noeud.getX() <= x && x <= noeud.getX()+50)
+                        (node.getX() <= x && x <= node.getX()+50)
                         &&
-                        (noeud.getY() <= y && y <= noeud.getY()+50)
+                        (node.getY() <= y && y <= node.getY()+50)
                         &&
                         (x>=20 && x<=this.widthJFrame-40 && y<=this.heightJFrame-125 && y>=20)
                         
                     )
                     {
-                            noeud.setX(x-25);
-                            noeud.setY(y-25);
+                            node.setX(x-25);
+                            node.setY(y-25);
                         break;
                     }
                 }
@@ -409,7 +389,7 @@ public class PanelInterface extends JPanel{
     }
      
     /**
-     * Affiche ou camoufle les liens selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de lien doit l'être
+     * Affiche ou camoufle les link selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de link doit l'être
      * @param selected correspond à un objet Boooleen
      * @param type correspond à un char
      */
@@ -435,13 +415,13 @@ public class PanelInterface extends JPanel{
                         if (link.getType() == type)
                         {
                             check = false;
-                            for (Node noeudA : list_node_affiches)
+                            for (Node nodeA : list_node_affiches)
                             {
-                                if (noeudA.equals(link.getArrivee()) || noeudA.equals(link.getDepart()))
+                                if (nodeA.equals(link.getArrivee()) || nodeA.equals(link.getDepart()))
                                 {
-                                    for (Node noeudB : list_node_affiches)
+                                    for (Node nodeB : list_node_affiches)
                                     {
-                                        if ((noeudB.equals(link.getArrivee()) || noeudB.equals(link.getDepart())) && !noeudA.equals(noeudB) )
+                                        if ((nodeB.equals(link.getArrivee()) || nodeB.equals(link.getDepart())) && !nodeA.equals(nodeB) )
                                         {
                                             check = true;
                                             break;
@@ -462,7 +442,7 @@ public class PanelInterface extends JPanel{
     }    
     
     /**
-     * Affiche ou camoufle les noeuds selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de noeud doit l'être
+     * Affiche ou camoufle les node selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de node doit l'être
      * @param selected correspond à un objet Boolean
      * @param type correspond à un char
      * @param JFrame correspond à un objet GrapheInterface
@@ -498,17 +478,17 @@ public class PanelInterface extends JPanel{
             if (!selected)
             {
                 checkNode = (ArrayList<Node>) list_node_affiches.clone();
-                for (Node noeud : checkNode)
+                for (Node node : checkNode)
                 {
                     if 
                     (
-                        (!noeud.equals(SelectedNode))
+                        (!node.equals(SelectedNode))
                         &&
-                        (noeud.getType() == type)
+                        (node.getType() == type)
                     )
                     {
-                        deleteLink(noeud);
-                        list_node_affiches.remove(noeud);
+                        deleteLink(node);
+                        list_node_affiches.remove(node);
                     }
                     
                 }
@@ -530,22 +510,22 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     * Supprime un noeud s'il n'a aucun voisin
+     * Supprime un node s'il n'a aucun voisin
      */
     private void deleteUnlinkedNode()
     {
         Boolean check;
         checkNode = (ArrayList<Node>) list_node_affiches.clone();
-        for (Node noeud : checkNode)
+        for (Node node : checkNode)
                         {
                             check = false; 
                             for (Link link : list_link_affiches)
                             {
                                 if 
                                 (
-                                    (link.getDepart().equals(noeud))
+                                    (link.getDepart().equals(node))
                                     ||
-                                    (link.getArrivee().equals(noeud))
+                                    (link.getArrivee().equals(node))
                                 )
                                 {
                                     check = true;
@@ -553,21 +533,17 @@ public class PanelInterface extends JPanel{
                             }
                             if (!check)
                             {
-                                list_node_affiches.remove(noeud);
+                                list_node_affiches.remove(node);
                             }
                         }
     }
    
-<<<<<<< HEAD
-    private void addLink(Node addNode, GrapheInterface JFrame) 
-=======
     /**
-     * Ajoute un lien
-     * @param addNoeud correspond à un objet Noeud
+     * Ajoute un link
+     * @param addNode correspond à un objet Node
      * @param JFrame coorespond à un objet GrapheInterface
      */
-    private void addLink(Noeud addNoeud, GrapheInterface JFrame) 
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    private void addLink(Node addNode, GrapheInterface JFrame) 
         {
         for (int y = 0; y <  this.getListNodeAffiches().size(); y++) 
         {
@@ -602,15 +578,11 @@ public class PanelInterface extends JPanel{
         }
     }
 
-<<<<<<< HEAD
-    private void deleteLink(Node delNode) 
-=======
     /**
-     * Supprime un lien s'il n'a comme voisin que lui-même
-     * @param delNoeud correspond à un objet Noeud
+     * Supprime un link s'il n'a comme voisin que lui-même
+     * @param delNode correspond à un objet Node
      */
-    private void deleteLink(Noeud delNoeud) 
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    private void deleteLink(Node delNode) 
     {
         for (int i = 0; i < this.getListLink().size(); i++) {
                 
@@ -633,9 +605,9 @@ public class PanelInterface extends JPanel{
         list_link_affiches.clear();
         list_node_affiches.clear();
 
-        for (Node noeud : list_node)
+        for (Node node : list_node)
         {
-            list_node_affiches.add(noeud);
+            list_node_affiches.add(node);
         }
 
         for (Link link : list_link)
@@ -650,7 +622,7 @@ public class PanelInterface extends JPanel{
     }
    
     /**
-     * Affiche toutes les statistiques de noeuds et de liens du graphique
+     * Affiche toutes les statistiques de node et de link du graphique
      */
     private void updateStat()
     {
@@ -669,7 +641,7 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     *  Renvoie le nombre de liens d'un type donné en paramètre
+     *  Renvoie le nombre de link d'un type donné en paramètre
      * @param type correspond à un char
      * @return un int
      */
@@ -687,16 +659,16 @@ public class PanelInterface extends JPanel{
     }
 
     /**
-     *  Renvoie le nombre de noeuds d'un type donné en paramètre
+     *  Renvoie le nombre de node d'un type donné en paramètre
      * @param type correspond à un char
      * @return un int
      */
     public int countNodeByType(char type) 
     {
         int count = 0;
-        for (Node noeud : list_node_affiches)
+        for (Node node : list_node_affiches)
         {
-            if (noeud.getType() == type)
+            if (node.getType() == type)
             {
                 count++;
             }
@@ -746,20 +718,11 @@ public class PanelInterface extends JPanel{
                 (link.getDepart().getY() + link.getArrivee().getY()+ 25) / 2
             );
             
-<<<<<<< HEAD
             this.add(link.getLabel());
-            /*g.drawString(
-                link.getType()+","+link.getDistance(),
-                (link.getDepart().getX() + link.getArrivee().getX()+ 25) / 2,
-                (link.getDepart().getY() + link.getArrivee().getY()+ 25) / 2
-            );*/
-=======
-            this.add(lien.getLabel());
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
         }
-        for (Node noeud:list_node_affiches)
+        for (Node node:list_node_affiches)
         {
-            switch (noeud.getType())
+            switch (node.getType())
             {
                 case 'V':
                 {
@@ -778,23 +741,23 @@ public class PanelInterface extends JPanel{
                 }
             }
             g.fillOval(
-                noeud.getX(),
-                noeud.getY(),
+                node.getX(),
+                node.getY(),
                 50,
                 50
             );
             g.drawString(
-                noeud.getNom(),
-                noeud.getX() + 24,
-                noeud.getY() + 60
+                node.getNom(),
+                node.getX() + 24,
+                node.getY() + 60
             );
             g.setColor(Color.WHITE);
             Font f = new Font ("Sanserif",Font.PLAIN, 12);
                 g.setFont (f);
             g.drawString(
-                String.valueOf(noeud.getType()),
-                noeud.getX() + 23,
-                noeud.getY() + 28
+                String.valueOf(node.getType()),
+                node.getX() + 23,
+                node.getY() + 28
             );
         }
         if (labelList != null)
@@ -803,85 +766,46 @@ public class PanelInterface extends JPanel{
         }
     }
 
-<<<<<<< HEAD
-    /*
-    * Méthode renvoyant la liste des node
-    * @return Un objet de type Arraylist<Link> contenant la liste des node.
-    */
-    public ArrayList<Node> getListNode()
-=======
     /**
-     * Méthode renvoyant la liste des noeuds
-     * @return Un objet de type Arraylist<Lien> contenant la liste des noeuds.
+     * Méthode renvoyant la liste des node
+     * @return Un objet de type Arraylist<Link> contenant la liste des node.
      */
-    public ArrayList<Noeud> getListNoeud()
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public ArrayList<Node> getListNode()
     {
         return this.list_node;
     }
 
-<<<<<<< HEAD
-    /*
-    * Méthode renvoyant la liste des link.
-    * @return Un objet de type Arraylist<Link> contenant la liste des link.
-    */
-    public ArrayList<Link> getListLink()
-=======
     /**
-     * Méthode renvoyant la liste des liens.
-     * @return Un objet de type Arraylist<Lien> contenant la liste des liens.
+     * Méthode renvoyant la liste des link.
+     * @return Un objet de type Arraylist<Link> contenant la liste des link.
      */
-    public ArrayList<Lien> getListLiens()
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public ArrayList<Link> getListLink()
     {
         return this.list_link;
     }
 
-<<<<<<< HEAD
-    /*
-    * Méthode renvoyant la liste des node affiches
-    * @return Un objet de type Arraylist<Node> contenant la liste des node affiches.
-    */
-    public ArrayList<Node> getListNodeAffiches()
-=======
     /**
-     * Méthode renvoyant la liste des noeuds affiches
-     * @return Un objet de type Arraylist<Noeud> contenant la liste des noeuds affiches.
+     * Méthode renvoyant la liste des node affiches
+     * @return Un objet de type Arraylist<Node> contenant la liste des node affiches.
      */
-    public ArrayList<Noeud> getListNoeudAffiches()
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public ArrayList<Node> getListNodeAffiches()
     {
         return list_node_affiches;
     }
     
-<<<<<<< HEAD
-    /*
-    * Méthode renvoyant la liste des link affiches
-    * @return Un objet de type Arraylist<Link> contenant la liste des link affiches.
-    */
-    public ArrayList<Link> getListLinkAffiches()
-=======
     /**
-     * Méthode renvoyant la liste des liens affiches
-     * @return Un objet de type Arraylist<Lien> contenant la liste des liens affiches.
+     * Méthode renvoyant la liste des link affiches
+     * @return Un objet de type Arraylist<Link> contenant la liste des link affiches.
      */
-    public ArrayList<Lien> getListLiensAffiches()
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
+    public ArrayList<Link> getListLinkAffiches()
     {
         return list_link_affiches;
     }
     
-<<<<<<< HEAD
-    /*
-    * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des node)
-    * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
-    */
-=======
     /**
-     * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des noeuds)
+     * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des node)
      * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
      */
->>>>>>> 81a35a7624ef2525e98208e62db193a2408358f8
     public void setLabelList(ArrayList<JLabel> labelList)
     {
         this.labelList = labelList;

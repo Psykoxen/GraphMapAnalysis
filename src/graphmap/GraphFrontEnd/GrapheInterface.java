@@ -1,4 +1,14 @@
+package graphmap.GraphFrontEnd;
 
+
+import graphmap.GraphBackEnd.Graphe;
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
+import graphmap.GraphDialog.ConnectedDialog;
+import graphmap.GraphDialog.LinkDialog;
+import graphmap.GraphDialog.CompareDialog;
+import graphmap.GraphDialog.NodeDialog;
+import graphmap.GraphFrontEnd.PanelInterface;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -86,7 +96,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         this.setTitle("GRAph-Map-Analysis");
         this.setPreferredSize(new Dimension(800, 800));
         this.setMinimumSize(new Dimension(800, 800));
-        this.setIconImage(new ImageIcon(getClass().getResource("logo.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("/graphmap/GraphData/logo.png")).getImage());
         this.setLocationRelativeTo(null);
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
@@ -105,7 +115,7 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         });
 
-        this.mainGraphe = new Graphe("graphData.csv");
+        this.mainGraphe = new Graphe("graphmap/GraphData/graphData.csv");
         labelList = new ArrayList<>();
         panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNode(),mainGraphe.getLink());
         getContentPane().add(panelInterface, BorderLayout.CENTER);

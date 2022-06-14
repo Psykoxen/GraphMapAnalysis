@@ -1,3 +1,5 @@
+package graphmap.GraphDialog;
+
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -10,13 +12,15 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
 public class LinkDialog extends AddDialog{
     JComboBox nodeA;
     JComboBox nodeB;
     JSpinner spinnerDist;
     JComboBox type;
     JButton btnVerify;
-    LinkDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche,ArrayList<Link> list_link,ArrayList<Link> list_link_affiche)
+    public LinkDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche,ArrayList<Link> list_link,ArrayList<Link> list_link_affiche)
     {
         super(parent,title);
         DefaultComboBoxModel modelA = new DefaultComboBoxModel<>();

@@ -1,4 +1,8 @@
+package graphmap.GraphDialog;
 
+
+import graphmap.GraphBackEnd.Node;
+import graphmap.GraphBackEnd.Link;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
