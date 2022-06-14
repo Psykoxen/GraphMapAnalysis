@@ -142,6 +142,12 @@ public class Graphe {
         return null;
     }
 
+    /**
+     * Renvoie true si les noeuds donnés en paramètres sont à une 2-distance et false sinon
+     * @param noeudInitial correspond à un object de type Noeud
+     * @param noeudArrivee correspond à un object de type Noeud
+     * @return un booleen
+     */
     public boolean deuxVoisins(Noeud noeudInitial, Noeud noeudArrivee)
     {
         boolean success = false;
@@ -157,6 +163,12 @@ public class Graphe {
         return success;
     }
 
+    /**
+     * Renvoie true si les noeuds donnés en paramètres sont voisins et false sinon
+     * @param noeudInitial correspond à un objet de type Noeud
+     * @param noeudVoisin correspond à un objet de type Noeud
+     * @return un booleen
+     */
     public boolean estVoisin(Noeud noeudInitial, Noeud noeudVoisin)
     {
         boolean success = false;
@@ -170,6 +182,11 @@ public class Graphe {
         return success;
     }
 
+    /**
+     * Renvoie la liste les voisins d'un noeud donné en paramètre
+     * @param noeud correspond à un objet Noeud
+     * @return une ArrayList d'objets de type Noeud
+     */
     public ArrayList<Noeud> listeVoisins(Noeud noeud)
     {
         ArrayList<Noeud> listVoisins = new ArrayList<>();
@@ -183,6 +200,11 @@ public class Graphe {
         return listVoisins;
     }
 
+    /**
+     * Renvoie la liste des noeuds à une 2-distance d'un noeud donné en paramètre
+     * @param noeud correspond à un objet de type noeud
+     * @return une ArrayList d'objets de type Noeud
+     */
     public ArrayList<Noeud> liste2Voisins(Noeud noeud)
     {
         ArrayList<Noeud> list2Voisins = new ArrayList<>();
@@ -196,16 +218,52 @@ public class Graphe {
         return list2Voisins;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Renvoie le nombre de noeuds dans le graphe
+     * @return un entier
+     */
+    public int getNbNoeuds() 
+    {
+        return nbNoeuds;
+    }
+
+
+    /**
+     * Renvoie le nombre de liens dans le graphe
+     * @return un entier
+     */
+    public int getNbLiens() 
+    {
+        return nbLiens;
+    }
+
+    /**
+     * Renvoie la liste des noeuds du graphe
+     * @return une ArrayList d'objets de type Noeud
+     */
+>>>>>>> 0b235c41e1e194657126cefcbf8c8f4e554c2e6f
     public ArrayList<Noeud> getNoeuds()
     {
         return list_noeuds;
     }
 
+    /**
+     * Renvoie la liste des liens du graphe
+     * @return une ArrayList d'objets de type Lien
+     */
     public ArrayList<Lien> getLiens()
     {
         return list_liens;
     }
 
+    /**
+     * Crée un objet de type Noeud et l'ajoute au graphe
+     * @param type correspond à un char
+     * @param nom correspond à un String
+     * @return un objet de type Noeud
+     */
     public Noeud add_noeud(char type, String nom)
     {
         Noeud create;
@@ -215,22 +273,36 @@ public class Graphe {
         return create;
     }
 
+    /**
+     * Crée un objet de type Lien et l'ajoute au graphe 
+     * @param distance correspond à un entier
+     * @param type correspond à un char
+     * @param depart correspond à un objet de type Noeud
+     * @param arrivee correspond à un objet de type Noeud
+     */
     public void add_lien(int distance, char type, Noeud depart, Noeud arrivee) 
     {
         list_liens.add(nbLiens, new Lien(distance, type, depart, arrivee));
         nbLiens++;
     }
 
+    /**
+     * Renvoie une chaine de caractères indiquant la gastronomie d'un Noeud par rapport à un autre.
+     * Plus le Noeud possède de voisins restaurants, plus il est gastronomique
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
+     */
     public String plusGastro(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'R') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'R')
             {
@@ -250,16 +322,23 @@ public class Graphe {
         }
     }
 
+    /**
+     * Renvoie une chaine de caractères indiquant l'ouverture d'un Noeud par rapport à un autre.
+     * Plus le Noeud possède de voisins qui sont des villes, plus il est ouvert
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
+     */
     public String plusOuverte(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'V') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'V')
             {
@@ -279,16 +358,23 @@ public class Graphe {
         }
     }
 
+    /**
+     * Renvoie une chaine de caractères indiquant la culture d'un Noeud par rapport à un autre.
+     * Plus le Noeud possède de voisins qui sont des centres de loisir, plus il est gastronomique
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
+     */
     public String plusCulturelle(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'L') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'L')
             {
