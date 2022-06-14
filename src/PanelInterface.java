@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +16,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import java.awt.Point;
 /**
  *
  * @author Antoine
  * 
  */
 public class PanelInterface extends JPanel{
-    Noeud SelectedNode = null;
+    private Noeud SelectedNode = null;
 
-    private int widthJFrame;
-    private int heightJFrame;
+    public int widthJFrame;
+    public int heightJFrame;
 
     private final ArrayList<Noeud> list_noeuds;
     private final ArrayList<Lien> list_liens;
@@ -32,17 +34,17 @@ public class PanelInterface extends JPanel{
     private ArrayList<Lien> list_liens_affiches;
     private ArrayList<Noeud> checkNode;
     private ArrayList<Lien> checkLink;
-    Map<String, Color> mapPanelColor; 
-
+    
+    public Map<String, Color> mapPanelColor; 
 
     Random random = new Random();
 
     JPopupMenu jMenu;
-    JMenuItem OneNeighbour;
-    JMenuItem TwoNeighbour;
-    JMenuItem Reset;
-    Boolean OneNeighbourDisplay = false;
-    Boolean TwoNeighbourDisplay = false;
+    JMenuItem btnOneNeighbour;
+    JMenuItem btnTwoNeighbour;
+    JMenuItem btnReset;
+    Boolean oneNeighbourDisplay = false;
+    Boolean twoNeighbourDisplay = false;
     ArrayList<JLabel> labelList;
 
     
@@ -68,30 +70,30 @@ public class PanelInterface extends JPanel{
         this.mapPanelColor.put("D",Color.BLACK);
 
         jMenu = new JPopupMenu();
-        OneNeighbour = new JMenuItem();
-        OneNeighbour.setText("1-voisins");
-        OneNeighbour.addActionListener(new java.awt.event.ActionListener() {
+        btnOneNeighbour = new JMenuItem();
+        btnOneNeighbour.setText("1-voisins");
+        btnOneNeighbour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OneNeigbourActionPerformed(evt);
+                btnOneNeigbourActionPerformed(evt);
             }
         });
-        TwoNeighbour = new JMenuItem();
-        TwoNeighbour.setText("2-voisins");
-        TwoNeighbour.addActionListener(new java.awt.event.ActionListener() {
+        btnTwoNeighbour = new JMenuItem();
+        btnTwoNeighbour.setText("2-voisins");
+        btnTwoNeighbour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TwoNeigbourActionPerformed(evt);
+                btnTwoNeigbourActionPerformed(evt);
             }
         });
-        Reset = new JMenuItem();
-        Reset.setText("Réinitialiser");
-        Reset.addActionListener(new java.awt.event.ActionListener() {
+        btnReset = new JMenuItem();
+        btnReset.setText("Réinitialiser");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResetActionPerformed(evt);
+                btnResetActionPerformed(evt);
             }
         }); 
-        jMenu.add(Reset);
-        jMenu.add(OneNeighbour);
-        jMenu.add(TwoNeighbour);
+        jMenu.add(btnReset);
+        jMenu.add(btnOneNeighbour);
+        jMenu.add(btnTwoNeighbour);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -138,37 +140,69 @@ public class PanelInterface extends JPanel{
                 moveNode((int)e.getPoint().getX(),(int)e.getPoint().getY());   
             }
         });
+        
     }
     
-    private void generatingNode()
+    /*
+    * Méthode générant les coordonées aléatoire d'un noeud.
+    */
+    public void generatingNode()
     {
         for (Noeud noeud:list_noeuds) 
         {
-            int x = random.nextInt(20,this.widthJFrame - 70);
-            int y = random.nextInt(20,this.heightJFrame - 170);
-
-            //int y = (int) Math.sqrt(-(Math.pow(400,2))+(2*400*x)+Math.pow(400,2)-Math.pow(x,2)+400);
-            /*         
-            for (Noeud noeudCheck:list_noeuds_affiches)
-            {
-                supperpose = ((noeudCheck.getX()-10 < x && x < noeudCheck.getX()+60) || (noeudCheck.getY()-10 < y && y < noeudCheck.getY()+60));
-                while ()
-                {
-                    System.out.println("X : "+x+" X : "+(x+50)+" Y :"+y+" Y :"+(y+50));
-                    System.out.println("Xnoeud : "+noeudCheck.getX()+" Xnoeud : "+(noeudCheck.getX()+50)+" Y :"+noeudCheck.getY()+" Y :"+(noeudCheck.getY()+50));
-                    x = random.nextInt(this.widthJFrame - 120);
-                    y = random.nextInt(this.heightJFrame - 120);
-                }
-            }
-             */
-            System.out.println(noeud.getNom()+"-> X : "+x+" Y :"+y);
-            noeud.setX(x);
-            noeud.setY(y);
+            generatingCoord(noeud);
             list_noeuds_affiches.add(noeud);
         }
     }
 
-    protected void ResetActionPerformed(ActionEvent evt) 
+    public void generatingCoord(Noeud noeud)
+    {
+        int x = random.nextInt(20,this.widthJFrame - 70);
+            int y = random.nextInt(20,this.heightJFrame - 170);
+            noeud.setX(x);
+            noeud.setY(y);
+            for (int i = 0;i<500;i++)
+            {
+                if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
+                {
+                    x = random.nextInt(20,this.widthJFrame - 70);
+                    y = random.nextInt(20,this.heightJFrame - 170);
+                    noeud.setX(x);
+                    noeud.setY(y);
+                }
+                else
+                {
+                    break;
+                }
+            }
+    }
+
+    private boolean checkNode(Noeud noeud)
+    {
+        for (Noeud noeudCheck : list_noeuds)
+        {
+            if 
+            (
+                (
+                (Point.distance((double)noeud.getX()+25,(double)noeud.getY()+25,(double)noeudCheck.getX()+25,(double)noeudCheck.getY()+25) <= 50)
+                )
+                &&
+                (!noeud.equals(noeudCheck))
+                &&
+                (noeudCheck.getX() != 0 && noeudCheck.getY() != 0)
+            )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    * Méthode ajoutant un action performed pour le boutton "reset"
+    * @param variable d'évenement evt
+    */
+    private void btnResetActionPerformed(ActionEvent evt) 
     {
         reset();
     }
@@ -194,15 +228,19 @@ public class PanelInterface extends JPanel{
         }
     }
     
-    protected void OneNeigbourActionPerformed(ActionEvent evt) 
+    /*
+    * Méthode ajoutant un action performed pour le boutton "1-voisins"
+    * @param variable d'évenement evt
+    */
+    private void btnOneNeigbourActionPerformed(ActionEvent evt) 
     {
         HideOrDisplayOneNeighbour();
     }
 
     private void HideOrDisplayOneNeighbour()
     {
-        TwoNeighbourDisplay = false;
-        OneNeighbourDisplay = true;
+        twoNeighbourDisplay = false;
+        oneNeighbourDisplay = true;
         list_liens_affiches.clear();
         list_noeuds_affiches.clear();
         list_noeuds_affiches.add(SelectedNode);
@@ -225,15 +263,19 @@ public class PanelInterface extends JPanel{
         repaint();
     }
 
-    protected void TwoNeigbourActionPerformed(ActionEvent evt) 
+    /*
+    * Méthode ajoutant un action performed pour le boutton "2-voisins"
+    * @param variable d'évenement evt
+    */
+    private void btnTwoNeigbourActionPerformed(ActionEvent evt) 
     {
         HideOrDisplayTwoNeighbour();
     }
 
     private void HideOrDisplayTwoNeighbour() 
     {
-        TwoNeighbourDisplay = true;
-        OneNeighbourDisplay = false;
+        twoNeighbourDisplay = true;
+        oneNeighbourDisplay = false;
         list_liens_affiches.clear();
         list_noeuds_affiches.clear();
         list_noeuds_affiches.add(SelectedNode);
@@ -308,11 +350,12 @@ public class PanelInterface extends JPanel{
                         &&
                         (noeud.getY() <= y && y <= noeud.getY()+50)
                         &&
-                        (x>20 && x<760 && y<680 && y>20)
+                        (x>=20 && x<=this.widthJFrame-40 && y<=this.heightJFrame-125 && y>=20)
+                        
                     )
                     {
-                        noeud.setX(x-25);
-                        noeud.setY(y-25);
+                            noeud.setX(x-25);
+                            noeud.setY(y-25);
                         break;
                     }
                 }
@@ -426,7 +469,7 @@ public class PanelInterface extends JPanel{
             }
             else
             {
-                if (OneNeighbourDisplay)
+                if (oneNeighbourDisplay)
                 {
                     HideOrDisplayOneNeighbour(); 
                 }
@@ -485,11 +528,11 @@ public class PanelInterface extends JPanel{
                 {
                     if 
                     (
-                        (JFrame.National.isSelected() && this.getListLiens().get(z).getType() == 'N')
+                        (JFrame.btnNational.isSelected() && this.getListLiens().get(z).getType() == 'N')
                         ||
-                        (JFrame.Departemental.isSelected() && this.getListLiens().get(z).getType() == 'D')
+                        (JFrame.btnDepartemental.isSelected() && this.getListLiens().get(z).getType() == 'D')
                         ||
-                        (JFrame.Highway.isSelected() && this.getListLiens().get(z).getType() == 'A')
+                        (JFrame.btnHighway.isSelected() && this.getListLiens().get(z).getType() == 'A')
                     )
                     {
                         this.getListLiensAffiches().add(this.getListLiens().get(z));
@@ -500,7 +543,8 @@ public class PanelInterface extends JPanel{
         }
         }
 
-    private void deleteLink(Noeud delNoeud) {
+    private void deleteLink(Noeud delNoeud) 
+    {
         for (int i = 0; i < this.getListLiens().size(); i++) {
                 
             if (
@@ -531,8 +575,8 @@ public class PanelInterface extends JPanel{
 
         this.repaint();
         SelectedNode = null;
-        TwoNeighbourDisplay = false;
-        OneNeighbourDisplay = false;
+        twoNeighbourDisplay = false;
+        oneNeighbourDisplay = false;
     }
    
     private void updateStat()
@@ -552,7 +596,8 @@ public class PanelInterface extends JPanel{
         }
     }
 
-    public int countLinkByType(char type) {
+    public int countLinkByType(char type) 
+    {
         int count = 0;
         for (Lien link : list_liens_affiches)
         {
@@ -564,7 +609,8 @@ public class PanelInterface extends JPanel{
         return count;
     }
 
-    public int countNodeByType(char type) {
+    public int countNodeByType(char type) 
+    {
         int count = 0;
         for (Noeud noeud : list_noeuds_affiches)
         {
@@ -576,13 +622,8 @@ public class PanelInterface extends JPanel{
         return count;
     }
  
-    public void updateLabelList(ArrayList<JLabel> labelList)
-    {
-        this.labelList = labelList;
-    }
-
     public void paintComponent(Graphics g) 
-    {
+    {    
         this.removeAll();
         System.out.println(" -- REPAINT -- ");
         super.paintComponent(g);
@@ -674,23 +715,48 @@ public class PanelInterface extends JPanel{
         }
     }
 
+    /*
+    * Méthode renvoyant la liste des noeuds
+    * @return Un objet de type Arraylist<Lien> contenant la liste des noeuds.
+    */
     public ArrayList<Noeud> getListNoeud()
     {
         return this.list_noeuds;
     }
 
+    /*
+    * Méthode renvoyant la liste des liens.
+    * @return Un objet de type Arraylist<Lien> contenant la liste des liens.
+    */
     public ArrayList<Lien> getListLiens()
     {
         return this.list_liens;
     }
 
+    /*
+    * Méthode renvoyant la liste des noeuds affiches
+    * @return Un objet de type Arraylist<Noeud> contenant la liste des noeuds affiches.
+    */
     public ArrayList<Noeud> getListNoeudAffiches()
     {
         return list_noeuds_affiches;
     }
     
+    /*
+    * Méthode renvoyant la liste des liens affiches
+    * @return Un objet de type Arraylist<Lien> contenant la liste des liens affiches.
+    */
     public ArrayList<Lien> getListLiensAffiches()
     {
         return list_liens_affiches;
+    }
+    
+    /*
+    * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des noeuds)
+    * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
+    */
+    public void setLabelList(ArrayList<JLabel> labelList)
+    {
+        this.labelList = labelList;
     }
 }

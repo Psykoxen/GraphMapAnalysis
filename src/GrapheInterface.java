@@ -5,7 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -24,37 +25,41 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class GrapheInterface extends javax.swing.JFrame {
 
-    Graphe mainGraphe;
-    PanelInterface PanelInterface;
-    JMenuBar menubar;
-    JMenu File;
-    JMenu Display;
-    JMenu Find;
-    JMenu Preferences;
-    JMenu color;
-    JMenu colorNoeud;
-    JMenu colorLink;
-    JMenuItem colorNoeudCity;
-    JMenuItem colorNoeudFun;
-    JMenuItem colorNoeudFood;
-    JMenuItem colorLinkHighway;
-    JMenuItem colorLinkNationale;
-    JMenuItem colorLinkDepartementale;
-    JMenuItem Connected;
-    JMenuItem Compare;
-    JMenuItem Finder;
-    JMenuItem Open;
-    JMenuItem Refresh;
+    Graphe mainGraphe = null;
+    
     BorderLayout borderLayout;
+    PanelInterface panelInterface;
     JPanel bottomBar;
-    JMenu Places;
-    JMenu Link;
-    JCheckBox City;
-    JCheckBox Fun;
-    JCheckBox Food;
-    JCheckBox Highway;
-    JCheckBox National;
-    JCheckBox Departemental;
+    
+    JMenuBar menubar;
+    JMenu menuFile;
+    JMenu menuDisplay;
+    JMenu menuFind;
+    JMenu menuPreferences;
+    JMenu menuColor;
+    JMenu menuColorNoeud;
+    JMenu menuColorLink;
+    JMenu menuPlaces;
+    JMenu menuLink;
+    
+    JMenuItem btnColorNoeudCity;
+    JMenuItem btnColorNoeudFun;
+    JMenuItem btnColorNoeudFood;
+    JMenuItem btnColorLinkHighway;
+    JMenuItem btnColorLinkNationale;
+    JMenuItem btnColorLinkDepartementale;
+    JMenuItem btnConnected;
+    JMenuItem btnCompare;
+    JMenuItem btnFinder;
+    JMenuItem btnOpen;
+    JMenuItem btnRefresh;
+    JCheckBox btnCity;
+    JCheckBox btnFun;
+    JCheckBox btnFood;
+    JCheckBox btnHighway;
+    JCheckBox btnNational;
+    JCheckBox btnDepartemental;
+    
     JLabel lblCity;
     JLabel lblFood;
     JLabel lblFun;
@@ -62,14 +67,15 @@ public class GrapheInterface extends javax.swing.JFrame {
     JLabel lblNational;
     JLabel lblHighway;
     ArrayList<JLabel>  labelList;
-    
 
-    public GrapheInterface() {
+    public GrapheInterface() 
+    {
 
         initComponents();
     }
 
-    private void initComponents() {
+    private void initComponents() 
+    {
 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,9 +87,26 @@ public class GrapheInterface extends javax.swing.JFrame {
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
 
-       this.mainGraphe = new Graphe("graphData.csv");
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                panelInterface.widthJFrame = getWidth();
+                panelInterface.heightJFrame = getHeight();
+                System.out.println("Resize");
 
-        /////////////////////////////////////////////////////////////
+                if (!new Dimension(getWidth(),getHeight()).equals(getPreferredSize()))
+                {
+                    System.out.println("Renode");
+                    for (Noeud noeud : panelInterface.getListNoeudAffiches())
+                    {
+                        panelInterface.generatingCoord(noeud);
+                    }
+                }
+            }
+        });
+
+        this.mainGraphe = new Graphe("graphData.csv");
+
+        /*////////////////////////////////////////////////////////////
         ArrayList<Noeud> list_noeuds;;
         ArrayList<Lien> list_liens;
         Noeud A = new Noeud('V', "A");
@@ -104,192 +127,181 @@ public class GrapheInterface extends javax.swing.JFrame {
         list_liens.add(BC);
         list_liens.add(CA);
         list_liens.add(AD);
-        PanelInterface = new PanelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
+        panelInterface = new panelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
         ////////////////////////////////////////////////////////////*/
-       labelList = new ArrayList<>();
-        PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
-        getContentPane().add(PanelInterface, BorderLayout.CENTER);
+        labelList = new ArrayList<>();
+        panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        getContentPane().add(panelInterface, BorderLayout.CENTER);
         
-        File = new JMenu("Menu");
-        Open = new JMenuItem("Ouvrir");
-        Open.addActionListener(new java.awt.event.ActionListener() {
+        menuFile = new JMenu("Menu");
+        btnOpen = new JMenuItem("Ouvrir");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOpenActionPerformed(evt);
             }
         });
-        File.add(Open);
+        menuFile.add(btnOpen);
 
-        Display = new JMenu("Affichage");
-        Places = new JMenu("Lieux");
-        Link = new JMenu("Liaisons");
+        menuDisplay = new JMenu("Affichage");
+        menuPlaces = new JMenu("Lieux");
+        menuLink = new JMenu("Liaisons");
 
-        City = new JCheckBox("Villes");
-        City.setSelected(true);
-        City.addActionListener(new java.awt.event.ActionListener() {
+        btnCity = new JCheckBox("Villes");
+        btnCity.setSelected(true);
+        btnCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCityActionPerformed(evt);
             }
         });
 
-        Fun = new JCheckBox("Loisirs");
-        Fun.setSelected(true);
-        Fun.addActionListener(new java.awt.event.ActionListener() {
+        btnFun = new JCheckBox("Loisirs");
+        btnFun.setSelected(true);
+        btnFun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFunActionPerformed(evt);
             }
         });
 
-        Food = new JCheckBox("Restaurants");
-        Food.setSelected(true);
-        Food.addActionListener(new java.awt.event.ActionListener() {
+        btnFood = new JCheckBox("Restaurants");
+        btnFood.setSelected(true);
+        btnFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFoodActionPerformed(evt);
             }
         });
 
-        Highway = new JCheckBox("Autoroutes");
-        Highway.setSelected(true);
-        Highway.addActionListener(new java.awt.event.ActionListener() {
+        btnHighway = new JCheckBox("Autoroutes");
+        btnHighway.setSelected(true);
+        btnHighway.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHighwayActionPerformed(evt);
             }
         });
 
-        National = new JCheckBox("Nationales");
-        National.setSelected(true);
-        National.addActionListener(new java.awt.event.ActionListener() {
+        btnNational = new JCheckBox("Nationales");
+        btnNational.setSelected(true);
+        btnNational.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNationalActionPerformed(evt);
             }
         });
 
-        Departemental = new JCheckBox("Départementales");
-        Departemental.setSelected(true);
-        Departemental.addActionListener(new java.awt.event.ActionListener() {
+        btnDepartemental = new JCheckBox("Départementales");
+        btnDepartemental.setSelected(true);
+        btnDepartemental.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDepartementalActionPerformed(evt);
             }
         });
 
-        Places.add(City);
-        Places.add(Fun);
-        Places.add(Food);
-        Link.add(Highway);
-        Link.add(National);
-        Link.add(Departemental);
-        Display.add(Places);
-        Display.add(Link);
+        menuPlaces.add(btnCity);
+        menuPlaces.add(btnFun);
+        menuPlaces.add(btnFood);
+        menuLink.add(btnHighway);
+        menuLink.add(btnNational);
+        menuLink.add(btnDepartemental);
+        menuDisplay.add(menuPlaces);
+        menuDisplay.add(menuLink);
 
 
-        Refresh = new JMenuItem("Réinitialiser");
-        Refresh.addActionListener(new java.awt.event.ActionListener() {
+        btnRefresh = new JMenuItem("Réinitialiser");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
             }
         });
-        Display.add(Refresh);
+        menuDisplay.add(btnRefresh);
 
-        Find = new JMenu("Recherche");
-        Connected = new JMenuItem("Connexion");
-        Connected.addActionListener(new java.awt.event.ActionListener() {
+        menuFind = new JMenu("Recherche");
+        btnConnected = new JMenuItem("Connexion");
+        btnConnected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConnectedActionPerformed(evt);
             }
         });
-        Find.add(Connected);
-        Compare = new JMenuItem("Comparer");
-        Compare.addActionListener(new java.awt.event.ActionListener() {
+        menuFind.add(btnConnected);
+        btnCompare = new JMenuItem("Comparer");
+        btnCompare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCompareActionPerformed(evt);
             }
         });
-        Find.add(Compare);
-        Finder = new JMenuItem("Recherche");
-        Finder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinderActionPerformed(evt);
-            }
-        });
+        menuFind.add(btnCompare);
 
-        Preferences = new JMenu("Préférences");
-        color = new JMenu("Couleurs");
-        colorNoeud = new JMenu("Noeuds");
-        colorLink = new JMenu("Liens");
+        menuPreferences = new JMenu("Préférences");
+        menuColor = new JMenu("Couleurs");
+        menuColorNoeud = new JMenu("Noeuds");
+        menuColorLink = new JMenu("Liens");
 
-        colorNoeudCity = new JMenuItem("Villes");
-        colorNoeudCity.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNoeudCity = new JMenuItem("Villes");
+        btnColorNoeudCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorNoeudCityActionPerformed(evt);
             }
         });
-        colorNoeudFood = new JMenuItem("Restaurants");
-        colorNoeudFood.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNoeudFood = new JMenuItem("Restaurants");
+        btnColorNoeudFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorNoeudFoodActionPerformed(evt);
             }
         });
-        colorNoeudFun = new JMenuItem("Loisirs");
-        colorNoeudFun.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNoeudFun = new JMenuItem("Loisirs");
+        btnColorNoeudFun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorNoeudFunActionPerformed(evt);
             }
         });
-        colorNoeud.add(colorNoeudCity);
-        colorNoeud.add(colorNoeudFood);
-        colorNoeud.add(colorNoeudFun);
-        color.add(colorNoeud);
+        menuColorNoeud.add(btnColorNoeudCity);
+        menuColorNoeud.add(btnColorNoeudFood);
+        menuColorNoeud.add(btnColorNoeudFun);
+        menuColor.add(menuColorNoeud);
 
-        colorLinkHighway = new JMenuItem("Autoroutes");
-        colorLinkHighway.addActionListener(new java.awt.event.ActionListener() {
+        btnColorLinkHighway = new JMenuItem("Autoroutes");
+        btnColorLinkHighway.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorLinkHighwayActionPerformed(evt);
             }
         });
-        colorLinkNationale = new JMenuItem("Nationales");
-        colorLinkNationale.addActionListener(new java.awt.event.ActionListener() {
+        btnColorLinkNationale = new JMenuItem("Nationales");
+        btnColorLinkNationale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorLinkNationaleActionPerformed(evt);
             }
         });
-        colorLinkDepartementale = new JMenuItem("Départementales");
-        colorLinkDepartementale.addActionListener(new java.awt.event.ActionListener() {
+        btnColorLinkDepartementale = new JMenuItem("Départementales");
+        btnColorLinkDepartementale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorLinkDepartementaleActionPerformed(evt);
             }
         }); 
-        colorLink.add(colorLinkHighway);
-        colorLink.add(colorLinkNationale);
-        colorLink.add(colorLinkDepartementale);    
-        color.add(colorLink);
+        menuColorLink.add(btnColorLinkHighway);
+        menuColorLink.add(btnColorLinkNationale);
+        menuColorLink.add(btnColorLinkDepartementale);    
+        menuColor.add(menuColorLink);
  
-        Preferences.add(color);
+        menuPreferences.add(menuColor);
 
         menubar = new JMenuBar();
-        menubar.add(File);
-        menubar.add(Display);
-        menubar.add(Find);
-        menubar.add(Preferences);
+        menubar.add(menuFile);
+        menubar.add(menuDisplay);
+        menubar.add(menuFind);
+        menubar.add(menuPreferences);
 
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 5));
-        lblCity = new JLabel("Ville : "+PanelInterface.countNodeByType('V'));
-        lblFood = new JLabel("Restaurant : "+PanelInterface.countNodeByType('L'));
-        lblFun = new JLabel("Loisir : "+PanelInterface.countNodeByType('R'));
-        lblDepartemental = new JLabel("Départementale : "+PanelInterface.countLinkByType('D'));
-        lblNational =   new JLabel("Nationale : "+PanelInterface.countLinkByType('N'));
-        lblHighway = new JLabel("Autoroute : "+PanelInterface.countLinkByType('A'));
+        lblCity = new JLabel("Ville : "+panelInterface.countNodeByType('V'));
+        lblFood = new JLabel("Restaurant : "+panelInterface.countNodeByType('L'));
+        lblFun = new JLabel("Loisir : "+panelInterface.countNodeByType('R'));
+        lblDepartemental = new JLabel("Départementale : "+panelInterface.countLinkByType('D'));
+        lblNational =   new JLabel("Nationale : "+panelInterface.countLinkByType('N'));
+        lblHighway = new JLabel("Autoroute : "+panelInterface.countLinkByType('A'));
         
         
         bottomBar.add(lblCity);
-        
         bottomBar.add(lblFood);
-        
-        bottomBar.add(lblFun);
-        
-        bottomBar.add(lblDepartemental);
-        
-        bottomBar.add(lblNational);
-        
+        bottomBar.add(lblFun);       
+        bottomBar.add(lblDepartemental);    
+        bottomBar.add(lblNational);       
         bottomBar.add(lblHighway);
         bottomBar.setBackground(Color.WHITE);
 
@@ -302,148 +314,146 @@ public class GrapheInterface extends javax.swing.JFrame {
         labelList.add(lblDepartemental);
         labelList.add(lblNational);
         labelList.add(lblHighway);
-        PanelInterface.updateLabelList(labelList);
+        panelInterface.setLabelList(labelList);
 
         setJMenuBar(menubar);
         pack();
         setVisible(true);
+        System.out.println(" -- CREATE -- ");
         
     }
 
-    protected void btnOpenActionPerformed(ActionEvent evt) 
+    private void btnOpenActionPerformed(ActionEvent evt) 
     {
         JFileChooser choice = new JFileChooser();
         int select=choice.showOpenDialog(this);
         if(select==JFileChooser.APPROVE_OPTION)
         {
-            getContentPane().remove(PanelInterface);
+            getContentPane().remove(panelInterface);
             mainGraphe = new Graphe(choice.getSelectedFile().getAbsolutePath());
-            PanelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
-            PanelInterface.updateLabelList(this.labelList);     
-            getContentPane().add(PanelInterface, BorderLayout.CENTER);
+            panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+            panelInterface.setLabelList(this.labelList);     
+            getContentPane().add(panelInterface, BorderLayout.CENTER);
             this.setVisible(false);
             this.setVisible(true);
         }
  
     }
 
-    protected void btnFinderActionPerformed(ActionEvent evt) 
+    private void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) 
     {
-
+        panelInterface.mapPanelColor.replace("D",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("D")));
+        panelInterface.repaint();
     }
 
-    protected void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) 
+    private void btnColorLinkNationaleActionPerformed(ActionEvent evt) 
     {
-        PanelInterface.mapPanelColor.replace("D",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("D")));
-        PanelInterface.repaint();
+        panelInterface.mapPanelColor.replace("N",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("N")));
+        panelInterface.repaint();
     }
 
-    protected void btnColorLinkNationaleActionPerformed(ActionEvent evt) 
+    private void btnColorLinkHighwayActionPerformed(ActionEvent evt) 
     {
-        PanelInterface.mapPanelColor.replace("N",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("N")));
-        PanelInterface.repaint();
+        panelInterface.mapPanelColor.replace("H",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("H")));
+        panelInterface.repaint();
     }
 
-    protected void btnColorLinkHighwayActionPerformed(ActionEvent evt) 
+    private void btnColorNoeudFunActionPerformed(ActionEvent evt) 
     {
-        PanelInterface.mapPanelColor.replace("H",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("H")));
-        PanelInterface.repaint();
+        panelInterface.mapPanelColor.replace("FU",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FU")));
+        panelInterface.repaint();
     }
 
-    protected void btnColorNoeudFunActionPerformed(ActionEvent evt) 
+    private void btnColorNoeudFoodActionPerformed(ActionEvent evt) 
     {
-        PanelInterface.mapPanelColor.replace("FU",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("FU")));
-        PanelInterface.repaint();
+        panelInterface.mapPanelColor.replace("FO",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FO")));
+        panelInterface.repaint();
     }
 
-    protected void btnColorNoeudFoodActionPerformed(ActionEvent evt) 
+    private void btnColorNoeudCityActionPerformed(ActionEvent evt) 
     {
-        PanelInterface.mapPanelColor.replace("FO",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("FO")));
-        PanelInterface.repaint();
-    }
-
-    protected void btnColorNoeudCityActionPerformed(ActionEvent evt) 
-    {
-        PanelInterface.mapPanelColor.replace("C",JColorChooser.showDialog(this, "Sélecteur de couleur", PanelInterface.mapPanelColor.get("C")));
-        PanelInterface.repaint();
+        panelInterface.mapPanelColor.replace("C",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("C")));
+        panelInterface.repaint();
     }
 
 	/*
-    * Ajoute un évènement au bouton "Compare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
+    * Ajoute un évènement au bouton "btnCompare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
     * grastronomiques, ouverts, culturels.
     * @param evt correspond à un ActionEvent
     */
-    protected void btnCompareActionPerformed(ActionEvent evt) {
-        new CompareDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches(),mainGraphe);
+    private void btnCompareActionPerformed(ActionEvent evt) {
+        new CompareDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches(),mainGraphe);
     }
 
     /*
     *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux noeuds sont reliés entre eux.
     * @param evt correspond à un ActionEvent
     */
-    protected void btnConnectedActionPerformed(ActionEvent evt) {
-        new ConnectedDialog(this, this.getTitle(),PanelInterface.getListNoeudAffiches(),PanelInterface.getListLiensAffiches());
+    private void btnConnectedActionPerformed(ActionEvent evt) {
+        new ConnectedDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches());
     }
 
     /*
     * Ajoute un évènement au bouton "Rafraîchir" qui permet de revenir au stade initial du graphe
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnRefreshActionPerformed(ActionEvent evt) {
-        PanelInterface.reset();
+    private void btnRefreshActionPerformed(ActionEvent evt) {
+        panelInterface.reset();
     }
 
     /*
     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnDepartementalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(Departemental.isSelected(), 'D');  
-
-
+    private void btnDepartementalActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayLinkByType(btnDepartemental.isSelected(), 'D');  
     }
     
     /*
     * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les liens de type "N".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnNationalActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(National.isSelected(), 'N');
+    private void btnNationalActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayLinkByType(btnNational.isSelected(), 'N');
     }
     
     /*
     * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les liens de type "A".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnHighwayActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayLinkByType(Highway.isSelected(), 'A');  
+    private void btnHighwayActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayLinkByType(btnHighway.isSelected(), 'A');  
     }
     
     /*
     * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les liens de type "R".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnFoodActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(Food.isSelected(), 'R',this);     
+    private void btnFoodActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayNodeByType(btnFood.isSelected(), 'R',this);     
     }
 
     /*
     * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les liens de type "L".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnFunActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(Fun.isSelected(), 'L',this);  
+    private void btnFunActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayNodeByType(btnFun.isSelected(), 'L',this);  
     }
 
     /*
     * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les liens de type "V".
     * @param evt correcpond à un ActionEvent
     */
-    protected void btnCityActionPerformed(ActionEvent evt) {
-        PanelInterface.hideOrDisplayNodeByType(City.isSelected(), 'V',this);     
+    private void btnCityActionPerformed(ActionEvent evt) {
+        panelInterface.hideOrDisplayNodeByType(btnCity.isSelected(), 'V',this);     
     }
 
-
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        System.out.println(" -- VISIBLE -- ");
+    } 
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
