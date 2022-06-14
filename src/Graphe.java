@@ -18,7 +18,7 @@ public class Graphe {
     private final ArrayList<Lien> list_liens;
 
 
-    /*
+    /**
      * Constructeur de la classe Graphe qui prend en argument une chaîne de caractères et instancie une liste de noeuds, 
      * une liste de liens, met le nombre de liens et de noeuds à 0 et essaye de récupérer les données d'un fichier CSV 
      * dont le chemin est donné par la chaîne de caractères en paramètres 
@@ -53,7 +53,7 @@ public class Graphe {
     }
     
 
-    /*
+    /**
      * Charge la classe en données en lisant et récupérant les données contenues dans un fichier CSV dont le chemin
      * est donné en paramètres
      * @param path correspond à une chaîne de caractères
@@ -125,7 +125,7 @@ public class Graphe {
         scan.close();
     }
 
-    /*
+    /**
      * Cherche si un noeud existe à partir d'un type de noeud et d'un nom de noeud
      * @param type correspond à un char
      * @param nom correspond à un String

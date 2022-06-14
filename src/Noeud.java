@@ -32,7 +32,7 @@ public class Noeud {
         return Objects.hash(type, nom);
     }
 
-   /*
+   /**
     * Renvoie le nom du noeud
     * @return String contenant le nom du noeud
     */
@@ -42,7 +42,7 @@ public class Noeud {
     }
 
     
-    /*
+    /**
      * Renvoie le type du noeud
      * @return char contenant le type du noeud
      */
@@ -52,7 +52,7 @@ public class Noeud {
     }
 
     
-    /* 
+    /** 
      * Renvoie la coordonnée de l'abscisse du noeud sur la fenêtre
      * @return int contenant la position X du noeud
      */
@@ -62,7 +62,7 @@ public class Noeud {
     }
 
     
-    /*
+    /**
      * Renvoie la coordonnée de l'ordonnée du noeud sur la fenêtre
      * @return int contenant la position Y du noeud
      */
@@ -72,7 +72,7 @@ public class Noeud {
     }
 
     
-    /* 
+    /** 
      * Change le nom du noeud par celui donné en paramètres
      * @param newNom correspond à un String
      */
@@ -82,7 +82,7 @@ public class Noeud {
     }
 
     
-    /* 
+    /** 
      * Change le type du noeud par celui donné en paramètres
      * @param newType correspond à un char
      */
@@ -92,7 +92,7 @@ public class Noeud {
     }
     
     
-    /* 
+    /** 
      * Change la coordonnée de l'abscisse du noeud par celle donné en paramètres
      * @param x correspond à un int
      */
@@ -102,7 +102,7 @@ public class Noeud {
     }
     
     
-    /* 
+    /** 
      * Change la coordonnée de l'ordonnée du noeud par celle donné en paramètres
      * @param y correspond à un int
      */
@@ -112,7 +112,7 @@ public class Noeud {
     }
     
     
-    /* 
+    /** 
      * Convertit le noeud en chaîne de caractères
      * @return String contenant une chaine de caractères personnalisée du noeud
      */
