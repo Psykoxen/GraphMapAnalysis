@@ -8,6 +8,7 @@
  * @author Maxence
  */
 public class TestNoeud {
+    @Test
     public void testNoeud()
     {
         Noeud noeudTest1 = new Noeud('V', "Test ville 1");
