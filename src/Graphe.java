@@ -286,20 +286,20 @@ public class Graphe {
     /**
      * Renvoie une chaine de caractères indiquant la gastronomie d'un Noeud par rapport à un autre.
      * Plus le Noeud possède de voisins restaurants, plus il est gastronomique
-     * @param noeud1
-     * @param noeud2
-     * @return
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
      */
     public String plusGastro(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'R') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'R')
             {
@@ -319,16 +319,23 @@ public class Graphe {
         }
     }
 
+    /**
+     * Renvoie une chaine de caractères indiquant l'ouverture d'un Noeud par rapport à un autre.
+     * Plus le Noeud possède de voisins qui sont des villes, plus il est ouvert
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
+     */
     public String plusOuverte(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'V') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'V')
             {
@@ -348,16 +355,23 @@ public class Graphe {
         }
     }
 
+    /**
+     * Renvoie une chaine de caractères indiquant la culture d'un Noeud par rapport à un autre.
+     * Plus le Noeud possède de voisins qui sont des centres de loisir, plus il est gastronomique
+     * @param noeud1 correspond à un objet de type Noeud
+     * @param noeud2 correspond à un objet de type Noeud
+     * @return un objet String
+     */
     public String plusCulturelle(Noeud noeud1, Noeud noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : liste2Voisins(noeud1))
+        for (Noeud noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'L') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : liste2Voisins(noeud2))
+        for (Noeud noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'L')
             {
