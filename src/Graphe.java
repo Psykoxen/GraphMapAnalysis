@@ -218,8 +218,6 @@ public class Graphe {
         return list2Voisins;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Renvoie le nombre de noeuds dans le graphe
      * @return un entier
@@ -243,7 +241,6 @@ public class Graphe {
      * Renvoie la liste des noeuds du graphe
      * @return une ArrayList d'objets de type Noeud
      */
->>>>>>> 0b235c41e1e194657126cefcbf8c8f4e554c2e6f
     public ArrayList<Noeud> getNoeuds()
     {
         return list_noeuds;

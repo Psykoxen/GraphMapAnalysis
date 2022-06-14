@@ -1,21 +1,11 @@
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;  
 
 public class AddDialog extends JDialog{
     JPanel panDialog;
-    JTextField noeud;
-    JComboBox type;
-    JButton btnAdd;
     GridBagConstraints gbc;
     AddDialog(JFrame parent, String title)
     {

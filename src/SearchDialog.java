@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -39,6 +40,12 @@ public class SearchDialog extends JDialog{
         this.list_noeuds = list_noeuds;
         this.list_liens = list_liens;
         
+        DefaultComboBoxModel model = new DefaultComboBoxModel<>();
+        for (Noeud noeud : list_noeuds)
+        {
+            model.addElement(noeud);
+        }
+        
         panConnectedDialog  = new JPanel();
         panConnectedDialog.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -50,11 +57,8 @@ public class SearchDialog extends JDialog{
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        noeudA = new JComboBox();
-        for (Noeud noeud : list_noeuds)
-        {
-            noeudA.addItem(noeud);
-        }
+        noeudA = new JComboBox<Noeud>();
+        noeudA.setModel(model);
         panConnectedDialog.add(noeudA,gbc);
 
         gbc.gridx = 0;
@@ -65,10 +69,7 @@ public class SearchDialog extends JDialog{
         gbc.gridx = 1;
         gbc.gridy = 1;
         noeudB = new JComboBox();
-        for (Noeud noeud : list_noeuds)
-        {
-            noeudB.addItem(noeud);
-        }
+        noeudB.setModel(model);
         panConnectedDialog.add(noeudB,gbc);
 
         gbc.gridx = 0;

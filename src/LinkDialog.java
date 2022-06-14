@@ -1,19 +1,14 @@
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.WindowConstants;
-
-import java.awt.GridBagConstraints;  
-import java.awt.GridBagLayout;  
 
 public class LinkDialog extends AddDialog{
     JComboBox noeudA;
@@ -24,18 +19,20 @@ public class LinkDialog extends AddDialog{
     LinkDialog(JFrame parent, String title,ArrayList<Noeud> list_noeuds,ArrayList<Noeud> list_noeuds_affiche,ArrayList<Lien> list_liens,ArrayList<Lien> list_liens_affiche)
     {
         super(parent,title);
-
+        DefaultComboBoxModel model = new DefaultComboBoxModel<>();
+        for (Noeud noeud : list_noeuds_affiche)
+        {
+            model.addElement(noeud);
+        }
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel labelNoeudA = new JLabel("Lieux 1 ");
         panDialog.add(labelNoeudA,gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        noeudA = new JComboBox();
-        for (Noeud noeud : list_noeuds_affiche)
-        {
-            noeudA.addItem(noeud);
-        }
+        noeudA = new JComboBox<Noeud>();
+        noeudA.setModel(model);
+        
         panDialog.add(noeudA,gbc);
 
 
@@ -45,11 +42,8 @@ public class LinkDialog extends AddDialog{
         panDialog.add(labelNoeudB,gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        noeudB = new JComboBox();
-        for (Noeud noeud : list_noeuds_affiche)
-        {
-            noeudB.addItem(noeud);
-        }
+        noeudB = new JComboBox<Noeud>();
+        noeudB.setModel(model);
         panDialog.add(noeudB,gbc);
 
         gbc.gridx = 0;
