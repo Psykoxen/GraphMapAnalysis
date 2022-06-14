@@ -28,6 +28,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -356,6 +357,9 @@ public class GrapheInterface extends javax.swing.JFrame {
     private void btnOpenActionPerformed(ActionEvent evt) 
     {
         JFileChooser choice = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichier CSV", "csv");                                
+        choice.addChoosableFileFilter(filter);
+        choice.setAcceptAllFileFilterUsed(false);
         int select=choice.showOpenDialog(this);
         if(select==JFileChooser.APPROVE_OPTION)
         {
