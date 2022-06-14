@@ -346,13 +346,20 @@ public class GrapheInterface extends javax.swing.JFrame {
         
     }
 
-    
+    /**
+     * Crée une action qui ouvre une une fenêtre afin d'ajouter un lien entre 2 noeuds
+     * @param evt correspond à un objet de type ActionEvent
+     */
     private void btnAddLinkActionPerformed(ActionEvent evt) 
     {
         new LinkDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches(),panelInterface.getListLiens(),panelInterface.getListLiensAffiches());
         this.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une une fenêtre afin d'ajouter un noeud entre 2 noeuds
+     * @param evt correspond à un objet de type ActionEvent
+     */
     private void btnAddNodeActionPerformed(ActionEvent evt) 
     {
         new NodeDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches());
