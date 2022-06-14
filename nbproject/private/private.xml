@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/Dialog.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/Graphe.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/PanelInterface.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/CompareDialog.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/ConnectedDialog.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/Noeud.java</file>
+            <file>file:/C:/Users/maxen/Desktop/graphemap/src/Lien.java</file>
+        </group>
     </open-files>
 </project-private>
