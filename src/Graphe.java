@@ -1,13 +1,4 @@
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-
 import java.io.FileNotFoundException;
-
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,7 +17,8 @@ public class Graphe {
     private final ArrayList<Noeud> list_noeuds;
     private final ArrayList<Lien> list_liens;
 
-    public Graphe(String path) {
+    public Graphe(String path) 
+    {
         list_noeuds = new ArrayList<>();
         list_liens = new ArrayList<>();
         nbNoeuds = 0;
@@ -38,10 +30,9 @@ public class Graphe {
         }
     }
 
-
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Graphe graphe = (Graphe) o;
@@ -49,9 +40,11 @@ public class Graphe {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return Objects.hash(nbNoeuds, nbLiens, list_noeuds, list_liens);
     }
+    
     public void loading(String path) throws FileNotFoundException
     {
         String line;
@@ -185,11 +178,13 @@ public class Graphe {
         return list2Voisins;
     }
 
-    public int getNbNoeuds() {
+    public int getNbNoeuds() 
+    {
         return nbNoeuds;
     }
 
-    public int getNbLiens() {
+    public int getNbLiens() 
+    {
         return nbLiens;
     }
 
@@ -212,9 +207,8 @@ public class Graphe {
         return create;
     }
 
-
-
-    public void add_lien(int distance, char type, Noeud depart, Noeud arrivee) {
+    public void add_lien(int distance, char type, Noeud depart, Noeud arrivee) 
+    {
         list_liens.add(nbLiens, new Lien(distance, type, depart, arrivee));
         nbLiens++;
     }

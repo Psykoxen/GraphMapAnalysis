@@ -1,10 +1,3 @@
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-
 import java.util.Objects;
 
 /**
@@ -25,7 +18,8 @@ public class Noeud {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Noeud noeud = (Noeud) o;
@@ -33,7 +27,8 @@ public class Noeud {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return Objects.hash(type, nom);
     }
 
@@ -126,6 +121,5 @@ public class Noeud {
     {
         return String.valueOf(this.getType())+','+this.getNom();
     }
-    
-    
+        
 }
