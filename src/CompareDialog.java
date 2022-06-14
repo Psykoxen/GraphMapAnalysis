@@ -5,9 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 public class CompareDialog extends SearchDialog{
     Graphe graphe;
-    CompareDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens, Graphe graphe)
+    CompareDialog (JFrame parent, String title,ArrayList<Node> list_node, ArrayList<Link> list_link, Graphe graphe)
     {
-        super(parent,title,list_noeuds,list_liens);
+        super(parent,title,list_node,list_link);
         this.graphe = graphe;
         labelselector.setText("Critère ");;
         selector.addItem("Gastronomique");
@@ -19,44 +19,45 @@ public class CompareDialog extends SearchDialog{
     protected void action() {
         super.action();
         String text = null;
-        Noeud noeudAToCompare = null, noeudBToCompare = null;
-        if (noeudA.getSelectedItem().equals(noeudB.getSelectedItem()))
+        Node nodeAToCompare = null;
+        Node nodeBToCompare = null;
+        if (nodeA.getSelectedItem().equals(nodeB.getSelectedItem()))
                 {
                     JOptionPane.showMessageDialog(
                                                         null,
-                                                        "Les noeuds sélectionnés sont identiques",
+                                                        "Les node sélectionnés sont identiques",
                                                         "Vérification de connexion",
                                                         JOptionPane.WARNING_MESSAGE
                                                         );
                 }
                 else
                 {
-                    for (Noeud noeud : list_noeuds)
+                    for (Node node : list_node)
                     {
                         if 
                         (
-                            noeudA.getSelectedItem().toString().split(",")[0].charAt(0)==noeud.getType()
+                            nodeA.getSelectedItem().toString().split(",")[0].charAt(0)==node.getType()
                             &&
-                            noeudA.getSelectedItem().toString().split(",")[1].equals(noeud.getNom())
+                            nodeA.getSelectedItem().toString().split(",")[1].equals(node.getNom())
                         )
                         {
-                            noeudAToCompare = noeud;
+                            nodeAToCompare = node;
                         }
                         else if
                         (
-                            noeudB.getSelectedItem().toString().split(",")[0].charAt(0)==noeud.getType()
+                            nodeB.getSelectedItem().toString().split(",")[0].charAt(0)==node.getType()
                             &&
-                            noeudB.getSelectedItem().toString().split(",")[1].equals(noeud.getNom())
+                            nodeB.getSelectedItem().toString().split(",")[1].equals(node.getNom())
                         )
                         {
-                            noeudBToCompare = noeud;
+                            nodeBToCompare = node;
                         }
                     }
                     switch(selector.getSelectedItem().toString())
                     {
-                            case "Gastronomique":text = graphe.plusGastro(noeudAToCompare, noeudBToCompare);break;
-                            case "Ouverte": text = graphe.plusOuverte(noeudAToCompare, noeudBToCompare);break;
-                            case "Culturelle": text = graphe.plusCulturelle(noeudAToCompare, noeudBToCompare);break;
+                            case "Gastronomique":text = graphe.plusGastro(nodeAToCompare, nodeBToCompare);break;
+                            case "Ouverte": text = graphe.plusOuverte(nodeAToCompare, nodeBToCompare);break;
+                            case "Culturelle": text = graphe.plusCulturelle(nodeAToCompare, nodeBToCompare);break;
                     }
                     JOptionPane.showMessageDialog(
                                                                             null,

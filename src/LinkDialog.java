@@ -11,40 +11,41 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class LinkDialog extends AddDialog{
-    JComboBox noeudA;
-    JComboBox noeudB;
+    JComboBox nodeA;
+    JComboBox nodeB;
     JSpinner spinnerDist;
     JComboBox type;
     JButton btnVerify;
-    LinkDialog(JFrame parent, String title,ArrayList<Noeud> list_noeuds,ArrayList<Noeud> list_noeuds_affiche,ArrayList<Lien> list_liens,ArrayList<Lien> list_liens_affiche)
+    LinkDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche,ArrayList<Link> list_link,ArrayList<Link> list_link_affiche)
     {
         super(parent,title);
-        DefaultComboBoxModel model = new DefaultComboBoxModel<>();
-        for (Noeud noeud : list_noeuds_affiche)
+        DefaultComboBoxModel modelA = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel modelB = new DefaultComboBoxModel<>();
+        for (Node node : list_node_affiche)
         {
-            model.addElement(noeud);
+            modelA.addElement(node);
+            modelB.addElement(node);
         }
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel labelNoeudA = new JLabel("Lieux 1 ");
-        panDialog.add(labelNoeudA,gbc);
+        JLabel labelNodeA = new JLabel("Lieux 1 ");
+        panDialog.add(labelNodeA,gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        noeudA = new JComboBox<Noeud>();
-        noeudA.setModel(model);
-        
-        panDialog.add(noeudA,gbc);
+        nodeA = new JComboBox<Node>();
+        nodeA.setModel(modelA);
+        panDialog.add(nodeA,gbc);
 
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JLabel labelNoeudB = new JLabel("Lieux 2 ");
-        panDialog.add(labelNoeudB,gbc);
+        JLabel labelNodeB = new JLabel("Lieux 2 ");
+        panDialog.add(labelNodeB,gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        noeudB = new JComboBox<Noeud>();
-        noeudB.setModel(model);
-        panDialog.add(noeudB,gbc);
+        nodeB = new JComboBox<Node>();
+        nodeB.setModel(modelB);
+        panDialog.add(nodeB,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -77,7 +78,7 @@ public class LinkDialog extends AddDialog{
         btnVerify = new JButton("Ajouter");
         btnVerify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerifyActionPerformed(list_noeuds_affiche,list_liens,list_liens_affiche);
+                btnVerifyActionPerformed(list_node_affiche,list_link,list_link_affiche);
             }});
         panDialog.add(btnVerify,gbc);
 
@@ -85,44 +86,42 @@ public class LinkDialog extends AddDialog{
         this.setVisible(true);
     }
 
-    private void btnVerifyActionPerformed(ArrayList<Noeud> list_noeuds_affiche, ArrayList<Lien> list_liens,ArrayList<Lien> list_liens_affiche) {
-        Noeud noeudAToLink = null;
-        Noeud noeudBToLink = null;
-        System.out.println(noeudA);
-        System.out.println(noeudB);
-        if (!noeudA.getSelectedItem().toString().equals(noeudB.getSelectedItem().toString()))
+    private void btnVerifyActionPerformed(ArrayList<Node> list_node_affiche, ArrayList<Link> list_link,ArrayList<Link> list_link_affiche) {
+        Node nodeAToLink = null;
+        Node nodeBToLink = null;
+        if (!nodeA.getSelectedItem().toString().equals(nodeB.getSelectedItem().toString()))
         {
-            for (Noeud noeud : list_noeuds_affiche)
+            for (Node node : list_node_affiche)
                     {
                         if 
                         (
-                            noeudA.getSelectedItem().toString().split(",")[0].charAt(0)==noeud.getType()
+                            nodeA.getSelectedItem().toString().split(",")[0].charAt(0)==node.getType()
                             &&
-                            noeudA.getSelectedItem().toString().split(",")[1].equals(noeud.getNom())
+                            nodeA.getSelectedItem().toString().split(",")[1].equals(node.getNom())
                         )
                         {
-                            noeudAToLink = noeud;
+                            nodeAToLink = node;
                         }
                         else if
                         (
-                            noeudB.getSelectedItem().toString().split(",")[0].charAt(0)==noeud.getType()
+                            nodeB.getSelectedItem().toString().split(",")[0].charAt(0)==node.getType()
                             &&
-                            noeudB.getSelectedItem().toString().split(",")[1].equals(noeud.getNom())
+                            nodeB.getSelectedItem().toString().split(",")[1].equals(node.getNom())
                         )
                         {
-                            noeudBToLink = noeud;
+                            nodeBToLink = node;
                         }
                     }
-            Lien link = new Lien(Integer.valueOf((int) spinnerDist.getValue()), type.getSelectedItem().toString().charAt(0), noeudAToLink, noeudBToLink);
-            list_liens.add(link);
-            list_liens_affiche.add(link);
+            Link link = new Link(Integer.valueOf((int) spinnerDist.getValue()), type.getSelectedItem().toString().charAt(0), nodeAToLink, nodeBToLink);
+            list_link.add(link);
+            list_link_affiche.add(link);
             dispose();
         }
         else
         {
             JOptionPane.showMessageDialog(
                                                         null,
-                                                        "Les noeuds sélectionnés sont identique",
+                                                        "Les node sélectionnés sont identique",
                                                         "Vérification",
                                                         JOptionPane.WARNING_MESSAGE
                                                         );

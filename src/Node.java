@@ -5,13 +5,13 @@ import java.util.Objects;
  * @author Antoine
  */
 
-public class Noeud {
+public class Node {
     private char type;
     private String nom;
     private int x;
     private int y;
     
-    public Noeud(char newType, String newNom)
+    public Node(char newType, String newNom)
     {
         type = newType;
         nom = newNom;
@@ -22,7 +22,7 @@ public class Noeud {
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Noeud noeud = (Noeud) o;
+        Node noeud = (Node) o;
         return type == noeud.type && Objects.equals(nom, noeud.nom);
     }
 

@@ -6,9 +6,9 @@ import javax.swing.JOptionPane;
 
 public class ConnectedDialog extends SearchDialog
 {
-    ConnectedDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens)
+    ConnectedDialog (JFrame parent, String title,ArrayList<Node> list_nodes, ArrayList<Link> list_link)
     {
-        super(parent,title,list_noeuds,list_liens);
+        super(parent,title,list_nodes,list_link);
         labelselector.setText("Liaison ");;
         selector.addItem(1);
         selector.addItem(2);
@@ -19,12 +19,12 @@ public class ConnectedDialog extends SearchDialog
     {
         super.action();
         Boolean find = false;
-        if (noeudA.getSelectedItem().equals(noeudB.getSelectedItem()))
+        if (nodeA.getSelectedItem().equals(nodeB.getSelectedItem()))
         {
             JOptionPane.showMessageDialog
             (
                                             null,
-                                            "Les noeuds sélectionnés sont identiques",
+                                            "Les nodes sélectionnés sont identiques",
                                             "Vérification de connexion",
                                             JOptionPane.WARNING_MESSAGE
             );
@@ -33,29 +33,29 @@ public class ConnectedDialog extends SearchDialog
         {
                     if (Integer.valueOf(selector.getSelectedItem().toString()) == 1)
                     {
-                        for (Lien lien : list_liens)
+                        for (Link link : list_link)
                         {
                            
                                 if 
                                 (
                                     (
-                                        lien.getDepart().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
+                                        link.getDepart().getType() == nodeA.getSelectedItem().toString().split(",")[0].charAt(0)
                                         &&
-                                        lien.getDepart().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
+                                        link.getDepart().getNom().equals(nodeA.getSelectedItem().toString().split(",")[1])
                                         &&
-                                        lien.getArrivee().getType() == noeudB.getSelectedItem().toString().split(",")[0].charAt(0)
+                                        link.getArrivee().getType() == nodeB.getSelectedItem().toString().split(",")[0].charAt(0)
                                         &&
-                                        lien.getArrivee().getNom().equals(noeudB.getSelectedItem().toString().split(",")[1])
+                                        link.getArrivee().getNom().equals(nodeB.getSelectedItem().toString().split(",")[1])
                                     )
                                     ||
                                     (
-                                        lien.getDepart().getType() == noeudB.getSelectedItem().toString().split(",")[0].charAt(0)
+                                        link.getDepart().getType() == nodeB.getSelectedItem().toString().split(",")[0].charAt(0)
                                         &&
-                                        lien.getDepart().getNom().equals(noeudB.getSelectedItem().toString().split(",")[1])
+                                        link.getDepart().getNom().equals(nodeB.getSelectedItem().toString().split(",")[1])
                                         &&
-                                        lien.getArrivee().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
+                                        link.getArrivee().getType() == nodeA.getSelectedItem().toString().split(",")[0].charAt(0)
                                         &&
-                                        lien.getArrivee().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
+                                        link.getArrivee().getNom().equals(nodeA.getSelectedItem().toString().split(",")[1])
                                     )       
                                 )
                                 {
@@ -66,55 +66,55 @@ public class ConnectedDialog extends SearchDialog
                     }
                             else
                             {
-                                for (Lien lienA : list_liens){
-                                    for (Lien lienB : list_liens)
+                                for (Link linkA : list_link){
+                                    for (Link linkB : list_link)
                                     {
                                         if
                                         (
                                             (
-                                                lienA.getDepart().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                linkA.getDepart().getType() == nodeA.getSelectedItem().toString().split(",")[0].charAt(0)
                                                 &&
-                                                lienA.getDepart().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
+                                                linkA.getDepart().getNom().equals(nodeA.getSelectedItem().toString().split(",")[1])
                                                 &&
                                                 (
                                                     (
-                                                        lienA.getArrivee().equals(lienB.getDepart())
+                                                        linkA.getArrivee().equals(linkB.getDepart())
                                                         &&
-                                                        lienB.getArrivee().getType() == noeudB.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                        linkB.getArrivee().getType() == nodeB.getSelectedItem().toString().split(",")[0].charAt(0)
                                                         &&
-                                                        lienB.getArrivee().getNom().equals(noeudB.getSelectedItem().toString().split(",")[1])
+                                                        linkB.getArrivee().getNom().equals(nodeB.getSelectedItem().toString().split(",")[1])
                                                     )
                                                     ||
                                                     (
-                                                        lienA.getArrivee().equals(lienB.getArrivee())
+                                                        linkA.getArrivee().equals(linkB.getArrivee())
                                                         &&
-                                                        lienB.getDepart().getType() == noeudB.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                        linkB.getDepart().getType() == nodeB.getSelectedItem().toString().split(",")[0].charAt(0)
                                                         &&
-                                                        lienB.getDepart().getNom().equals(noeudB.getSelectedItem().toString().split(",")[1])
+                                                        linkB.getDepart().getNom().equals(nodeB.getSelectedItem().toString().split(",")[1])
                                                     )
                                                 )
                                             )
                                             ||
                                             (
-                                                lienA.getDepart().getType() == noeudB.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                linkA.getDepart().getType() == nodeB.getSelectedItem().toString().split(",")[0].charAt(0)
                                                 &&
-                                                lienA.getDepart().getNom().equals(noeudB.getSelectedItem().toString().split(",")[1])
+                                                linkA.getDepart().getNom().equals(nodeB.getSelectedItem().toString().split(",")[1])
                                                 &&
                                                 (
                                                     (
-                                                        lienA.getArrivee().equals(lienB.getDepart())
+                                                        linkA.getArrivee().equals(linkB.getDepart())
                                                         &&
-                                                        lienB.getArrivee().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                        linkB.getArrivee().getType() == nodeA.getSelectedItem().toString().split(",")[0].charAt(0)
                                                         &&
-                                                        lienB.getArrivee().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
+                                                        linkB.getArrivee().getNom().equals(nodeA.getSelectedItem().toString().split(",")[1])
                                                     )
                                                     ||
                                                     (
-                                                        lienA.getArrivee().equals(lienB.getArrivee())
+                                                        linkA.getArrivee().equals(linkB.getArrivee())
                                                         &&
-                                                        lienB.getDepart().getType() == noeudA.getSelectedItem().toString().split(",")[0].charAt(0)
+                                                        linkB.getDepart().getType() == nodeA.getSelectedItem().toString().split(",")[0].charAt(0)
                                                         &&
-                                                        lienB.getDepart().getNom().equals(noeudA.getSelectedItem().toString().split(",")[1])
+                                                        linkB.getDepart().getNom().equals(nodeA.getSelectedItem().toString().split(",")[1])
                                                     )
                                                 )
                                             )
@@ -132,7 +132,7 @@ public class ConnectedDialog extends SearchDialog
                         {
                             JOptionPane.showMessageDialog(
                                                             null,
-                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" sont à "+selector.getSelectedItem()+" de liaison.",
+                                                            "Les nodes "+nodeA.getSelectedItem()+" et "+nodeB.getSelectedItem()+" sont à "+selector.getSelectedItem()+" de liaison.",
                                                             "Vérification de connexion",
                                                             JOptionPane.INFORMATION_MESSAGE
                                                             );
@@ -141,7 +141,7 @@ public class ConnectedDialog extends SearchDialog
                         {
                             JOptionPane.showMessageDialog(
                                                             null,
-                                                            "Les noeuds "+noeudA.getSelectedItem()+" et "+noeudB.getSelectedItem()+" ne sont pas à "+selector.getSelectedItem()+" de liaison.",
+                                                            "Les nodes "+nodeA.getSelectedItem()+" et "+nodeB.getSelectedItem()+" ne sont pas à "+selector.getSelectedItem()+" de liaison.",
                                                             "Vérification de connexion",
                                                             JOptionPane.ERROR_MESSAGE
                                                             );

@@ -1,49 +1,46 @@
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
-import java.awt.Insets;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.GridBagConstraints;  
-import java.awt.GridBagLayout; 
+import javax.swing.JPanel; 
 
 public class SearchDialog extends JDialog{
-    protected ArrayList<Noeud> list_noeuds;
-    protected ArrayList<Lien> list_liens;
+    protected ArrayList<Node> list_node;
+    protected ArrayList<Link> list_link;
     private JPanel panConnectedDialog;
     private Boolean find;
     
     JButton check;
-    JComboBox noeudA;
-    JComboBox noeudB;
+    JComboBox nodeA;
+    JComboBox nodeB;
     JComboBox selector;
     JLabel labelselector;
 
     
 
-    public SearchDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens)
+    public SearchDialog (JFrame parent, String title,ArrayList<Node> list_node, ArrayList<Link> list_link)
     {
         super(parent,title,true);
         this.setSize(220,150);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        this.list_noeuds = list_noeuds;
-        this.list_liens = list_liens;
+        this.list_node = list_node;
+        this.list_link = list_link;
         
-        DefaultComboBoxModel model = new DefaultComboBoxModel<>();
-        for (Noeud noeud : list_noeuds)
+        DefaultComboBoxModel modelA = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel modelB = new DefaultComboBoxModel<>();
+        for (Node node : list_node)
         {
-            model.addElement(noeud);
+            modelA.addElement(node);
+            modelB.addElement(node);
         }
         
         panConnectedDialog  = new JPanel();
@@ -52,25 +49,25 @@ public class SearchDialog extends JDialog{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel labelNoeudA = new JLabel("Lieux 1 ");
-        panConnectedDialog.add(labelNoeudA,gbc);
+        JLabel labelNodeA = new JLabel("Lieux 1 ");
+        panConnectedDialog.add(labelNodeA,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        noeudA = new JComboBox<Noeud>();
-        noeudA.setModel(model);
-        panConnectedDialog.add(noeudA,gbc);
+        nodeA = new JComboBox<Node>();
+        nodeA.setModel(modelA);
+        panConnectedDialog.add(nodeA,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JLabel labelNoeudB = new JLabel("Lieux 2 ");
-        panConnectedDialog.add(labelNoeudB,gbc);
+        JLabel labelNodeB = new JLabel("Lieux 2 ");
+        panConnectedDialog.add(labelNodeB,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        noeudB = new JComboBox();
-        noeudB.setModel(model);
-        panConnectedDialog.add(noeudB,gbc);
+        nodeB = new JComboBox();
+        nodeB.setModel(modelB);
+        panConnectedDialog.add(nodeB,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;

@@ -8,23 +8,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;  
 
 public class NodeDialog extends AddDialog{
-    JTextField noeud;
+    JTextField node;
     JComboBox type;
     JButton btnAdd;
-    NodeDialog(JFrame parent, String title,ArrayList<Noeud> list_noeuds,ArrayList<Noeud> list_noeuds_affiche)
+    NodeDialog(JFrame parent, String title,ArrayList<Node> list_node,ArrayList<Node> list_node_affiche)
     {
         super(parent,title);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel labelNoeud = new JLabel("Nom ");
+        JLabel labelNode = new JLabel("Nom ");
         
 
-        panDialog.add(labelNoeud,gbc);
+        panDialog.add(labelNode,gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        noeud = new JTextField(13);
-        panDialog.add(noeud,gbc);
+        node = new JTextField(13);
+        panDialog.add(node,gbc);
 
 
         gbc.gridx = 0;
@@ -45,7 +45,7 @@ public class NodeDialog extends AddDialog{
         btnAdd = new JButton("Ajouter");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(list_noeuds_affiche,list_noeuds);
+                btnAddActionPerformed(list_node_affiche,list_node);
             }});
         panDialog.add(btnAdd,gbc);
 
@@ -53,16 +53,16 @@ public class NodeDialog extends AddDialog{
         this.setVisible(true);
     }
 
-    private void btnAddActionPerformed(ArrayList<Noeud> list_noeuds_affiche, ArrayList<Noeud> list_noeuds) {
-        Noeud newNoeud = null;
+    private void btnAddActionPerformed(ArrayList<Node> list_node_affiche, ArrayList<Node> list_node) {
+        Node newNode = null;
         Boolean find = false;
-        for (Noeud noeudCheck : list_noeuds)
+        for (Node nodeCheck : list_node)
         {
             if 
                 (
-                    type.getSelectedItem().toString().charAt(0) == noeudCheck.getType()
+                    type.getSelectedItem().toString().charAt(0) == nodeCheck.getType()
                     &&
-                    noeud.getText().equals(noeudCheck.getNom())
+                    node.getText().equals(nodeCheck.getNom())
                     )
                     {
                         find = true;
@@ -71,16 +71,16 @@ public class NodeDialog extends AddDialog{
         }
         if (!find)
         {
-            newNoeud = new Noeud(type.getSelectedItem().toString().charAt(0),noeud.getText());
-            list_noeuds.add(newNoeud);
-            list_noeuds_affiche.add(newNoeud);
+            newNode = new Node(type.getSelectedItem().toString().charAt(0),node.getText());
+            list_node.add(newNode);
+            list_node_affiche.add(newNode);
             dispose();
         }
         else
         {
             JOptionPane.showMessageDialog(
                                                         null,
-                                                        "Le noeud existe déjà !",
+                                                        "Le node existe déjà !",
                                                         "Vérification",
                                                         JOptionPane.WARNING_MESSAGE
                                                         );

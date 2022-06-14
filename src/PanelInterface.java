@@ -2,10 +2,10 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,25 +15,23 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
-import java.awt.Point;
 /**
  *
  * @author Antoine
  * 
  */
 public class PanelInterface extends JPanel{
-    private Noeud SelectedNode = null;
+    private Node SelectedNode = null;
 
     public int widthJFrame;
     public int heightJFrame;
 
-    private final ArrayList<Noeud> list_noeuds;
-    private final ArrayList<Lien> list_liens;
-    private ArrayList<Noeud> list_noeuds_affiches;
-    private ArrayList<Lien> list_liens_affiches;
-    private ArrayList<Noeud> checkNode;
-    private ArrayList<Lien> checkLink;
+    private final ArrayList<Node> list_node;
+    private final ArrayList<Link> list_link;
+    private ArrayList<Node> list_node_affiches;
+    private ArrayList<Link> list_link_affiches;
+    private ArrayList<Node> checkNode;
+    private ArrayList<Link> checkLink;
     
     public Map<String, Color> mapPanelColor; 
 
@@ -48,15 +46,15 @@ public class PanelInterface extends JPanel{
     ArrayList<JLabel> labelList;
 
     
-    PanelInterface(int width,int height,ArrayList<Noeud> list_noeuds,ArrayList<Lien> list_liens)
+    PanelInterface(int width,int height,ArrayList<Node> list_node,ArrayList<Link> list_link)
     {
         this.widthJFrame = width;
         this.heightJFrame = height;
-        this.list_liens = list_liens;
-        this.list_noeuds = list_noeuds;
+        this.list_link = list_link;
+        this.list_node = list_node;
 
-        this.list_liens_affiches = (ArrayList<Lien>) list_liens.clone();
-        this.list_noeuds_affiches = new ArrayList<>();
+        this.list_link_affiches = (ArrayList<Link>) list_link.clone();
+        this.list_node_affiches = new ArrayList<>();
        
 
         generatingNode();
@@ -97,11 +95,9 @@ public class PanelInterface extends JPanel{
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                    //selectNoeud(e.getX(),e.getY());
                     if (e.getButton() == MouseEvent.BUTTON3)
                     {
-                        for (Noeud noeud:list_noeuds_affiches)
+                        for (Node noeud:list_node_affiches)
                         {
                         if (
                             (noeud.getX() <= e.getX() && e.getX() <= noeud.getX()+50)
@@ -116,15 +112,15 @@ public class PanelInterface extends JPanel{
                     }
                     else
                     {
-                        for (Lien lien : list_liens_affiches)
+                        for (Link link : list_link_affiches)
                         {
-                            if(checkOnTheLine(lien, e.getX(), e.getY()))
+                            if(checkOnTheLine(link, e.getX(), e.getY()))
                             {
-                                list_liens_affiches.clear();
-                                list_liens_affiches.add(lien);
-                                list_noeuds_affiches.clear();
-                                list_noeuds_affiches.add(lien.getDepart());
-                                list_noeuds_affiches.add(lien.getArrivee());
+                                list_link_affiches.clear();
+                                list_link_affiches.add(link);
+                                list_node_affiches.clear();
+                                list_node_affiches.add(link.getDepart());
+                                list_node_affiches.add(link.getArrivee());
                                 repaint();
                                 break;
                             }
@@ -148,14 +144,14 @@ public class PanelInterface extends JPanel{
     */
     public void generatingNode()
     {
-        for (Noeud noeud:list_noeuds) 
+        for (Node noeud:list_node) 
         {
             generatingCoord(noeud);
-            list_noeuds_affiches.add(noeud);
+            list_node_affiches.add(noeud);
         }
     }
 
-    public void generatingCoord(Noeud noeud)
+    public void generatingCoord(Node noeud)
     {
         int x = random.nextInt(20,this.widthJFrame - 70);
             int y = random.nextInt(20,this.heightJFrame - 170);
@@ -163,7 +159,7 @@ public class PanelInterface extends JPanel{
             noeud.setY(y);
             for (int i = 0;i<500;i++)
             {
-                if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
+                if (checkNode(noeud) && !noeud.equals(list_node.get(0)))
                 {
                     x = random.nextInt(20,this.widthJFrame - 70);
                     y = random.nextInt(20,this.heightJFrame - 170);
@@ -177,9 +173,9 @@ public class PanelInterface extends JPanel{
             }
     }
 
-    private boolean checkNode(Noeud noeud)
+    private boolean checkNode(Node noeud)
     {
-        for (Noeud noeudCheck : list_noeuds)
+        for (Node noeudCheck : list_node)
         {
             if 
             (
@@ -207,17 +203,14 @@ public class PanelInterface extends JPanel{
         reset();
     }
     
-    public boolean checkOnTheLine(Lien lien,int x, int y)
+    public boolean checkOnTheLine(Link link,int x, int y)
     {
-        System.out.println("Xclick : "+x+" Yclick : "+y);
-        System.out.println("X : "+lien.getLabel().getX()+" X++ : "+(lien.getLabel().getX()+(int)lien.getLabel().getSize().getWidth()));
-        System.out.println("Y :"+lien.getLabel().getY());
-        System.out.println("Y++ :"+(lien.getLabel().getY()+(int)lien.getLabel().getSize().getHeight()));
+
         if 
         (
-            (lien.getLabel().getX() < x && (lien.getLabel().getX()+(int)lien.getLabel().getSize().getWidth()) > x)
+            (link.getLabel().getX() < x && (link.getLabel().getX()+(int)link.getLabel().getSize().getWidth()) > x)
             &&
-            (lien.getLabel().getY() < y && (lien.getLabel().getY()+(int)lien.getLabel().getSize().getHeight()) > y)
+            (link.getLabel().getY() < y && (link.getLabel().getY()+(int)link.getLabel().getSize().getHeight()) > y)
         )
         {
             return true;
@@ -241,23 +234,23 @@ public class PanelInterface extends JPanel{
     {
         twoNeighbourDisplay = false;
         oneNeighbourDisplay = true;
-        list_liens_affiches.clear();
-        list_noeuds_affiches.clear();
-        list_noeuds_affiches.add(SelectedNode);
-        for (Lien lien : list_liens)
+        list_link_affiches.clear();
+        list_node_affiches.clear();
+        list_node_affiches.add(SelectedNode);
+        for (Link link : list_link)
         {
-            System.out.println(lien);
-            if (lien.getDepart().equals(SelectedNode))
+
+            if (link.getDepart().equals(SelectedNode))
             {
-                list_liens_affiches.add(lien);
-                list_noeuds_affiches.add(lien.getArrivee());
-                System.out.println("Ajout de arrivée "+lien.getArrivee());
+                list_link_affiches.add(link);
+                list_node_affiches.add(link.getArrivee());
+
             }
-            else if (lien.getArrivee().equals(SelectedNode))
+            else if (link.getArrivee().equals(SelectedNode))
             {
-                list_liens_affiches.add(lien);
-                list_noeuds_affiches.add(lien.getDepart());
-                System.out.println("Ajout de départ "+lien.getDepart());
+                list_link_affiches.add(link);
+                list_node_affiches.add(link.getDepart());
+
             }
         }
         repaint();
@@ -276,64 +269,64 @@ public class PanelInterface extends JPanel{
     {
         twoNeighbourDisplay = true;
         oneNeighbourDisplay = false;
-        list_liens_affiches.clear();
-        list_noeuds_affiches.clear();
-        list_noeuds_affiches.add(SelectedNode);
-        for (Lien lien : list_liens)
+        list_link_affiches.clear();
+        list_node_affiches.clear();
+        list_node_affiches.add(SelectedNode);
+        for (Link link : list_link)
         {
-            if (lien.getDepart().equals(SelectedNode))
+            if (link.getDepart().equals(SelectedNode))
             {
-                list_liens_affiches.add(lien);
-                list_noeuds_affiches.add(lien.getArrivee());
-                for (Lien lienSecond : list_liens)
+                list_link_affiches.add(link);
+                list_node_affiches.add(link.getArrivee());
+                for (Link linkSecond : list_link)
                 {
                     if 
                     (
-                        (lien.getArrivee().equals(lienSecond.getDepart()))
+                        (link.getArrivee().equals(linkSecond.getDepart()))
                         &&
-                        (!SelectedNode.equals(lienSecond.getArrivee())) 
+                        (!SelectedNode.equals(linkSecond.getArrivee())) 
                     )
                     {
-                        list_liens_affiches.add(lienSecond);
-                        list_noeuds_affiches.add(lienSecond.getArrivee());
+                        list_link_affiches.add(linkSecond);
+                        list_node_affiches.add(linkSecond.getArrivee());
                     }
                     else if 
                     (
-                        (lien.getArrivee().equals(lienSecond.getArrivee()))
+                        (link.getArrivee().equals(linkSecond.getArrivee()))
                         &&
-                        (!SelectedNode.equals(lienSecond.getDepart())) 
+                        (!SelectedNode.equals(linkSecond.getDepart())) 
                     )
                     {
-                        list_liens_affiches.add(lienSecond);
-                        list_noeuds_affiches.add(lienSecond.getDepart());
+                        list_link_affiches.add(linkSecond);
+                        list_node_affiches.add(linkSecond.getDepart());
                     }
                 }
             }
-            else if (lien.getArrivee().equals(SelectedNode))
+            else if (link.getArrivee().equals(SelectedNode))
             {
-                list_liens_affiches.add(lien);
-                list_noeuds_affiches.add(lien.getDepart());
-                for (Lien lienSecond : list_liens)
+                list_link_affiches.add(link);
+                list_node_affiches.add(link.getDepart());
+                for (Link linkSecond : list_link)
                 {
                     if 
                     (
-                        (lien.getDepart().equals(lienSecond.getDepart()))
+                        (link.getDepart().equals(linkSecond.getDepart()))
                         &&
-                        (!SelectedNode.equals(lienSecond.getArrivee())) 
+                        (!SelectedNode.equals(linkSecond.getArrivee())) 
                     )
                     {
-                        list_liens_affiches.add(lienSecond);
-                        list_noeuds_affiches.add(lienSecond.getArrivee());
+                        list_link_affiches.add(linkSecond);
+                        list_node_affiches.add(linkSecond.getArrivee());
                     }
                     else if 
                     (
-                        (lien.getDepart().equals(lienSecond.getArrivee()))
+                        (link.getDepart().equals(linkSecond.getArrivee()))
                         &&
-                        (!SelectedNode.equals(lienSecond.getDepart())) 
+                        (!SelectedNode.equals(linkSecond.getDepart())) 
                     )
                     {
-                        list_liens_affiches.add(lienSecond);
-                        list_noeuds_affiches.add(lienSecond.getDepart());
+                        list_link_affiches.add(linkSecond);
+                        list_node_affiches.add(linkSecond.getDepart());
                     }
                 }
             }
@@ -343,7 +336,7 @@ public class PanelInterface extends JPanel{
 
     private void moveNode(int x,int y)
     {
-        for (Noeud noeud:list_noeuds_affiches)
+        for (Node noeud:list_node_affiches)
                 {
                     if (
                         (noeud.getX() <= x && x <= noeud.getX()+50)
@@ -368,35 +361,29 @@ public class PanelInterface extends JPanel{
             
                 if (!selected)
                 {
-                    for (Lien lien : list_liens)
+                    for (Link link : list_link)
                     {
-                        if (lien.getType() == type)
+                        if (link.getType() == type)
                         {
-                            System.out.println("Type : "+lien.getType()+" || From "+lien.getDepart().getNom()+" to "+lien.getArrivee().getNom()+" --> TRUE");
-                        
-                            list_liens_affiches.remove(lien);
+                            list_link_affiches.remove(link);
                         }
-                        else
-                        {
-                            System.out.println("Type : "+lien.getType()+" || From "+lien.getDepart().getNom()+" to "+lien.getArrivee().getNom()+" --> FALSE");
-                        
-                        }
+
                     }
                 }
                 else
                 {
-                    for (Lien lien : list_liens)
+                    for (Link link : list_link)
                     {
-                        if (lien.getType() == type)
+                        if (link.getType() == type)
                         {
                             check = false;
-                            for (Noeud noeudA : list_noeuds_affiches)
+                            for (Node noeudA : list_node_affiches)
                             {
-                                if (noeudA.equals(lien.getArrivee()) || noeudA.equals(lien.getDepart()))
+                                if (noeudA.equals(link.getArrivee()) || noeudA.equals(link.getDepart()))
                                 {
-                                    for (Noeud noeudB : list_noeuds_affiches)
+                                    for (Node noeudB : list_node_affiches)
                                     {
-                                        if ((noeudB.equals(lien.getArrivee()) || noeudB.equals(lien.getDepart())) && !noeudA.equals(noeudB) )
+                                        if ((noeudB.equals(link.getArrivee()) || noeudB.equals(link.getDepart())) && !noeudA.equals(noeudB) )
                                         {
                                             check = true;
                                             break;
@@ -406,16 +393,12 @@ public class PanelInterface extends JPanel{
                             }
                             if (check)
                             {
-                                list_liens_affiches.add(lien);
+                                list_link_affiches.add(link);
                             }
                     }
                 }
             
 
-        }
-        for (Lien lien : list_liens_affiches)
-        {
-            System.out.println("Type : "+lien.getType()+" || From "+lien.getDepart().getNom()+" to "+lien.getArrivee().getNom());
         }
         this.repaint();    
     }    
@@ -426,23 +409,23 @@ public class PanelInterface extends JPanel{
         if (SelectedNode == null)
         {
             
-            for (int i = 0; i <  this.getListNoeud().size(); i++) {
+            for (int i = 0; i <  this.getListNode().size(); i++) {
                 if (!selected) {
-                    if ( this.getListNoeud().get(i).getType() == type) {
-                        this.getListNoeudAffiches().remove(this.getListNoeud().get(i));
-                        deleteLink(this.getListNoeud().get(i));
+                    if ( this.getListNode().get(i).getType() == type) {
+                        this.getListNodeAffiches().remove(this.getListNode().get(i));
+                        deleteLink(this.getListNode().get(i));
                     }
                 } else {
-                    if ( this.getListNoeud().get(i).getType() == type) {
-                        for (int y = 0; y <  this.getListNoeudAffiches().size(); y++) {
-                            if ( this.getListNoeud().get(i).getNom().equals( this.getListNoeudAffiches().get(y).getNom())) {
+                    if ( this.getListNode().get(i).getType() == type) {
+                        for (int y = 0; y <  this.getListNodeAffiches().size(); y++) {
+                            if ( this.getListNode().get(i).getNom().equals( this.getListNodeAffiches().get(y).getNom())) {
                                 check = true;
                                 break;
                             }
                         }
                         if (!check) {
-                            this.getListNoeudAffiches().add( this.getListNoeud().get(i));
-                            addLink( this.getListNoeud().get(i),JFrame);
+                            this.getListNodeAffiches().add( this.getListNode().get(i));
+                            addLink( this.getListNode().get(i),JFrame);
                         }
                     }
                 }
@@ -450,8 +433,8 @@ public class PanelInterface extends JPanel{
         } else {
             if (!selected)
             {
-                checkNode = (ArrayList<Noeud>) list_noeuds_affiches.clone();
-                for (Noeud noeud : checkNode)
+                checkNode = (ArrayList<Node>) list_node_affiches.clone();
+                for (Node noeud : checkNode)
                 {
                     if 
                     (
@@ -461,7 +444,7 @@ public class PanelInterface extends JPanel{
                     )
                     {
                         deleteLink(noeud);
-                        list_noeuds_affiches.remove(noeud);
+                        list_node_affiches.remove(noeud);
                     }
                     
                 }
@@ -485,17 +468,17 @@ public class PanelInterface extends JPanel{
     private void deleteUnlinkedNode()
     {
         Boolean check;
-        checkNode = (ArrayList<Noeud>) list_noeuds_affiches.clone();
-        for (Noeud noeud : checkNode)
+        checkNode = (ArrayList<Node>) list_node_affiches.clone();
+        for (Node noeud : checkNode)
                         {
                             check = false; 
-                            for (Lien lien : list_liens_affiches)
+                            for (Link link : list_link_affiches)
                             {
                                 if 
                                 (
-                                    (lien.getDepart().equals(noeud))
+                                    (link.getDepart().equals(noeud))
                                     ||
-                                    (lien.getArrivee().equals(noeud))
+                                    (link.getArrivee().equals(noeud))
                                 )
                                 {
                                     check = true;
@@ -503,39 +486,39 @@ public class PanelInterface extends JPanel{
                             }
                             if (!check)
                             {
-                                list_noeuds_affiches.remove(noeud);
+                                list_node_affiches.remove(noeud);
                             }
                         }
     }
    
-    private void addLink(Noeud addNoeud, GrapheInterface JFrame) 
+    private void addLink(Node addNode, GrapheInterface JFrame) 
         {
-        for (int y = 0; y <  this.getListNoeudAffiches().size(); y++) 
+        for (int y = 0; y <  this.getListNodeAffiches().size(); y++) 
         {
-            for (int z = 0; z < this.getListLiens().size(); z++) 
+            for (int z = 0; z < this.getListLink().size(); z++) 
             {
                 if (
                     (
-                        ( this.getListNoeudAffiches().get(y).equals(this.getListLiens().get(z).getDepart()))
+                        ( this.getListNodeAffiches().get(y).equals(this.getListLink().get(z).getDepart()))
                         &&
-                        (addNoeud.equals(this.getListLiens().get(z).getArrivee()))
+                        (addNode.equals(this.getListLink().get(z).getArrivee()))
                         ||
-                        ( this.getListNoeudAffiches().get(y).equals(this.getListLiens().get(z).getArrivee()))
+                        ( this.getListNodeAffiches().get(y).equals(this.getListLink().get(z).getArrivee()))
                         &&
-                        (addNoeud.equals(this.getListLiens().get(z).getDepart()))
+                        (addNode.equals(this.getListLink().get(z).getDepart()))
                     )
                    ) 
                 {
                     if 
                     (
-                        (JFrame.btnNational.isSelected() && this.getListLiens().get(z).getType() == 'N')
+                        (JFrame.btnNational.isSelected() && this.getListLink().get(z).getType() == 'N')
                         ||
-                        (JFrame.btnDepartemental.isSelected() && this.getListLiens().get(z).getType() == 'D')
+                        (JFrame.btnDepartemental.isSelected() && this.getListLink().get(z).getType() == 'D')
                         ||
-                        (JFrame.btnHighway.isSelected() && this.getListLiens().get(z).getType() == 'A')
+                        (JFrame.btnHighway.isSelected() && this.getListLink().get(z).getType() == 'A')
                     )
                     {
-                        this.getListLiensAffiches().add(this.getListLiens().get(z));
+                        this.getListLinkAffiches().add(this.getListLink().get(z));
                     }
                     
                 }
@@ -543,34 +526,34 @@ public class PanelInterface extends JPanel{
         }
         }
 
-    private void deleteLink(Noeud delNoeud) 
+    private void deleteLink(Node delNode) 
     {
-        for (int i = 0; i < this.getListLiens().size(); i++) {
+        for (int i = 0; i < this.getListLink().size(); i++) {
                 
             if (
-                (this.getListLiens().get(i).getDepart().equals(delNoeud))
+                (this.getListLink().get(i).getDepart().equals(delNode))
                 ||
-                (this.getListLiens().get(i).getArrivee().equals(delNoeud))
+                (this.getListLink().get(i).getArrivee().equals(delNode))
                 ) 
                 {
-                this.getListLiensAffiches().remove(this.getListLiens().get(i));
+                this.getListLinkAffiches().remove(this.getListLink().get(i));
                 }
             }
         }    
     
     public void reset()
     {
-        list_liens_affiches.clear();
-        list_noeuds_affiches.clear();
+        list_link_affiches.clear();
+        list_node_affiches.clear();
 
-        for (Noeud noeud : list_noeuds)
+        for (Node noeud : list_node)
         {
-            list_noeuds_affiches.add(noeud);
+            list_node_affiches.add(noeud);
         }
 
-        for (Lien lien : list_liens)
+        for (Link link : list_link)
         {
-            list_liens_affiches.add(lien);
+            list_link_affiches.add(link);
         }
 
         this.repaint();
@@ -581,7 +564,6 @@ public class PanelInterface extends JPanel{
    
     private void updateStat()
     {
-        System.out.println("-- UPDATE --");
         for (JLabel label : labelList)
         {
             switch(label.getText().split(":")[0])
@@ -599,7 +581,7 @@ public class PanelInterface extends JPanel{
     public int countLinkByType(char type) 
     {
         int count = 0;
-        for (Lien link : list_liens_affiches)
+        for (Link link : list_link_affiches)
         {
             if (link.getType() == type)
             {
@@ -612,7 +594,7 @@ public class PanelInterface extends JPanel{
     public int countNodeByType(char type) 
     {
         int count = 0;
-        for (Noeud noeud : list_noeuds_affiches)
+        for (Node noeud : list_node_affiches)
         {
             if (noeud.getType() == type)
             {
@@ -625,51 +607,50 @@ public class PanelInterface extends JPanel{
     public void paintComponent(Graphics g) 
     {    
         this.removeAll();
-        System.out.println(" -- REPAINT -- ");
         super.paintComponent(g);
-        for (Lien lien:this.list_liens_affiches)
+        for (Link link:this.list_link_affiches)
         {
-            switch (lien.getType())
+            switch (link.getType())
             {
                 case 'A':
                 {
                     g.setColor(mapPanelColor.get("H"));
-                    lien.getLabel().setForeground(mapPanelColor.get("H"));
+                    link.getLabel().setForeground(mapPanelColor.get("H"));
                     break;
                 }
                 case 'N':
                 {
                     g.setColor(mapPanelColor.get("N"));
-                    lien.getLabel().setForeground(mapPanelColor.get("N"));
+                    link.getLabel().setForeground(mapPanelColor.get("N"));
                     break;
                 }
                 case 'D':
                 {
                     g.setColor(mapPanelColor.get("D"));
-                    lien.getLabel().setForeground(mapPanelColor.get("D"));
+                    link.getLabel().setForeground(mapPanelColor.get("D"));
                     break;
                 }
             }
             g.drawLine(
-                lien.getDepart().getX()+25, 
-                lien.getDepart().getY()+25,
-                lien.getArrivee().getX()+25,
-                lien.getArrivee().getY()+25
+                link.getDepart().getX()+25, 
+                link.getDepart().getY()+25,
+                link.getArrivee().getX()+25,
+                link.getArrivee().getY()+25
             );
             /* */
-            lien.getLabel().setLocation(
-                (lien.getDepart().getX() + lien.getArrivee().getX()+ 25) / 2,
-                (lien.getDepart().getY() + lien.getArrivee().getY()+ 25) / 2
+            link.getLabel().setLocation(
+                (link.getDepart().getX() + link.getArrivee().getX()+ 25) / 2,
+                (link.getDepart().getY() + link.getArrivee().getY()+ 25) / 2
             );
             
-            this.add(lien.getLabel());
+            this.add(link.getLabel());
             /*g.drawString(
-                lien.getType()+","+lien.getDistance(),
-                (lien.getDepart().getX() + lien.getArrivee().getX()+ 25) / 2,
-                (lien.getDepart().getY() + lien.getArrivee().getY()+ 25) / 2
+                link.getType()+","+link.getDistance(),
+                (link.getDepart().getX() + link.getArrivee().getX()+ 25) / 2,
+                (link.getDepart().getY() + link.getArrivee().getY()+ 25) / 2
             );*/
         }
-        for (Noeud noeud:list_noeuds_affiches)
+        for (Node noeud:list_node_affiches)
         {
             switch (noeud.getType())
             {
@@ -716,43 +697,43 @@ public class PanelInterface extends JPanel{
     }
 
     /*
-    * Méthode renvoyant la liste des noeuds
-    * @return Un objet de type Arraylist<Lien> contenant la liste des noeuds.
+    * Méthode renvoyant la liste des node
+    * @return Un objet de type Arraylist<Link> contenant la liste des node.
     */
-    public ArrayList<Noeud> getListNoeud()
+    public ArrayList<Node> getListNode()
     {
-        return this.list_noeuds;
+        return this.list_node;
     }
 
     /*
-    * Méthode renvoyant la liste des liens.
-    * @return Un objet de type Arraylist<Lien> contenant la liste des liens.
+    * Méthode renvoyant la liste des link.
+    * @return Un objet de type Arraylist<Link> contenant la liste des link.
     */
-    public ArrayList<Lien> getListLiens()
+    public ArrayList<Link> getListLink()
     {
-        return this.list_liens;
+        return this.list_link;
     }
 
     /*
-    * Méthode renvoyant la liste des noeuds affiches
-    * @return Un objet de type Arraylist<Noeud> contenant la liste des noeuds affiches.
+    * Méthode renvoyant la liste des node affiches
+    * @return Un objet de type Arraylist<Node> contenant la liste des node affiches.
     */
-    public ArrayList<Noeud> getListNoeudAffiches()
+    public ArrayList<Node> getListNodeAffiches()
     {
-        return list_noeuds_affiches;
+        return list_node_affiches;
     }
     
     /*
-    * Méthode renvoyant la liste des liens affiches
-    * @return Un objet de type Arraylist<Lien> contenant la liste des liens affiches.
+    * Méthode renvoyant la liste des link affiches
+    * @return Un objet de type Arraylist<Link> contenant la liste des link affiches.
     */
-    public ArrayList<Lien> getListLiensAffiches()
+    public ArrayList<Link> getListLinkAffiches()
     {
-        return list_liens_affiches;
+        return list_link_affiches;
     }
     
     /*
-    * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des noeuds)
+    * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des node)
     * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
     */
     public void setLabelList(ArrayList<JLabel> labelList)

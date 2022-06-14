@@ -11,11 +11,11 @@ public class TestNoeud {
     @Test
     public void testNoeud()
     {
-        Noeud noeudTest1 = new Noeud('V', "Test ville 1");
-        Noeud noeudTest2 = new Noeud('R', "Test restaurant 2");
-        Noeud noeudTest3 = new Noeud('L', "Test loisir 3");
-        Noeud noeudTest4 = new Noeud('V', "Test ville 4");
-        Noeud noeudTest5 = new Noeud('V', "Test ville 1");
+        Node noeudTest1 = new Node('V', "Test ville 1");
+        Node noeudTest2 = new Node('R', "Test restaurant 2");
+        Node noeudTest3 = new Node('L', "Test loisir 3");
+        Node noeudTest4 = new Node('V', "Test ville 4");
+        Node noeudTest5 = new Node('V', "Test ville 1");
         boolean test1 = assertequals(noeudTest1.getType(),noeudTest4.getType());
         boolean test2 = assertequals(noeudTest1.getNom(),noeudTest5.getNom());
         boolean test3 = assertfalse(assertequals(noeudTest3.getType(),noeudTest4.getType()));

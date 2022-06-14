@@ -12,14 +12,14 @@ import javax.swing.JLabel;
  *
  * @author Maxence
  */
-public class Lien {
+public class Link {
     int distance;
     char type;
-    Noeud depart;
-    Noeud arrivee;
+    Node depart;
+    Node arrivee;
     JLabel label;
 
-    public Lien(int newDistance, char newType, Noeud newDepart, Noeud newArrivee)
+    public Link(int newDistance, char newType, Node newDepart, Node newArrivee)
     {
         distance = newDistance;
         type = newType;
@@ -51,7 +51,7 @@ public class Lien {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Lien other = (Lien) obj;
+        final Link other = (Link) obj;
         if (this.distance != other.distance) {
             return false;
         }
@@ -86,7 +86,7 @@ public class Lien {
      * Renvoie le NoeudDepart du lien
      * @return Un objet de type noeud. 
      */
-    public Noeud getDepart()
+    public Node getDepart()
     {
         return this.depart;
     }
@@ -95,7 +95,7 @@ public class Lien {
      * Renvoie le NoeudArrivee du lien
      * @return Un objet de type noeud. 
      */
-    public Noeud getArrivee()
+    public Node getArrivee()
     {
         return this.arrivee;
     }

@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -37,7 +38,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenu menuFind;
     JMenu menuPreferences;
     JMenu menuColor;
-    JMenu menuColorNoeud;
+    JMenu menuColorNode;
     JMenu menuColorLink;
     JMenu menuPlaces;
     JMenu menuLink;
@@ -45,9 +46,9 @@ public class GrapheInterface extends javax.swing.JFrame {
 
     JMenuItem btnAddNode;
     JMenuItem btnAddLink;
-    JMenuItem btnColorNoeudCity;
-    JMenuItem btnColorNoeudFun;
-    JMenuItem btnColorNoeudFood;
+    JMenuItem btnColorNodeCity;
+    JMenuItem btnColorNodeFun;
+    JMenuItem btnColorNodeFood;
     JMenuItem btnColorLinkHighway;
     JMenuItem btnColorLinkNationale;
     JMenuItem btnColorLinkDepartementale;
@@ -94,47 +95,19 @@ public class GrapheInterface extends javax.swing.JFrame {
             public void componentResized(ComponentEvent e) {
                 panelInterface.widthJFrame = getWidth();
                 panelInterface.heightJFrame = getHeight();
-                System.out.println("Resize");
-
                 if (!new Dimension(getWidth(),getHeight()).equals(getPreferredSize()))
                 {
-                    System.out.println("Renode");
-                    for (Noeud noeud : panelInterface.getListNoeudAffiches())
+                    for (Node node : panelInterface.getListNodeAffiches())
                     {
-                        panelInterface.generatingCoord(noeud);
+                        panelInterface.generatingCoord(node);
                     }
                 }
             }
         });
 
         this.mainGraphe = new Graphe("graphData.csv");
-
-        /*////////////////////////////////////////////////////////////
-        ArrayList<Noeud> list_noeuds;;
-        ArrayList<Lien> list_liens;
-        Noeud A = new Noeud('V', "A");
-        Noeud B = new Noeud('R', "B");
-        Noeud C = new Noeud('L', "C");
-        Noeud D = new Noeud('L', "D");
-        list_noeuds = new ArrayList<>();
-        list_noeuds.add(A);
-        list_noeuds.add(B);
-        list_noeuds.add(C);
-        list_noeuds.add(D);
-        Lien AB = new Lien(3,'N',A,B);
-        Lien BC = new Lien(6,'D',B,C);
-        Lien CA = new Lien(2,'A',C,A);
-        Lien AD = new Lien(11,'A',A,D);
-        list_liens = new ArrayList<>();
-        list_liens.add(AB);
-        list_liens.add(BC);
-        list_liens.add(CA);
-        list_liens.add(AD);
-        panelInterface = new panelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
-        ////////////////////////////////////////////////////////////*/
-
         labelList = new ArrayList<>();
-        panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+        panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNode(),mainGraphe.getLink());
         getContentPane().add(panelInterface, BorderLayout.CENTER);
         
         menuFile = new JMenu("Menu");
@@ -252,31 +225,31 @@ public class GrapheInterface extends javax.swing.JFrame {
 
         menuPreferences = new JMenu("Préférences");
         menuColor = new JMenu("Couleurs");
-        menuColorNoeud = new JMenu("Noeuds");
+        menuColorNode = new JMenu("Noeuds");
         menuColorLink = new JMenu("Liens");
 
-        btnColorNoeudCity = new JMenuItem("Villes");
-        btnColorNoeudCity.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNodeCity = new JMenuItem("Villes");
+        btnColorNodeCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnColorNoeudCityActionPerformed(evt);
+                btnColorNodeCityActionPerformed(evt);
             }
         });
-        btnColorNoeudFood = new JMenuItem("Restaurants");
-        btnColorNoeudFood.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNodeFood = new JMenuItem("Restaurants");
+        btnColorNodeFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnColorNoeudFoodActionPerformed(evt);
+                btnColorNodeFoodActionPerformed(evt);
             }
         });
-        btnColorNoeudFun = new JMenuItem("Loisirs");
-        btnColorNoeudFun.addActionListener(new java.awt.event.ActionListener() {
+        btnColorNodeFun = new JMenuItem("Loisirs");
+        btnColorNodeFun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnColorNoeudFunActionPerformed(evt);
+                btnColorNodeFunActionPerformed(evt);
             }
         });
-        menuColorNoeud.add(btnColorNoeudCity);
-        menuColorNoeud.add(btnColorNoeudFood);
-        menuColorNoeud.add(btnColorNoeudFun);
-        menuColor.add(menuColorNoeud);
+        menuColorNode.add(btnColorNodeCity);
+        menuColorNode.add(btnColorNodeFood);
+        menuColorNode.add(btnColorNodeFun);
+        menuColor.add(menuColorNode);
 
         btnColorLinkHighway = new JMenuItem("Autoroutes");
         btnColorLinkHighway.addActionListener(new java.awt.event.ActionListener() {
@@ -342,27 +315,26 @@ public class GrapheInterface extends javax.swing.JFrame {
         setJMenuBar(menubar);
         pack();
         setVisible(true);
-        System.out.println(" -- CREATE -- ");
-        
+
     }
 
     /**
-     * Crée une action qui ouvre une une fenêtre afin d'ajouter un lien entre 2 noeuds
+     * Crée une action qui ouvre une une fenêtre afin d'ajouter un link entre 2 nodes
      * @param evt correspond à un objet de type ActionEvent
      */
     private void btnAddLinkActionPerformed(ActionEvent evt) 
     {
-        new LinkDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches(),panelInterface.getListLiens(),panelInterface.getListLiensAffiches());
+        new LinkDialog(this, this.getTitle(),panelInterface.getListNode(), panelInterface.getListNodeAffiches(),panelInterface.getListLink(),panelInterface.getListLinkAffiches());
         this.repaint();
     }
 
     /**
-     * Crée une action qui ouvre une une fenêtre afin d'ajouter un noeud entre 2 noeuds
+     * Crée une action qui ouvre une une fenêtre afin d'ajouter un node entre 2 nodes
      * @param evt correspond à un objet de type ActionEvent
      */
     private void btnAddNodeActionPerformed(ActionEvent evt) 
     {
-        new NodeDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches());
+        new NodeDialog(this, this.getTitle(),panelInterface.getListNode(), panelInterface.getListNodeAffiches());
         this.repaint();
     }
     
@@ -379,7 +351,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         {
             getContentPane().remove(panelInterface);
             mainGraphe = new Graphe(choice.getSelectedFile().getAbsolutePath());
-            panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
+            panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNode(),mainGraphe.getLink());
             panelInterface.setLabelList(this.labelList);     
             getContentPane().add(panelInterface, BorderLayout.CENTER);
             this.setVisible(false);
@@ -389,7 +361,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "D" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des link de type "D" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
     private void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) 
@@ -399,7 +371,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "N" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des link de type "N" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
     private void btnColorLinkNationaleActionPerformed(ActionEvent evt) 
@@ -409,7 +381,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "H" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des link de type "H" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
     private void btnColorLinkHighwayActionPerformed(ActionEvent evt) 
@@ -419,50 +391,50 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "FU" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des nodes de type "FU" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
-    private void btnColorNoeudFunActionPerformed(ActionEvent evt) 
+    private void btnColorNodeFunActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("FU",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FU")));
         panelInterface.repaint();
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "FO" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des nodes de type "FO" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
-    private void btnColorNoeudFoodActionPerformed(ActionEvent evt) 
+    private void btnColorNodeFoodActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("FO",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FO")));
         panelInterface.repaint();
     }
 
     /**
-     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "C" par la couleur souhaitée
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des nodes de type "C" par la couleur souhaitée
      * @param evt correspond à un objet ActionEvent
      */
-    private void btnColorNoeudCityActionPerformed(ActionEvent evt) 
+    private void btnColorNodeCityActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("C",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("C")));
         panelInterface.repaint();
     }
 
 	/**
-     * Ajoute un évènement au bouton "btnCompare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
+     * Ajoute un évènement au bouton "btnCompare" qui permet de comparer 2 nodes afin de savoir s'ils sont plus ou moins
      * grastronomiques, ouverts, culturels.
      * @param evt correspond à un ActionEvent
      */
     private void btnCompareActionPerformed(ActionEvent evt) {
-        new CompareDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches(),mainGraphe);
+        new CompareDialog(this, this.getTitle(),panelInterface.getListNodeAffiches(),panelInterface.getListLinkAffiches(),mainGraphe);
     }
 
     /**
-     *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux noeuds sont reliés entre eux.
+     *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux nodes sont reliés entre eux.
      * @param evt correspond à un ActionEvent
      */
     private void btnConnectedActionPerformed(ActionEvent evt) {
-        new ConnectedDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches());
+        new ConnectedDialog(this, this.getTitle(),panelInterface.getListNodeAffiches(),panelInterface.getListLinkAffiches());
     }
 
     /**
@@ -474,7 +446,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
+     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les link de type "D".
      * @param evt correcpond à un ActionEvent
      */
     private void btnDepartementalActionPerformed(ActionEvent evt) {
@@ -482,7 +454,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
     
     /**
-     * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les liens de type "N".
+     * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les link de type "N".
      * @param evt correcpond à un ActionEvent
      */
     private void btnNationalActionPerformed(ActionEvent evt) {
@@ -490,7 +462,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
     
     /**
-     * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les liens de type "A".
+     * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les link de type "A".
      * @param evt correcpond à un ActionEvent
      */
     private void btnHighwayActionPerformed(ActionEvent evt) {
@@ -498,7 +470,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
     
     /**
-     * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les liens de type "R".
+     * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les link de type "R".
      * @param evt correcpond à un ActionEvent
      */
     private void btnFoodActionPerformed(ActionEvent evt) {
@@ -506,7 +478,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les liens de type "L".
+     * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les link de type "L".
      * @param evt correcpond à un ActionEvent
      */
     private void btnFunActionPerformed(ActionEvent evt) {
@@ -514,7 +486,7 @@ public class GrapheInterface extends javax.swing.JFrame {
     }
 
     /**
-     * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les liens de type "V".
+     * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les link de type "V".
      * @param evt correcpond à un ActionEvent
      */
     private void btnCityActionPerformed(ActionEvent evt) {
@@ -524,12 +496,10 @@ public class GrapheInterface extends javax.swing.JFrame {
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
-        System.out.println(" -- VISIBLE -- ");
     } 
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;

@@ -12,24 +12,24 @@ import java.util.Scanner;
  * */
 
 public class Graphe {
-    private int nbNoeuds;
-    private int nbLiens;
-    private final ArrayList<Noeud> list_noeuds;
-    private final ArrayList<Lien> list_liens;
+    private int nbNode;
+    private int nbLink;
+    private final ArrayList<Node> list_node;
+    private final ArrayList<Link> list_link;
 
 
     /**
-     * Constructeur de la classe Graphe qui prend en argument une chaîne de caractères et instancie une liste de noeuds, 
-     * une liste de liens, met le nombre de liens et de noeuds à 0 et essaye de récupérer les données d'un fichier CSV 
+     * Constructeur de la classe Graphe qui prend en argument une chaîne de caractères et instancie une liste de node, 
+     * une liste de link, met le nombre de link et de node à 0 et essaye de récupérer les données d'un fichier CSV 
      * dont le chemin est donné par la chaîne de caractères en paramètres 
      * @param path Le chemin du fichier à charger
      */
     public Graphe(String path) 
     {
-        list_noeuds = new ArrayList<>();
-        list_liens = new ArrayList<>();
-        nbNoeuds = 0;
-        nbLiens = 0;
+        list_node = new ArrayList<>();
+        list_link = new ArrayList<>();
+        nbNode = 0;
+        nbLink = 0;
         try {
             loading(path);
         } catch (FileNotFoundException e) {
@@ -43,13 +43,13 @@ public class Graphe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Graphe graphe = (Graphe) o;
-        return nbNoeuds == graphe.nbNoeuds && nbLiens == graphe.nbLiens && Objects.equals(list_noeuds, graphe.list_noeuds) && Objects.equals(list_liens, graphe.list_liens);
+        return nbNode == graphe.nbNode && nbLink == graphe.nbLink && Objects.equals(list_node, graphe.list_node) && Objects.equals(list_link, graphe.list_link);
     }
 
     @Override
     public int hashCode() 
     {
-        return Objects.hash(nbNoeuds, nbLiens, list_noeuds, list_liens);
+        return Objects.hash(nbNode, nbLink, list_node, list_link);
     }
     
 
@@ -62,11 +62,11 @@ public class Graphe {
     {
         String line;
         String[] lieux;
-        String[] liens;
+        String[] links;
         String[] details;
         String[] data;
-        Noeud start = null;
-        Noeud voisin = null;
+        Node start = null;
+        Node voisin = null;
         Boolean check;
         int i = 0;
         File file = new File(path);
@@ -76,36 +76,36 @@ public class Graphe {
             line = scan.next();
             if (!line.equals(null))
             {
-                lieux = line.split(":", 2);                                //On sépare en 2 pour ne pas se concentrer sur les autres , du CSV.  lieux[0] contient le noeud & lieux[1] les liens
+                lieux = line.split(":", 2);                                //On sépare en 2 pour ne pas se concentrer sur les autres , du CSV.  lieux[0] contient le noeud & lieux[1] les link
                 data = lieux[0].split(",");
                 if (i != 0) {                                                           //Pour passer l'erreur du premier neud à créer
-                    if (existNoeud(data[0].charAt(2), data[1]) == null) {        //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
+                    if (existNode(data[0].charAt(2), data[1]) == null) {        //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
                         start = this.add_noeud(data[0].charAt(2), data[1]);
                     } else {
-                        start = existNoeud(data[0].charAt(2), data[1]);
+                        start = existNode(data[0].charAt(2), data[1]);
                     }
-                    liens = lieux[1].split(";");                                 //Séparation des liens dans la liste de lien
-                    for (String lien : liens) {
-                        details = lien.split("::");
+                    links = lieux[1].split(";");                                 //Séparation des link dans la liste de link
+                    for (String link : links) {
+                        details = link.split("::");
                         data = details[1].split(",");
-                        if (existNoeud(data[0].charAt(0), data[1]) == null) {    //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
+                        if (existNode(data[0].charAt(0), data[1]) == null) {    //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
                             voisin = this.add_noeud(data[0].charAt(0), data[1]);
                         } else {
-                            voisin = existNoeud(data[0].charAt(0), data[1]);
+                            voisin = existNode(data[0].charAt(0), data[1]);
                         }
                         data = details[0].split(",");               
                         check =true;
-                        for (Lien lientoCheck : list_liens)
+                        for (Link linktoCheck : list_link)
                         {
                             if 
                             (
-                                (lientoCheck.getDepart().equals(voisin))
+                                (linktoCheck.getDepart().equals(voisin))
                                 &&
-                                (lientoCheck.getArrivee().equals(start))
-                                &&                                                      //Vérifier si un lien identique existe déjà
-                                (lientoCheck.getType() == data[0].charAt(0))
+                                (linktoCheck.getArrivee().equals(start))
+                                &&                                                      //Vérifier si un link identique existe déjà
+                                (linktoCheck.getType() == data[0].charAt(0))
                                 &&
-                                (lientoCheck.getDistance() == Integer.parseInt(data[1]))
+                                (linktoCheck.getDistance() == Integer.parseInt(data[1]))
                             )
                             {
                                 check = false;
@@ -113,7 +113,7 @@ public class Graphe {
                         }
                         if (check)
                         {   
-                            this.add_lien(Integer.parseInt(data[1]), data[0].charAt(0), start, voisin);
+                            this.add_link(Integer.parseInt(data[1]), data[0].charAt(0), start, voisin);
                         }
                         
                         
@@ -130,9 +130,9 @@ public class Graphe {
      * @param type correspond à un char
      * @param nom correspond à un String
      */
-    public Noeud existNoeud(char type,String nom)
+    public Node existNode(char type,String nom)
     {
-        for (Noeud noeud : list_noeuds)
+        for (Node noeud : list_node)
         {
             if (noeud.getNom().equals(nom) && noeud.getType()==type)
             {
@@ -143,18 +143,18 @@ public class Graphe {
     }
 
     /**
-     * Renvoie true si les noeuds donnés en paramètres sont à une 2-distance et false sinon
-     * @param noeudInitial correspond à un object de type Noeud
-     * @param noeudArrivee correspond à un object de type Noeud
+     * Renvoie true si les node donnés en paramètres sont à une 2-distance et false sinon
+     * @param noeudInitial correspond à un object de type Node
+     * @param noeudArrivee correspond à un object de type Node
      * @return un booleen
      */
-    public boolean deuxVoisins(Noeud noeudInitial, Noeud noeudArrivee)
+    public boolean deuxVoisins(Node noeudInitial, Node noeudArrivee)
     {
         boolean success = false;
-        for (Lien lien : list_liens) {
-            if (lien.getDepart().equals(noeudInitial)) {
-                for (Lien second : list_liens) {
-                    if (second.getDepart().equals(lien.getArrivee()) && second.getArrivee().equals(noeudArrivee)) {
+        for (Link link : list_link) {
+            if (link.getDepart().equals(noeudInitial)) {
+                for (Link second : list_link) {
+                    if (second.getDepart().equals(link.getArrivee()) && second.getArrivee().equals(noeudArrivee)) {
                         success = true;
                     }
                 }
@@ -164,17 +164,17 @@ public class Graphe {
     }
 
     /**
-     * Renvoie true si les noeuds donnés en paramètres sont voisins et false sinon
-     * @param noeudInitial correspond à un objet de type Noeud
-     * @param noeudVoisin correspond à un objet de type Noeud
+     * Renvoie true si les node donnés en paramètres sont voisins et false sinon
+     * @param noeudInitial correspond à un objet de type Node
+     * @param noeudVoisin correspond à un objet de type Node
      * @return un booleen
      */
-    public boolean estVoisin(Noeud noeudInitial, Noeud noeudVoisin)
+    public boolean estVoisin(Node noeudInitial, Node noeudVoisin)
     {
         boolean success = false;
-        for (Lien lien : list_liens)
+        for (Link link : list_link)
         {
-            if (lien.getDepart().equals(noeudInitial) && lien.getArrivee().equals(noeudVoisin))
+            if (link.getDepart().equals(noeudInitial) && link.getArrivee().equals(noeudVoisin))
             {
                 success = true;
             }
@@ -184,13 +184,13 @@ public class Graphe {
 
     /**
      * Renvoie la liste les voisins d'un noeud donné en paramètre
-     * @param noeud correspond à un objet Noeud
-     * @return une ArrayList d'objets de type Noeud
+     * @param noeud correspond à un objet Node
+     * @return une ArrayList d'objets de type Node
      */
-    public ArrayList<Noeud> listeVoisins(Noeud noeud)
+    public ArrayList<Node> listeVoisins(Node noeud)
     {
-        ArrayList<Noeud> listVoisins = new ArrayList<>();
-        for (Noeud noeud_test : list_noeuds)
+        ArrayList<Node> listVoisins = new ArrayList<>();
+        for (Node noeud_test : list_node)
         {
             if (estVoisin(noeud,noeud_test) && noeud != noeud_test)
             {
@@ -201,14 +201,14 @@ public class Graphe {
     }
 
     /**
-     * Renvoie la liste des noeuds à une 2-distance d'un noeud donné en paramètre
+     * Renvoie la liste des node à une 2-distance d'un noeud donné en paramètre
      * @param noeud correspond à un objet de type noeud
-     * @return une ArrayList d'objets de type Noeud
+     * @return une ArrayList d'objets de type Node
      */
-    public ArrayList<Noeud> liste2Voisins(Noeud noeud)
+    public ArrayList<Node> liste2Voisins(Node noeud)
     {
-        ArrayList<Noeud> list2Voisins = new ArrayList<>();
-        for (Noeud noeud_test : list_noeuds)
+        ArrayList<Node> list2Voisins = new ArrayList<>();
+        for (Node noeud_test : list_node)
         {
             if (deuxVoisins(noeud,noeud_test) && noeud != noeud_test)
             {
@@ -219,87 +219,87 @@ public class Graphe {
     }
 
     /**
-     * Renvoie le nombre de noeuds dans le graphe
+     * Renvoie le nombre de node dans le graphe
      * @return un entier
      */
-    public int getNbNoeuds() 
+    public int getNbNode() 
     {
-        return nbNoeuds;
+        return nbNode;
     }
 
 
     /**
-     * Renvoie le nombre de liens dans le graphe
+     * Renvoie le nombre de link dans le graphe
      * @return un entier
      */
-    public int getNbLiens() 
+    public int getNbLink() 
     {
-        return nbLiens;
+        return nbLink;
     }
 
     /**
-     * Renvoie la liste des noeuds du graphe
-     * @return une ArrayList d'objets de type Noeud
+     * Renvoie la liste des node du graphe
+     * @return une ArrayList d'objets de type Node
      */
-    public ArrayList<Noeud> getNoeuds()
+    public ArrayList<Node> getNode()
     {
-        return list_noeuds;
+        return list_node;
     }
 
     /**
-     * Renvoie la liste des liens du graphe
-     * @return une ArrayList d'objets de type Lien
+     * Renvoie la liste des link du graphe
+     * @return une ArrayList d'objets de type Link
      */
-    public ArrayList<Lien> getLiens()
+    public ArrayList<Link> getLink()
     {
-        return list_liens;
+        return list_link;
     }
 
     /**
-     * Crée un objet de type Noeud et l'ajoute au graphe
+     * Crée un objet de type Node et l'ajoute au graphe
      * @param type correspond à un char
      * @param nom correspond à un String
-     * @return un objet de type Noeud
+     * @return un objet de type Node
      */
-    public Noeud add_noeud(char type, String nom)
+    public Node add_noeud(char type, String nom)
     {
-        Noeud create;
-        create = new Noeud(type, nom);
-        list_noeuds.add(create);
-        nbNoeuds++;
+        Node create;
+        create = new Node(type, nom);
+        list_node.add(create);
+        nbNode++;
         return create;
     }
 
     /**
-     * Crée un objet de type Lien et l'ajoute au graphe 
+     * Crée un objet de type Link et l'ajoute au graphe 
      * @param distance correspond à un entier
      * @param type correspond à un char
-     * @param depart correspond à un objet de type Noeud
-     * @param arrivee correspond à un objet de type Noeud
+     * @param depart correspond à un objet de type Node
+     * @param arrivee correspond à un objet de type Node
      */
-    public void add_lien(int distance, char type, Noeud depart, Noeud arrivee) 
+    public void add_link(int distance, char type, Node depart, Node arrivee) 
     {
-        list_liens.add(nbLiens, new Lien(distance, type, depart, arrivee));
-        nbLiens++;
+        list_link.add(nbLink, new Link(distance, type, depart, arrivee));
+        nbLink++;
     }
 
     /**
-     * Renvoie une chaine de caractères indiquant la gastronomie d'un Noeud par rapport à un autre.
-     * Plus le Noeud possède de voisins restaurants, plus il est gastronomique
-     * @param noeud1 correspond à un objet de type Noeud
-     * @param noeud2 correspond à un objet de type Noeud
+     * Renvoie une chaine de caractères indiquant la gastronomie d'un Node par rapport à un autre.
+     * Plus le Node possède de voisins restaurants, plus il est gastronomique
+     * @param noeud1 correspond à un objet de type Node
+     * @param noeud2 correspond à un objet de type Node
      * @return un objet String
      */
-    public String plusGastro(Noeud noeud1, Noeud noeud2)
+    public String plusGastro(Node noeud1, Node noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : listeVoisins(noeud1))
+        for (Node noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'R') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : listeVoisins(noeud2))
+        for (Node noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'R')
             {
@@ -320,22 +320,22 @@ public class Graphe {
     }
 
     /**
-     * Renvoie une chaine de caractères indiquant l'ouverture d'un Noeud par rapport à un autre.
-     * Plus le Noeud possède de voisins qui sont des villes, plus il est ouvert
-     * @param noeud1 correspond à un objet de type Noeud
-     * @param noeud2 correspond à un objet de type Noeud
+     * Renvoie une chaine de caractères indiquant l'ouverture d'un Node par rapport à un autre.
+     * Plus le Node possède de voisins qui sont des villes, plus il est ouvert
+     * @param noeud1 correspond à un objet de type Node
+     * @param noeud2 correspond à un objet de type Node
      * @return un objet String
      */
-    public String plusOuverte(Noeud noeud1, Noeud noeud2)
+    public String plusOuverte(Node noeud1, Node noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : listeVoisins(noeud1))
+        for (Node noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'V') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : listeVoisins(noeud2))
+        for (Node noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'V')
             {
@@ -356,22 +356,22 @@ public class Graphe {
     }
 
     /**
-     * Renvoie une chaine de caractères indiquant la culture d'un Noeud par rapport à un autre.
-     * Plus le Noeud possède de voisins qui sont des centres de loisir, plus il est gastronomique
-     * @param noeud1 correspond à un objet de type Noeud
-     * @param noeud2 correspond à un objet de type Noeud
+     * Renvoie une chaine de caractères indiquant la culture d'un Node par rapport à un autre.
+     * Plus le Node possède de voisins qui sont des centres de loisir, plus il est gastronomique
+     * @param noeud1 correspond à un objet de type Node
+     * @param noeud2 correspond à un objet de type Node
      * @return un objet String
      */
-    public String plusCulturelle(Noeud noeud1, Noeud noeud2)
+    public String plusCulturelle(Node noeud1, Node noeud2)
     {
         int compteur1 = 0; int compteur2 = 0;
-        for (Noeud noeud1test : listeVoisins(noeud1))
+        for (Node noeud1test : listeVoisins(noeud1))
         {
             if (noeud1test.getType() == 'L') {
                 compteur1++;
             }
         }
-        for (Noeud noeud2test : listeVoisins(noeud2))
+        for (Node noeud2test : listeVoisins(noeud2))
         {
             if (noeud2test.getType() == 'L')
             {
