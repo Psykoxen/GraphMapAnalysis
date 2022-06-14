@@ -143,9 +143,9 @@ public class PanelInterface extends JPanel{
         
     }
     
-    /*
-    * Méthode générant les coordonées aléatoire d'un noeud.
-    */
+    /**
+     * Donne des coordonnées à chaque noeud de la liste list_noeuds et les ajoute
+     */
     public void generatingNode()
     {
         for (Noeud noeud:list_noeuds) 
@@ -155,28 +155,37 @@ public class PanelInterface extends JPanel{
         }
     }
 
+    /**
+     * Génère des coordonnées aléatoires pour un noeud donné en paramètre
+     * @param noeud correspond à un objet de type Noeud
+     */
     public void generatingCoord(Noeud noeud)
     {
         int x = random.nextInt(20,this.widthJFrame - 70);
-            int y = random.nextInt(20,this.heightJFrame - 170);
-            noeud.setX(x);
-            noeud.setY(y);
-            for (int i = 0;i<500;i++)
+        int y = random.nextInt(20,this.heightJFrame - 170);
+        noeud.setX(x);
+        noeud.setY(y);
+        for (int i = 0;i<500;i++)
+        {
+            if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
             {
-                if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
-                {
-                    x = random.nextInt(20,this.widthJFrame - 70);
-                    y = random.nextInt(20,this.heightJFrame - 170);
-                    noeud.setX(x);
-                    noeud.setY(y);
-                }
-                else
-                {
-                    break;
-                }
+                x = random.nextInt(20,this.widthJFrame - 70);
+                y = random.nextInt(20,this.heightJFrame - 170);
+                noeud.setX(x);
+                noeud.setY(y);
             }
+            else
+            {
+                break;
+            }
+        }
     }
 
+    /**
+     * Renvoie true si les noeud donné en paramètre est superposé à un autre noeud et false sinon
+     * @param noeud correspond à un objet de type Noeud
+     * @return un booleen
+     */
     private boolean checkNode(Noeud noeud)
     {
         for (Noeud noeudCheck : list_noeuds)
@@ -198,15 +207,22 @@ public class PanelInterface extends JPanel{
         return false;
     }
 
-    /*
-    * Méthode ajoutant un action performed pour le boutton "reset"
-    * @param variable d'évenement evt
-    */
+    /**
+     * Méthode ajoutant un action performed pour le boutton "reset"
+     * @param variable d'évenement evt
+     */
     private void btnResetActionPerformed(ActionEvent evt) 
     {
         reset();
     }
     
+    /**
+     * Renvoie true si les coordonnées x,y sont sur le label du lien donné en paramètre
+     * @param lien correspond à un objet de type Lien
+     * @param x correspond à un entier
+     * @param y correspond à un entier
+     * @return un booleen
+     */
     public boolean checkOnTheLine(Lien lien,int x, int y)
     {
         System.out.println("Xclick : "+x+" Yclick : "+y);
@@ -228,15 +244,18 @@ public class PanelInterface extends JPanel{
         }
     }
     
-    /*
-    * Méthode ajoutant un action performed pour le boutton "1-voisins"
-    * @param variable d'évenement evt
-    */
+    /**
+     * Méthode ajoutant un action performed pour le boutton "1-voisins"
+     * @param variable d'évenement evt
+     */
     private void btnOneNeigbourActionPerformed(ActionEvent evt) 
     {
         HideOrDisplayOneNeighbour();
     }
 
+    /**
+     * Affiche ou camoufle les 1-voisins d'un noeud
+     */
     private void HideOrDisplayOneNeighbour()
     {
         twoNeighbourDisplay = false;
@@ -263,15 +282,18 @@ public class PanelInterface extends JPanel{
         repaint();
     }
 
-    /*
-    * Méthode ajoutant un action performed pour le boutton "2-voisins"
-    * @param variable d'évenement evt
-    */
+    /**
+     * Méthode ajoutant un action performed pour le boutton "2-voisins"
+     * @param variable d'évenement evt
+     */
     private void btnTwoNeigbourActionPerformed(ActionEvent evt) 
     {
         HideOrDisplayTwoNeighbour();
     }
 
+    /**
+     * Affiche ou camoufle les 2-voisins d'un noeud
+     */
     private void HideOrDisplayTwoNeighbour() 
     {
         twoNeighbourDisplay = true;
@@ -341,6 +363,11 @@ public class PanelInterface extends JPanel{
         repaint();
     }
 
+    /**
+     * Permet de bouger les noeuds indépendamment
+     * @param x correspond à un entier
+     * @param y correspond à un entier
+     */
     private void moveNode(int x,int y)
     {
         for (Noeud noeud:list_noeuds_affiches)
@@ -362,6 +389,11 @@ public class PanelInterface extends JPanel{
                 this.repaint();
     }
      
+    /**
+     * Affiche ou camoufle les liens selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de lien doit l'être
+     * @param selected correspond à un objet Boooleen
+     * @param type correspond à un char
+     */
     public void hideOrDisplayLinkByType(Boolean selected,char type)
     {
         boolean check;
@@ -420,6 +452,12 @@ public class PanelInterface extends JPanel{
         this.repaint();    
     }    
     
+    /**
+     * Affiche ou camoufle les noeuds selon leur type. le booléen "selected" indiquera s'ils doivent être affichés ou non, le char "type" indiquera quel type de noeud doit l'être
+     * @param selected correspond à un objet Boolean
+     * @param type correspond à un char
+     * @param JFrame correspond à un objet GrapheInterface
+     */
     public void hideOrDisplayNodeByType(Boolean selected,char type,GrapheInterface JFrame)
     {
         boolean check = false;
@@ -480,8 +518,11 @@ public class PanelInterface extends JPanel{
             }
         }
         this.repaint();
-        }
+    }
 
+    /**
+     * Supprime un noeud s'il n'a aucun voisin
+     */
     private void deleteUnlinkedNode()
     {
         Boolean check;
@@ -508,6 +549,11 @@ public class PanelInterface extends JPanel{
                         }
     }
    
+    /**
+     * Ajoute un lien
+     * @param addNoeud correspond à un objet Noeud
+     * @param JFrame coorespond à un objet GrapheInterface
+     */
     private void addLink(Noeud addNoeud, GrapheInterface JFrame) 
         {
         for (int y = 0; y <  this.getListNoeudAffiches().size(); y++) 
@@ -541,8 +587,12 @@ public class PanelInterface extends JPanel{
                 }
             }
         }
-        }
+    }
 
+    /**
+     * Supprime un lien s'il n'a comme voisin que lui-même
+     * @param delNoeud correspond à un objet Noeud
+     */
     private void deleteLink(Noeud delNoeud) 
     {
         for (int i = 0; i < this.getListLiens().size(); i++) {
@@ -555,9 +605,12 @@ public class PanelInterface extends JPanel{
                 {
                 this.getListLiensAffiches().remove(this.getListLiens().get(i));
                 }
-            }
-        }    
+        }
+    }    
     
+    /**
+     * Réinitialise le graphe
+     */
     public void reset()
     {
         list_liens_affiches.clear();
@@ -579,6 +632,9 @@ public class PanelInterface extends JPanel{
         oneNeighbourDisplay = false;
     }
    
+    /**
+     * Affiche toutes les statistiques de noeuds et de liens du graphique
+     */
     private void updateStat()
     {
         System.out.println("-- UPDATE --");
@@ -596,6 +652,11 @@ public class PanelInterface extends JPanel{
         }
     }
 
+    /**
+     *  Renvoie le nombre de liens d'un type donné en paramètre
+     * @param type correspond à un char
+     * @return un int
+     */
     public int countLinkByType(char type) 
     {
         int count = 0;
@@ -609,6 +670,11 @@ public class PanelInterface extends JPanel{
         return count;
     }
 
+    /**
+     *  Renvoie le nombre de noeuds d'un type donné en paramètre
+     * @param type correspond à un char
+     * @return un int
+     */
     public int countNodeByType(char type) 
     {
         int count = 0;
@@ -622,6 +688,9 @@ public class PanelInterface extends JPanel{
         return count;
     }
  
+    /**
+     * Redéfinition de la méthode paintComponent
+     */
     public void paintComponent(Graphics g) 
     {    
         this.removeAll();
@@ -663,11 +732,6 @@ public class PanelInterface extends JPanel{
             );
             
             this.add(lien.getLabel());
-            /*g.drawString(
-                lien.getType()+","+lien.getDistance(),
-                (lien.getDepart().getX() + lien.getArrivee().getX()+ 25) / 2,
-                (lien.getDepart().getY() + lien.getArrivee().getY()+ 25) / 2
-            );*/
         }
         for (Noeud noeud:list_noeuds_affiches)
         {
@@ -715,46 +779,46 @@ public class PanelInterface extends JPanel{
         }
     }
 
-    /*
-    * Méthode renvoyant la liste des noeuds
-    * @return Un objet de type Arraylist<Lien> contenant la liste des noeuds.
-    */
+    /**
+     * Méthode renvoyant la liste des noeuds
+     * @return Un objet de type Arraylist<Lien> contenant la liste des noeuds.
+     */
     public ArrayList<Noeud> getListNoeud()
     {
         return this.list_noeuds;
     }
 
-    /*
-    * Méthode renvoyant la liste des liens.
-    * @return Un objet de type Arraylist<Lien> contenant la liste des liens.
-    */
+    /**
+     * Méthode renvoyant la liste des liens.
+     * @return Un objet de type Arraylist<Lien> contenant la liste des liens.
+     */
     public ArrayList<Lien> getListLiens()
     {
         return this.list_liens;
     }
 
-    /*
-    * Méthode renvoyant la liste des noeuds affiches
-    * @return Un objet de type Arraylist<Noeud> contenant la liste des noeuds affiches.
-    */
+    /**
+     * Méthode renvoyant la liste des noeuds affiches
+     * @return Un objet de type Arraylist<Noeud> contenant la liste des noeuds affiches.
+     */
     public ArrayList<Noeud> getListNoeudAffiches()
     {
         return list_noeuds_affiches;
     }
     
-    /*
-    * Méthode renvoyant la liste des liens affiches
-    * @return Un objet de type Arraylist<Lien> contenant la liste des liens affiches.
-    */
+    /**
+     * Méthode renvoyant la liste des liens affiches
+     * @return Un objet de type Arraylist<Lien> contenant la liste des liens affiches.
+     */
     public ArrayList<Lien> getListLiensAffiches()
     {
         return list_liens_affiches;
     }
     
-    /*
-    * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des noeuds)
-    * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
-    */
+    /**
+     * Méthode modifiant le contenu de la liste des labels de la JFrame (Stats des noeuds)
+     * @param Un objet de type ArrayList<JLabel> contenant une liste de JLabel.
+     */
     public void setLabelList(ArrayList<JLabel> labelList)
     {
         this.labelList = labelList;

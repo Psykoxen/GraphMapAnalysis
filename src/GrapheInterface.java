@@ -521,6 +521,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         panelInterface.hideOrDisplayNodeByType(btnCity.isSelected(), 'V',this);     
     }
 
+    
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
