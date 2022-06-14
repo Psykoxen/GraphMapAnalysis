@@ -323,6 +323,11 @@ public class GrapheInterface extends javax.swing.JFrame {
         
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre permettant de chercher un fichier dans l'ordinateur et de charger le ficher
+     * dans le graphe. 
+     * @param evt correspond à un objet de type ActionEvent
+     */
     private void btnOpenActionPerformed(ActionEvent evt) 
     {
         JFileChooser choice = new JFileChooser();
@@ -340,111 +345,135 @@ public class GrapheInterface extends javax.swing.JFrame {
  
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "D" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorLinkDepartementaleActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("D",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("D")));
         panelInterface.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "N" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorLinkNationaleActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("N",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("N")));
         panelInterface.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des liens de type "H" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorLinkHighwayActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("H",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("H")));
         panelInterface.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "FU" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorNoeudFunActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("FU",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FU")));
         panelInterface.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "FO" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorNoeudFoodActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("FO",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("FO")));
         panelInterface.repaint();
     }
 
+    /**
+     * Crée une action qui ouvre une fenêtre d'un panel de couleurs afin de remplacer la couleurs des noeuds de type "C" par la couleur souhaitée
+     * @param evt correspond à un objet ActionEvent
+     */
     private void btnColorNoeudCityActionPerformed(ActionEvent evt) 
     {
         panelInterface.mapPanelColor.replace("C",JColorChooser.showDialog(this, "Sélecteur de couleur", panelInterface.mapPanelColor.get("C")));
         panelInterface.repaint();
     }
 
-	/*
-    * Ajoute un évènement au bouton "btnCompare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
-    * grastronomiques, ouverts, culturels.
-    * @param evt correspond à un ActionEvent
-    */
+	/**
+     * Ajoute un évènement au bouton "btnCompare" qui permet de comparer 2 noeuds afin de savoir s'ils sont plus ou moins
+     * grastronomiques, ouverts, culturels.
+     * @param evt correspond à un ActionEvent
+     */
     private void btnCompareActionPerformed(ActionEvent evt) {
         new CompareDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches(),mainGraphe);
     }
 
-    /*
-    *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux noeuds sont reliés entre eux.
-    * @param evt correspond à un ActionEvent
-    */
+    /**
+     *Ajoute un évènement au bouton "Connexion" qui permet de savoir si deux noeuds sont reliés entre eux.
+     * @param evt correspond à un ActionEvent
+     */
     private void btnConnectedActionPerformed(ActionEvent evt) {
         new ConnectedDialog(this, this.getTitle(),panelInterface.getListNoeudAffiches(),panelInterface.getListLiensAffiches());
     }
 
-    /*
-    * Ajoute un évènement au bouton "Rafraîchir" qui permet de revenir au stade initial du graphe
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement au bouton "Rafraîchir" qui permet de revenir au stade initial du graphe
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnRefreshActionPerformed(ActionEvent evt) {
         panelInterface.reset();
     }
 
-    /*
-    * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Départementales" qui efface de l'interface tous les liens de type "D".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnDepartementalActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayLinkByType(btnDepartemental.isSelected(), 'D');  
     }
     
-    /*
-    * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les liens de type "N".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Nationales" qui efface de l'interface tous les liens de type "N".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnNationalActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayLinkByType(btnNational.isSelected(), 'N');
     }
     
-    /*
-    * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les liens de type "A".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Autoroutes" qui efface de l'interface tous les liens de type "A".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnHighwayActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayLinkByType(btnHighway.isSelected(), 'A');  
     }
     
-    /*
-    * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les liens de type "R".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Restaurants" qui efface de l'interface tous les liens de type "R".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnFoodActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayNodeByType(btnFood.isSelected(), 'R',this);     
     }
 
-    /*
-    * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les liens de type "L".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Loisirs" qui efface de l'interface tous les liens de type "L".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnFunActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayNodeByType(btnFun.isSelected(), 'L',this);  
     }
 
-    /*
-    * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les liens de type "V".
-    * @param evt correcpond à un ActionEvent
-    */
+    /**
+     * Ajoute un évènement à la checkbox "Villes" qui efface de l'interface tous les liens de type "V".
+     * @param evt correcpond à un ActionEvent
+     */
     private void btnCityActionPerformed(ActionEvent evt) {
         panelInterface.hideOrDisplayNodeByType(btnCity.isSelected(), 'V',this);     
     }
