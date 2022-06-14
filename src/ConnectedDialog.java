@@ -15,20 +15,22 @@ public class ConnectedDialog extends Dialog
         this.setVisible(true);
     }
     @Override
-    protected void action() {
+    protected void action() 
+    {
         super.action();
-               Boolean find = false;
-                if (noeudA.getSelectedItem().equals(noeudB.getSelectedItem()))
-                {
-                    JOptionPane.showMessageDialog(
-                                                        null,
-                                                        "Les noeuds sélectionnés sont identiques",
-                                                        "Vérification de connexion",
-                                                        JOptionPane.WARNING_MESSAGE
-                                                        );
-                }
-                else
-                {
+        Boolean find = false;
+        if (noeudA.getSelectedItem().equals(noeudB.getSelectedItem()))
+        {
+            JOptionPane.showMessageDialog
+            (
+                                            null,
+                                            "Les noeuds sélectionnés sont identiques",
+                                            "Vérification de connexion",
+                                            JOptionPane.WARNING_MESSAGE
+            );
+        }
+        else
+        {
                     if (Integer.valueOf(selector.getSelectedItem().toString()) == 1)
                     {
                         for (Lien lien : list_liens)
@@ -146,6 +148,6 @@ public class ConnectedDialog extends Dialog
                         }   
                     }
                 }
-            }
+    }
         
 

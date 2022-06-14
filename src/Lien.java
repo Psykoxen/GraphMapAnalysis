@@ -29,7 +29,8 @@ public class Lien {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         int hash = 7;
         hash = 71 * hash + this.distance;
         hash = 71 * hash + this.type;
@@ -39,7 +40,8 @@ public class Lien {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) 
+    {
         if (this == obj) {
             return true;
         }
