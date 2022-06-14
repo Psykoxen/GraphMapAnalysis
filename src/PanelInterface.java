@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import java.awt.Point;
 /**
  *
  * @author Antoine
@@ -145,16 +146,56 @@ public class PanelInterface extends JPanel{
     /*
     * Méthode générant les coordonées aléatoire d'un noeud.
     */
-    private void generatingNode()
+    public void generatingNode()
     {
         for (Noeud noeud:list_noeuds) 
         {
-            int x = random.nextInt(20,this.widthJFrame - 70);
+            generatingCoord(noeud);
+            list_noeuds_affiches.add(noeud);
+        }
+    }
+
+    public void generatingCoord(Noeud noeud)
+    {
+        int x = random.nextInt(20,this.widthJFrame - 70);
             int y = random.nextInt(20,this.heightJFrame - 170);
             noeud.setX(x);
             noeud.setY(y);
-            list_noeuds_affiches.add(noeud);
+            for (int i = 0;i<500;i++)
+            {
+                if (checkNode(noeud) && !noeud.equals(list_noeuds.get(0)))
+                {
+                    x = random.nextInt(20,this.widthJFrame - 70);
+                    y = random.nextInt(20,this.heightJFrame - 170);
+                    noeud.setX(x);
+                    noeud.setY(y);
+                }
+                else
+                {
+                    break;
+                }
+            }
+    }
+
+    private boolean checkNode(Noeud noeud)
+    {
+        for (Noeud noeudCheck : list_noeuds)
+        {
+            if 
+            (
+                (
+                (Point.distance((double)noeud.getX()+25,(double)noeud.getY()+25,(double)noeudCheck.getX()+25,(double)noeudCheck.getY()+25) <= 50)
+                )
+                &&
+                (!noeud.equals(noeudCheck))
+                &&
+                (noeudCheck.getX() != 0 && noeudCheck.getY() != 0)
+            )
+            {
+                return true;
+            }
         }
+        return false;
     }
 
     /*
@@ -310,10 +351,11 @@ public class PanelInterface extends JPanel{
                         (noeud.getY() <= y && y <= noeud.getY()+50)
                         &&
                         (x>=20 && x<=this.widthJFrame-40 && y<=this.heightJFrame-125 && y>=20)
+                        
                     )
                     {
-                        noeud.setX(x-25);
-                        noeud.setY(y-25);
+                            noeud.setX(x-25);
+                            noeud.setY(y-25);
                         break;
                     }
                 }
@@ -581,8 +623,7 @@ public class PanelInterface extends JPanel{
     }
  
     public void paintComponent(Graphics g) 
-    {
-
+    {    
         this.removeAll();
         System.out.println(" -- REPAINT -- ");
         super.paintComponent(g);

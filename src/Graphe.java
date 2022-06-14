@@ -63,24 +63,24 @@ public class Graphe {
             line = scan.next();
             if (!line.equals(null))
             {
-                lieux = line.split(":", 2);
+                lieux = line.split(":", 2);                                //On sépare en 2 pour ne pas se concentrer sur les autres , du CSV.  lieux[0] contient le noeud & lieux[1] les liens
                 data = lieux[0].split(",");
-                if (i != 0) {
-                    if (existNoeud(data[0].charAt(2), data[1]) == null) {
+                if (i != 0) {                                                           //Pour passer l'erreur du premier neud à créer
+                    if (existNoeud(data[0].charAt(2), data[1]) == null) {        //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
                         start = this.add_noeud(data[0].charAt(2), data[1]);
                     } else {
                         start = existNoeud(data[0].charAt(2), data[1]);
                     }
-                    liens = lieux[1].split(";");
+                    liens = lieux[1].split(";");                                 //Séparation des liens dans la liste de lien
                     for (String lien : liens) {
                         details = lien.split("::");
                         data = details[1].split(",");
-                        if (existNoeud(data[0].charAt(0), data[1]) == null) {
+                        if (existNoeud(data[0].charAt(0), data[1]) == null) {    //Vérifie si le noeud existe déjà pour le créer ou juste le sélectionner
                             voisin = this.add_noeud(data[0].charAt(0), data[1]);
                         } else {
                             voisin = existNoeud(data[0].charAt(0), data[1]);
                         }
-                        data = details[0].split(",");
+                        data = details[0].split(",");               
                         check =true;
                         for (Lien lientoCheck : list_liens)
                         {
@@ -89,7 +89,7 @@ public class Graphe {
                                 (lientoCheck.getDepart().equals(voisin))
                                 &&
                                 (lientoCheck.getArrivee().equals(start))
-                                &&
+                                &&                                                      //Vérifier si un lien identique existe déjà
                                 (lientoCheck.getType() == data[0].charAt(0))
                                 &&
                                 (lientoCheck.getDistance() == Integer.parseInt(data[1]))

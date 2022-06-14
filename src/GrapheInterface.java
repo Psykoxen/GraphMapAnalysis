@@ -26,7 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class GrapheInterface extends javax.swing.JFrame {
 
-    Graphe mainGraphe;
+    Graphe mainGraphe = null;
     
     BorderLayout borderLayout;
     PanelInterface panelInterface;
@@ -87,6 +87,23 @@ public class GrapheInterface extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
+
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                panelInterface.widthJFrame = getWidth();
+                panelInterface.heightJFrame = getHeight();
+                System.out.println("Resize");
+
+                if (!new Dimension(getWidth(),getHeight()).equals(getPreferredSize()))
+                {
+                    System.out.println("Renode");
+                    for (Noeud noeud : panelInterface.getListNoeudAffiches())
+                    {
+                        panelInterface.generatingCoord(noeud);
+                    }
+                }
+            }
+        });
 
         this.mainGraphe = new Graphe("graphData.csv");
 
@@ -300,16 +317,10 @@ public class GrapheInterface extends javax.swing.JFrame {
         labelList.add(lblHighway);
         panelInterface.setLabelList(labelList);
 
-        this.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent e) {
-                panelInterface.widthJFrame = getWidth();
-                panelInterface.heightJFrame = getHeight();
-                System.out.println("Resize");
-            }
-        });
         setJMenuBar(menubar);
         pack();
         setVisible(true);
+        System.out.println(" -- CREATE -- ");
         
     }
 
@@ -439,6 +450,11 @@ public class GrapheInterface extends javax.swing.JFrame {
         panelInterface.hideOrDisplayNodeByType(btnCity.isSelected(), 'V',this);     
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        System.out.println(" -- VISIBLE -- ");
+    } 
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
