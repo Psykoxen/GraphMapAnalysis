@@ -108,4 +108,11 @@ public class Lien {
     {
         return this.label;
     }
+
+    @Override
+    public String toString()
+    {
+        return getDepart()+" -> "+getArrivee();
+
+    }
 }

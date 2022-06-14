@@ -12,7 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Dialog extends JDialog{
+import java.awt.GridBagConstraints;  
+import java.awt.GridBagLayout; 
+
+public class SearchDialog extends JDialog{
     protected ArrayList<Noeud> list_noeuds;
     protected ArrayList<Lien> list_liens;
     private JPanel panConnectedDialog;
@@ -24,10 +27,12 @@ public class Dialog extends JDialog{
     JComboBox selector;
     JLabel labelselector;
 
-    public Dialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens)
+    
+
+    public SearchDialog (JFrame parent, String title,ArrayList<Noeud> list_noeuds, ArrayList<Lien> list_liens)
     {
         super(parent,title,true);
-        this.setSize(350,200);
+        this.setSize(220,150);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
@@ -35,56 +40,59 @@ public class Dialog extends JDialog{
         this.list_liens = list_liens;
         
         panConnectedDialog  = new JPanel();
+        panConnectedDialog.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JPanel p1 = new JPanel();
-        p1.setBorder(new EmptyBorder(new Insets(10, 20, 10, 20)));
-        p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         JLabel labelNoeudA = new JLabel("Lieux 1 ");
-        noeudA = new JComboBox();
+        panConnectedDialog.add(labelNoeudA,gbc);
 
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        noeudA = new JComboBox();
         for (Noeud noeud : list_noeuds)
         {
             noeudA.addItem(noeud);
         }
-        p1.add(labelNoeudA);
-        p1.add(noeudA);
+        panConnectedDialog.add(noeudA,gbc);
 
-        JPanel p2 = new JPanel();
-        p2.setBorder(new EmptyBorder(new Insets(10, 20, 10, 20)));
-        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         JLabel labelNoeudB = new JLabel("Lieux 2 ");
+        panConnectedDialog.add(labelNoeudB,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         noeudB = new JComboBox();
         for (Noeud noeud : list_noeuds)
         {
             noeudB.addItem(noeud);
         }
-        p2.add(labelNoeudB);
-        p2.add(noeudB);
+        panConnectedDialog.add(noeudB,gbc);
 
-        JPanel p3 = new JPanel();
-        p3.setBorder(new EmptyBorder(new Insets(10, 20, 10, 20)));
-        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         labelselector = new JLabel();
+        panConnectedDialog.add(labelselector,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         selector = new JComboBox();
-        
+        panConnectedDialog.add(selector,gbc);
 
 
-        p3.add(labelselector);
-        p3.add(selector);
+
 
         check = new JButton("Vérifier");
         check.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 action();
             }});
-
-        p3.add(check);
-        panConnectedDialog.setLayout(new BoxLayout(panConnectedDialog, BoxLayout.PAGE_AXIS));
-        panConnectedDialog.add(p1);
-        panConnectedDialog.add(p2);
-        panConnectedDialog.add(p3);
-        this.add(panConnectedDialog, BorderLayout.CENTER);
-        
+        gbc.gridwidth = 2;    
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panConnectedDialog.add(check,gbc);
+        this.add(panConnectedDialog);
     }
 
     protected void action() {

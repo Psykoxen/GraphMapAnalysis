@@ -42,7 +42,10 @@ public class GrapheInterface extends javax.swing.JFrame {
     JMenu menuColorLink;
     JMenu menuPlaces;
     JMenu menuLink;
-    
+    JMenu menuAdd;
+
+    JMenuItem btnAddNode;
+    JMenuItem btnAddLink;
     JMenuItem btnColorNoeudCity;
     JMenuItem btnColorNoeudFun;
     JMenuItem btnColorNoeudFood;
@@ -130,6 +133,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         list_liens.add(AD);
         panelInterface = new panelInterface(getWidth(), getHeight(),list_noeuds,list_liens);
         ////////////////////////////////////////////////////////////*/
+
         labelList = new ArrayList<>();
         panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNoeuds(),mainGraphe.getLiens());
         getContentPane().add(panelInterface, BorderLayout.CENTER);
@@ -142,6 +146,24 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         });
         menuFile.add(btnOpen);
+
+
+        menuAdd = new JMenu("Ajout");
+        btnAddNode = new JMenuItem("Noeud");
+        btnAddNode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddNodeActionPerformed(evt);
+            }
+        });
+
+        menuAdd.add(btnAddNode);
+        btnAddLink = new JMenuItem("Lien");
+        btnAddLink.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddLinkActionPerformed(evt);
+            }
+        });
+        menuAdd.add(btnAddLink);
 
         menuDisplay = new JMenu("Affichage");
         menuPlaces = new JMenu("Lieux");
@@ -284,6 +306,7 @@ public class GrapheInterface extends javax.swing.JFrame {
 
         menubar = new JMenuBar();
         menubar.add(menuFile);
+        menubar.add(menuAdd);
         menubar.add(menuDisplay);
         menubar.add(menuFind);
         menubar.add(menuPreferences);
@@ -322,6 +345,18 @@ public class GrapheInterface extends javax.swing.JFrame {
         setVisible(true);
         System.out.println(" -- CREATE -- ");
         
+    }
+
+    private void btnAddLinkActionPerformed(ActionEvent evt) 
+    {
+        new LinkDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches(),panelInterface.getListLiens(),panelInterface.getListLiensAffiches());
+        this.repaint();
+    }
+
+    private void btnAddNodeActionPerformed(ActionEvent evt) 
+    {
+        new NodeDialog(this, this.getTitle(),panelInterface.getListNoeud(), panelInterface.getListNoeudAffiches());
+        this.repaint();
     }
 
     private void btnOpenActionPerformed(ActionEvent evt) 
