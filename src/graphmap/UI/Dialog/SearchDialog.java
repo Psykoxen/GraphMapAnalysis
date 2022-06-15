@@ -1,8 +1,8 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
+import graphmap.models.Node;
+import graphmap.models.Link;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -14,6 +14,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel; 
+
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog général utilisé pour les Dialog de comparaison.
+ * 
+ */
 
 public class SearchDialog extends JDialog{
     protected ArrayList<Node> list_node;

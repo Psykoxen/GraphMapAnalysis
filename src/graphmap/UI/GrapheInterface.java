@@ -1,14 +1,14 @@
-package graphmap.GraphFrontEnd;
+package graphmap.UI;
 
 
-import graphmap.GraphBackEnd.Graphe;
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
-import graphmap.GraphDialog.ConnectedDialog;
-import graphmap.GraphDialog.LinkDialog;
-import graphmap.GraphDialog.CompareDialog;
-import graphmap.GraphDialog.NodeDialog;
-import graphmap.GraphFrontEnd.PanelInterface;
+import graphmap.models.Graphe;
+import graphmap.models.Node;
+import graphmap.models.Link;
+import graphmap.UI.Dialog.ConnectedDialog;
+import graphmap.UI.Dialog.LinkDialog;
+import graphmap.UI.Dialog.CompareDialog;
+import graphmap.UI.Dialog.NodeDialog;
+import graphmap.UI.PanelInterface;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,6 +33,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Antoine
+ * 
+ * Interace Java qui étend une JFrame et qui sert de Frame principal. Elle dispose d'un Panel personnaliser et de l'ensemble des fonctions associés au projets.
  * 
  */
 public class GrapheInterface extends javax.swing.JFrame {
@@ -97,7 +99,7 @@ public class GrapheInterface extends javax.swing.JFrame {
         this.setTitle("GRAph-Map-Analysis");
         this.setPreferredSize(new Dimension(800, 800));
         this.setMinimumSize(new Dimension(800, 800));
-        this.setIconImage(new ImageIcon(getClass().getResource("/graphmap/GraphData/logo.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("/graphmap/Assets/logo.png")).getImage());
         this.setLocationRelativeTo(null);
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
@@ -116,7 +118,7 @@ public class GrapheInterface extends javax.swing.JFrame {
             }
         });
 
-        this.mainGraphe = new Graphe("graphmap/GraphData/graphData.csv");
+        this.mainGraphe = new Graphe("src/graphmap/Assets/graphData.csv");
         labelList = new ArrayList<>();
         panelInterface = new PanelInterface(getWidth(), getHeight(),mainGraphe.getNode(),mainGraphe.getLink());
         getContentPane().add(panelInterface, BorderLayout.CENTER);
@@ -507,11 +509,6 @@ public class GrapheInterface extends javax.swing.JFrame {
         panelInterface.hideOrDisplayNodeByType(btnCity.isSelected(), 'V',this);     
     }
 
-    
-    @Override
-    public void setVisible(boolean b) {
-        super.setVisible(b);
-    } 
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

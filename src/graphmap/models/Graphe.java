@@ -1,4 +1,4 @@
-package graphmap.GraphBackEnd;
+package graphmap.models;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.ArrayList;
@@ -9,9 +9,10 @@ import java.util.Scanner;
  *
  * @author Antoine
  * @author Maxence
+ * 
+ * Class Graphe contenant des noeuds reliés par des liens ainsi qu'une fonction de chargement. 
  *
  * */
-
 public class Graphe {
     private int nbNode;
     private int nbLink;
@@ -227,7 +228,6 @@ public class Graphe {
     {
         return nbNode;
     }
-
 
     /**
      * Renvoie le nombre de link dans le graphe

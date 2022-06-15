@@ -1,4 +1,4 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;  
 
-import graphmap.GraphBackEnd.Node;
+import graphmap.models.Node;
+
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog étendant une JDialog générale utilisé pour les Dialog d'affichage, cette JDialog sert à l'ajout de Noeud.
+ * 
+ */
 public class NodeDialog extends AddDialog{
     JTextField node;
     JComboBox type;

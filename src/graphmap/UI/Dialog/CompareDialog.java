@@ -1,13 +1,21 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 
-import graphmap.GraphBackEnd.Graphe;
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
+import graphmap.models.Graphe;
+import graphmap.models.Node;
+import graphmap.models.Link;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog étendant une JDialog générale utilisé pour les Dialog de comparaison, cette JDialog sert à comparer 2 noeuds.
+ * 
+ */
 public class CompareDialog extends SearchDialog{
     Graphe graphe;
     public CompareDialog (JFrame parent, String title,ArrayList<Node> list_node, ArrayList<Link> list_link, Graphe graphe)

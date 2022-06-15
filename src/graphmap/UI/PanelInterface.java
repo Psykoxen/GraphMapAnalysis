@@ -1,4 +1,4 @@
-package graphmap.GraphFrontEnd;
+package graphmap.UI;
 
 
 import java.awt.Color;
@@ -19,11 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
+import graphmap.models.Node;
+import graphmap.models.Link;
 /**
  *
  * @author Antoine
+ * 
+ * Panel personnalisé permettant l'affichage des noeuds et les fonctionnalités associées.
  * 
  */
 public class PanelInterface extends JPanel{

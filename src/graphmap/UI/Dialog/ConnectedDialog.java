@@ -1,4 +1,4 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 
 import java.util.ArrayList;
@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
+import graphmap.models.Node;
+import graphmap.models.Link;
 
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog étendant une JDialog générale utilisé pour les Dialog de comparaison, cette JDialog sert à vérifier si 2 noeuds sont connectés.
+ * 
+ */
 public class ConnectedDialog extends SearchDialog
 {
     public ConnectedDialog (JFrame parent, String title,ArrayList<Node> list_nodes, ArrayList<Link> list_link)

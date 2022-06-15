@@ -1,4 +1,4 @@
-package graphmap.GraphBackEnd;
+package graphmap.models;
 import java.util.Objects;
 
 import javax.swing.JLabel;
@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 /**
  *
  * @author Maxence
+ * 
+ * Class Link servant à représenter un ojbet de type lien qui relie 2 noeuds avec un type et une distance
+ * 
  */
 public class Link {
     int distance;

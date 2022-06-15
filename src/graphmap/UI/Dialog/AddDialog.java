@@ -1,4 +1,4 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -6,6 +6,13 @@ import javax.swing.JPanel;
 import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;  
 
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog général utilisé pour les Dialog d'affichage.
+ * 
+ */
 public class AddDialog extends JDialog{
     JPanel panDialog;
     GridBagConstraints gbc;

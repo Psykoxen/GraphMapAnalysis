@@ -1,11 +1,13 @@
-package graphmap.GraphBackEnd;
+package graphmap.models;
 import java.util.Objects;
 
 /**
  *
  * @author Antoine
+ * 
+ * Class Node représentant un noeud représetnant un lieu qui est caractérisé par un nom et un type
+ * 
  */
-
 public class Node {
     private char type;
     private String nom;

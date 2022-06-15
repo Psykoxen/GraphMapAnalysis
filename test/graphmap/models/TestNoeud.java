@@ -1,5 +1,4 @@
-
-import graphmap.GraphBackEnd.Node;
+package graphmap.models;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,12 +21,7 @@ public class TestNoeud {
         boolean test1 = asserequals(noeudTest1.getType(),noeudTest4.getType());
         boolean test2 = assertequals(noeudTest1.getNom(),noeudTest5.getNom());
         boolean test3 = assertfalse(assertequals(noeudTest3.getType(),noeudTest4.getType()));
-        if(test1 && test2 && test3)
-        {
-            System.out.println("Les tests renvoient un résultat positif");
-            return;
-        }
-        System.out.println("Problèmes lors des tests");
+        System.out.println("Les tests renvoient un résultat positif");
         return;
     }
 }

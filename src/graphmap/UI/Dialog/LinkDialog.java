@@ -1,4 +1,4 @@
-package graphmap.GraphDialog;
+package graphmap.UI.Dialog;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,16 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-import graphmap.GraphBackEnd.Node;
-import graphmap.GraphBackEnd.Link;
+import graphmap.models.Node;
+import graphmap.models.Link;
+
+/**
+ * 
+ * @author Antoine
+ * 
+ * JDialog étendant une JDialog générale utilisé pour les Dialog d'affichage, cette JDialog sert à l'ajout de lien.
+ * 
+ */
 public class LinkDialog extends AddDialog{
     JComboBox nodeA;
     JComboBox nodeB;
